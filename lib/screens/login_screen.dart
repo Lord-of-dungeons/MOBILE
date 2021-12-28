@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.symmetric(
             vertical: 50,
-            horizontal: 30,
+            horizontal: 20,
           ),
           child: Column(
             children: [
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
-                    horizontal: 30,
+                    horizontal: 20,
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
-                    horizontal: 30,
+                    horizontal: 20,
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
-                    horizontal: 30,
+                    horizontal: 20,
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -183,7 +183,7 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
-                    horizontal: 30,
+                    horizontal: 20,
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
