@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/utils/constants.dart';
+import 'package:lordofdungeons/widgets/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class LoginScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(
-            vertical: 60,
+            vertical: 50,
             horizontal: 30,
           ),
           child: Column(
@@ -24,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Image.asset(
                     "assets/images/logo_fond_blanc.png",
-                    width: 200,
+                    width: 175,
                   ),
                 ),
               ),
@@ -37,43 +38,25 @@ class LoginScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Bungee',
-                        fontSize: 22,
+                        fontSize: 20,
                         color: Colors.black),
                   ),
                 ),
               ),
+              // ######################################################
+              //                    LOGIN FORM
+              // ######################################################
+              LoginForm(),
+              // ######################################################
+              // ######################################################
+
+              // ######################################################
+              //                   PAS DE COMPTE
+              // ######################################################
               DelayedAnimation(
                 delay: 2500,
                 child: Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: 60,
-                    horizontal: 30,
-                  ),
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: color_green,
-                        shape: StadiumBorder(),
-                        padding: EdgeInsets.all(13)),
-                    child: Text('Go'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => this,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              DelayedAnimation(
-                delay: 2500,
-                child: Container(
-                    margin: EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 30,
-                    ),
+                    margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
                     child: Text('Vous n\'avez pas encore de compte ?')),
               ),
               DelayedAnimation(
@@ -101,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                           'Email',
                           style: TextStyle(
                             color: color_red,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -140,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                           'Facebook',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -178,7 +161,7 @@ class LoginScreen extends StatelessWidget {
                           'Google',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -216,7 +199,7 @@ class LoginScreen extends StatelessWidget {
                           'Github',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -233,6 +216,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              // ######################################################
+              // ######################################################
             ],
           ),
         ),
