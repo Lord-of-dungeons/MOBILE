@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Image.asset(
                     "assets/images/logo_fond_blanc.png",
-                    width: 250,
+                    width: 200,
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: color_green,
-                        // shape: StadiumBorder(),
+                        shape: StadiumBorder(),
                         padding: EdgeInsets.all(13)),
                     child: Text('Go'),
                     onPressed: () {
@@ -85,9 +85,52 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF0178EE),
-                        // shape: StadiumBorder(),
-                        padding: EdgeInsets.all(13)),
+                        primary: Colors.white,
+                        shape: StadiumBorder(),
+                        padding: EdgeInsets.all(10),
+                        shadowColor: color_red),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.envelope,
+                          color: color_red,
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          'Email',
+                          style: TextStyle(
+                            color: color_red,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => this,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              DelayedAnimation(
+                delay: 2500,
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 30,
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF0178EE),
+                      shape: StadiumBorder(),
+                      padding: EdgeInsets.all(10),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -124,8 +167,8 @@ class LoginScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xFFFF371D),
-                        // shape: StadiumBorder(),
-                        padding: EdgeInsets.all(13)),
+                        shape: StadiumBorder(),
+                        padding: EdgeInsets.all(10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -162,8 +205,8 @@ class LoginScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Colors.black,
-                        // shape: StadiumBorder(),
-                        padding: EdgeInsets.all(13)),
+                        shape: StadiumBorder(),
+                        padding: EdgeInsets.all(10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
