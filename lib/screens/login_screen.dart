@@ -54,13 +54,13 @@ class LoginScreen extends StatelessWidget {
               //                   PAS DE COMPTE
               // ######################################################
               DelayedAnimation(
-                delay: 2500,
+                delay: 3000,
                 child: Container(
                     margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
                     child: Text('Vous n\'avez pas encore de compte ?')),
               ),
               DelayedAnimation(
-                delay: 2500,
+                delay: 3500,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 2500,
+                delay: 3500,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
@@ -141,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 2500,
+                delay: 3500,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
@@ -179,7 +179,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 2500,
+                delay: 3500,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
