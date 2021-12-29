@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    'Bienvenue dans l\'univers\nLord of Dungeons',
+                    title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Bungee',

@@ -2,6 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 
+// TITRE
+const title = 'Rejoignez l\'univers\nLord of Dungeons';
+//
+
 // COULEURS
 const color_yellow = Color(0xFFFFC526);
 const color_green = Color(0xFF00C644);
