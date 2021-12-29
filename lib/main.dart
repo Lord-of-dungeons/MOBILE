@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       // Set Raleway as the default app font.
       theme: ThemeData(fontFamily: 'Montserrat'),
       home: AnimatedSplashScreen(
-        duration: 2000,
+        duration: 3000,
         splash: "assets/images/logo_start_app.png",
         nextScreen: LoginScreen(),
         splashTransition: SplashTransition.fadeTransition,
