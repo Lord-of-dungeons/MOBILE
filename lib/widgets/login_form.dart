@@ -48,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 2500,
+            delay: 1000,
             child: TextField(
               onChanged: (value) {
                 setState(() {
@@ -65,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 5),
           DelayedAnimation(
-            delay: 2500,
+            delay: 1000,
             child: TextField(
               onChanged: (value) {
                 setState(() {
@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           DelayedAnimation(
-            delay: 2500,
+            delay: 1000,
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
               width: double.infinity,

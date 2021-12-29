@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               DelayedAnimation(
-                delay: 1500,
+                delay: 250,
                 child: Container(
                   alignment: Alignment.center,
                   child: Image.asset(
@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 2000,
+                delay: 500,
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -54,13 +54,13 @@ class LoginScreen extends StatelessWidget {
               //                   PAS DE COMPTE
               // ######################################################
               DelayedAnimation(
-                delay: 3000,
+                delay: 1750,
                 child: Container(
                     margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
                     child: Text('Vous n\'avez pas encore de compte ?')),
               ),
               DelayedAnimation(
-                delay: 3500,
+                delay: 2500,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 3500,
+                delay: 3000,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
@@ -179,7 +179,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               DelayedAnimation(
-                delay: 3500,
+                delay: 4000,
                 child: Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 5,
