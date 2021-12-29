@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
+import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:http/http.dart';
@@ -29,9 +30,8 @@ class _LoginFormState extends State<LoginForm> {
         var decodedResponse = json.decode(res.body);
         throw (decodedResponse['error']);
       }
-      print("gooood");
       // redirection
-      Route route = MaterialPageRoute(builder: (context) => LoginScreen());
+      Route route = MaterialPageRoute(builder: (context) => HomeScreen());
       Navigator.pushReplacement(context, route);
     } catch (e) {
       print('error $e');
@@ -63,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 10),
           DelayedAnimation(
             delay: 1000,
             child: TextField(

@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Image.asset(
                     "assets/images/logo_fond_blanc.png",
-                    width: 175,
+                    width: 150,
                   ),
                 ),
               ),
@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Bungee',
-                        fontSize: 20,
+                        fontSize: 18,
                         color: Colors.black),
                   ),
                 ),
