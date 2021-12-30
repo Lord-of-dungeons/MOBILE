@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
+import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
-import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:http/http.dart';
 
@@ -18,25 +18,6 @@ class _LoginFormState extends State<LoginForm> {
   var _obscureText = true;
   var _password = "";
   var _email = "";
-
-  login() async {
-    try {
-      Response res = await post(Uri.parse('$url_api/auth/login'),
-          body: {'email': _email, 'password': _password});
-
-      // si y'a une erreur
-      if (res.statusCode != 200) {
-        // récupération du body
-        var decodedResponse = json.decode(res.body);
-        throw (decodedResponse['error']);
-      }
-      // redirection
-      Route route = MaterialPageRoute(builder: (context) => HomeScreen());
-      Navigator.pushReplacement(context, route);
-    } catch (e) {
-      print('error $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +84,9 @@ class _LoginFormState extends State<LoginForm> {
                     shape: StadiumBorder(),
                     padding: EdgeInsets.all(13)),
                 child: Text('Go'),
-                onPressed: login,
+                onPressed: () {
+                  AuthProvider().login(context, _email, _password);
+                },
               ),
             ),
           ),
