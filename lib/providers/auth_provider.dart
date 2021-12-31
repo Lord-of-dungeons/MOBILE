@@ -1,25 +1,43 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:lordofdungeons/utils/constants.dart';
+import 'package:lordofdungeons/utils/singleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider {
   Future<void> login(
       BuildContext context, String email, String password) async {
     try {
-      Response res = await post(Uri.parse('$url_api/auth/login'),
-          body: {'email': email, 'password': password});
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      // si y'a une erreur
-      if (res.statusCode != 200) {
-        // récupération du body
-        var decodedResponse = json.decode(res.body);
-        throw (decodedResponse['error']);
-      }
+      final res = await Singleton.getDio().post('$url_api/auth/login',
+          data: {'email': email, 'password': password});
+
+      // print(res.headers);
+      final cookies = await Singleton.cookieManager.cookieJar
+          .loadForRequest(Uri.parse('$url_api/auth/login'));
+
+      // on ajoute les infos de l'utilisateur dans le stockage local
+      prefs.setString('user', jsonEncode(res.data));
+      // on ajoute les cookies
+      prefs.setString("cookies", cookies[0].toString());
+
       // redirection
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushNamed(context, '/home');
     } catch (e) {
       print('error $e');
     }
+  }
+
+  Future<void> autoLogIn(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final dynamic user = prefs.getString('user');
+
+    if (user == null) {
+      return;
+    }
+
+    Navigator.pushNamed(context, '/home');
   }
 }

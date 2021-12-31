@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/providers/auth_provider.dart';
-import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/utils/constants.dart';
-import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -18,6 +17,20 @@ class _LoginFormState extends State<LoginForm> {
   var _obscureText = true;
   var _password = "";
   var _email = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    // on récupère l'utilisateur s'il existe dans le stockage local afin de mettre à journ l'email
+    SharedPreferences.getInstance().then((value) {
+      final dynamic user = value.getString('user');
+      if (user == null) return;
+      setState(() {
+        _email = jsonDecode(user).email;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

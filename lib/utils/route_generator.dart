@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
 
 class RouteGenerator {
@@ -8,6 +9,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case '/home':
+        return MaterialPageRoute(builder: (_) => HomeScreen());
       default:
         return _errorRoute();
     }
