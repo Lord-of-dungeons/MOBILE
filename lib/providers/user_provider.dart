@@ -5,14 +5,14 @@ import 'package:lordofdungeons/utils/singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider {
-  Future<bool> getProfile() async {
+  Future<dynamic> getProfile() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final res = await Singleton.getDio().get('$url_api/user/profile');
 
       // on ajoute les infos de l'utilisateur dans le stockage local
       prefs.setString('user', jsonEncode(res.data));
-      return true;
+      return res.data;
     } catch (e) {
       print('error $e');
       return false;

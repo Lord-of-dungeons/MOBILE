@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,13 +32,13 @@ class AuthProvider {
   }
 
   Future<void> autoLogIn(BuildContext context) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final dynamic user = prefs.getString('user');
+    try {
+      final res = await UserProvider().getProfile();
 
-    if (user == null) {
-      return;
+      if (res == false) return;
+      Navigator.pushNamed(context, '/home');
+    } catch (e) {
+      print('autoLogIn : $e');
     }
-
-    Navigator.pushNamed(context, '/home');
   }
 }
