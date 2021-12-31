@@ -1,5 +1,5 @@
 name: lordofdungeons
-description: A new Flutter project.
+description: Jeu vidéo RPG
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -76,5 +76,4 @@ flutter:
         - asset: fonts/Bungee/Bungee-Regular.ttf
   assets:
     - assets/images/
-    - assets/logo/
   uses-material-design: true
