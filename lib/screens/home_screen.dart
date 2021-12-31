@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               DelayedAnimation(
-                delay: 1000,
+                delay: 500,
                 child: Container(
                   alignment: Alignment.center,
                   child: Image.asset(
