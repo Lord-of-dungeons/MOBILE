@@ -7,6 +7,9 @@ import 'package:lordofdungeons/utils/singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider {
+  /**
+   * Connexion de l'utilisateur
+   */
   Future<void> login(
       BuildContext context, String email, String password) async {
     try {
@@ -15,7 +18,6 @@ class AuthProvider {
       final res = await Singleton.getDio().post('$url_api/auth/login',
           data: {'email': email, 'password': password});
 
-      // print(res.headers);
       final cookies = await Singleton.cookieManager.cookieJar
           .loadForRequest(Uri.parse('$url_api/auth/login'));
 
@@ -31,6 +33,11 @@ class AuthProvider {
     }
   }
 
+/**
+ * Auto connexion au lancement de la page.
+ * On utilise la récupération du profil comme test car si y'a un token expiré mais un refresh_token
+ * l'utilisateur sera réauthentifié dynamiquement
+ */
   Future<void> autoLogIn(BuildContext context) async {
     try {
       final res = await UserProvider().getProfile();
