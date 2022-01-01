@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
