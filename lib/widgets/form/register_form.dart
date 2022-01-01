@@ -22,12 +22,6 @@ class _RegisterFormState extends State<RegisterForm> {
   var _password = "";
   var _confirmPassword = "";
   var _pseudo = "";
-  var _birthday = "";
-  var _city = "";
-  var _zipCode = "";
-  late int _numAddress;
-  var _street = "";
-  var _country = "France";
   final dateController = TextEditingController();
 
   @override
@@ -64,6 +58,7 @@ class _RegisterFormState extends State<RegisterForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _firstname,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _firstname = value;
@@ -82,6 +77,7 @@ class _RegisterFormState extends State<RegisterForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _lastname,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _lastname = value;
@@ -122,6 +118,7 @@ class _RegisterFormState extends State<RegisterForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _pseudo,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _pseudo = value;
@@ -140,6 +137,8 @@ class _RegisterFormState extends State<RegisterForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _email,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
                 setState(() {
                   _email = value;
@@ -158,6 +157,7 @@ class _RegisterFormState extends State<RegisterForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _password,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _password = value;
@@ -188,6 +188,7 @@ class _RegisterFormState extends State<RegisterForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _confirmPassword,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _confirmPassword = value;
@@ -224,7 +225,20 @@ class _RegisterFormState extends State<RegisterForm> {
                     shape: StadiumBorder(),
                     padding: EdgeInsets.all(13)),
                 child: Text('Étape suivante'),
-                onPressed: () {
+                onPressed: () async {
+                  final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  // on ajoute les infos du formulaire dans le stockage local
+                  Map<String, dynamic> data = {
+                    'firstname': _firstname,
+                    'lastname': _lastname,
+                    'pseudo': _pseudo,
+                    'email': _email,
+                    'birthday': dateController.text,
+                    'password': _password,
+                    'confirm_password': _confirmPassword,
+                  };
+                  prefs.setString('register_form', jsonEncode(data));
                   Navigator.pushNamed(context, '/register/address');
                 },
               ),

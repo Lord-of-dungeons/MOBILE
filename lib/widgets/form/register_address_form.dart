@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
+import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterAddressForm extends StatefulWidget {
   const RegisterAddressForm({Key? key}) : super(key: key);
@@ -11,15 +15,21 @@ class RegisterAddressForm extends StatefulWidget {
 }
 
 class _RegisterAddressFormState extends State<RegisterAddressForm> {
-  var _city = "";
-  var _zipCode = "";
-  var _numAddress = "";
-  var _street = "";
-  var _country = "France";
+  String _city = "";
+  String _zipCode = "";
+  String _numAddress = "";
+  String _street = "";
+  String _country = "France";
 
   @override
   void initState() {
     super.initState();
+    // on récupère l'utilisateur s'il existe dans le stockage local afin de mettre à journ l'email
+    SharedPreferences.getInstance().then((value) {
+      final dynamic registerForm = value.getString('register_form');
+      if (registerForm == null) return;
+      print(registerForm);
+    });
   }
 
   String? numberValidator(String? value) {
@@ -57,6 +67,7 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _numAddress.toString(),
+              autocorrect: false,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               keyboardType: TextInputType.number,
               validator: numberValidator,
@@ -78,6 +89,7 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _street,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _street = value;
@@ -96,6 +108,7 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _city,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _city = value;
@@ -114,6 +127,8 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _zipCode,
+              autocorrect: false,
+              maxLength: 5,
               validator: zipCodeValidator,
               onChanged: (value) {
                 setState(() {
@@ -133,6 +148,7 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
             delay: 1000,
             child: TextFormField(
               initialValue: _country,
+              autocorrect: false,
               onChanged: (value) {
                 setState(() {
                   _country = value;
@@ -157,7 +173,36 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
                     shape: StadiumBorder(),
                     padding: EdgeInsets.all(13)),
                 child: Text('Je m\'inscris'),
-                onPressed: () {},
+                onPressed: () async {
+                  final dynamic prefs = await SharedPreferences.getInstance();
+                  final registerForm = prefs.getString('register_form');
+
+                  //TODO: afficher une erreur
+                  if (registerForm == null) return;
+
+                  // formatage de l'adresse
+                  var address = null;
+                  // si un des champs de l'adresse est renseigné (le pays ne compte pas) alors on renseigne l'adresse
+                  if (_city.isNotEmpty ||
+                      _numAddress.isNotEmpty ||
+                      _street.isNotEmpty ||
+                      _zipCode.isNotEmpty) {
+                    address = {
+                      'city': _city,
+                      'zip_code': _zipCode,
+                      'num_address': int.parse(
+                          _numAddress), // on formate en nombre pour l'api
+                      'street': _street,
+                      'country': _country
+                    };
+                  }
+
+                  // on concataine les infos principales avec l'adresse
+                  final data = {'address': address};
+                  data.addAll(jsonDecode(registerForm));
+
+                  await AuthProvider().register(context, data);
+                },
               ),
             ),
           ),

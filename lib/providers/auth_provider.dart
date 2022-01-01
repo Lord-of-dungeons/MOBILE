@@ -33,6 +33,34 @@ class AuthProvider {
     }
   }
 
+  /**
+   * Inscription de l'utilisateur
+   */
+  Future<void> register(BuildContext context, Map<String, dynamic> data) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      final res = await Singleton.getDio()
+          .post('$url_api/auth/register', data: {...data});
+
+      final cookies = await Singleton.cookieManager.cookieJar
+          .loadForRequest(Uri.parse('$url_api/auth/register'));
+
+      // on ajoute les infos de l'utilisateur dans le stockage local
+      prefs.setString('user', jsonEncode(res.data));
+      // on ajoute les cookies
+      prefs.setString("cookies", cookies[0].toString());
+
+      // on supprime les données du formulaire en stockage
+      prefs.remove('register_form');
+
+      // redirection
+      Navigator.pushNamed(context, '/home');
+    } catch (e) {
+      print('error $e');
+    }
+  }
+
 /**
  * Auto connexion au lancement de la page.
  * On utilise la récupération du profil comme test car si y'a un token expiré mais un refresh_token
