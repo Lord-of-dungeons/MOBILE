@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
-import 'package:lordofdungeons/widgets/login_form.dart';
+import 'package:lordofdungeons/widgets/form/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -121,12 +121,7 @@ class BodyLoginScreen extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, '/register/informations');
                 },
               ),
             ),
