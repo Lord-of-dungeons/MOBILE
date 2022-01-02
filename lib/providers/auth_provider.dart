@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
@@ -74,9 +75,11 @@ class AuthProvider {
 
       // redirection si la connexion a réussi
       Navigator.pushNamed(context, '/home');
+    } on PlatformException catch (e) {
+      print("facebook : $e");
+      return;
     } catch (e) {
       print('error $e');
-      //TODO: gérer les erreurs pour éviter de rediriger un utilisateur qui n'entre pas les bonnes infos facebook
 
       // sinon on redirige l'utilisateur vers le formulaire d'inscription complémentaire car ça veut dire qu'il n'est pas encore inscrit
       Navigator.pushNamed(context, '/register/informations');
