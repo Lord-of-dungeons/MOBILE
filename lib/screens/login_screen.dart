@@ -155,8 +155,7 @@ class BodyLoginScreen extends StatelessWidget {
                     ],
                   ),
                   onPressed: () async {
-                    final data = await AuthProvider().loginFacebook(context);
-                    print("data : $data");
+                    AuthProvider().loginFacebook(context);
                   }),
             ),
           ),

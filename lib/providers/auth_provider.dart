@@ -36,8 +36,9 @@ class AuthProvider {
   /**
    * Connexion de l'utilisateur
    */
-  Future<Map<String, dynamic>?> loginFacebook(BuildContext context) async {
+  Future<void> loginFacebook(BuildContext context) async {
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await FacebookAuth.instance
           .login(permissions: ["public_profile", "email", "user_birthday"]);
 
@@ -53,15 +54,32 @@ class AuthProvider {
         "firstname": firstname,
         "lastname": lastname,
         "email": result["email"],
-        "facebookId": result["id"]
+        "facebook_id": result["id"]
       };
+      prefs.setString('register_form', jsonEncode(data));
 
+      //
       // on teste la connexion pour voir si l'utilisateur est déjà authentifié avec facebook
+      //
+      final res = await Singleton.getDio().post('$url_api/auth/login/facebook',
+          data: {'email': data["email"], 'facebook_id': result["id"]});
 
-      return data;
+      final cookies = await Singleton.cookieManager.cookieJar
+          .loadForRequest(Uri.parse('$url_api/auth/facebook'));
+
+      // on ajoute les infos de l'utilisateur dans le stockage local
+      prefs.setString('user', jsonEncode(res.data));
+      // on ajoute les cookies
+      prefs.setString("cookies", cookies[0].toString());
+
+      // redirection si la connexion a réussi
+      Navigator.pushNamed(context, '/home');
     } catch (e) {
       print('error $e');
-      return null;
+      //TODO: gérer les erreurs pour éviter de rediriger un utilisateur qui n'entre pas les bonnes infos facebook
+
+      // sinon on redirige l'utilisateur vers le formulaire d'inscription complémentaire car ça veut dire qu'il n'est pas encore inscrit
+      Navigator.pushNamed(context, '/register/informations');
     }
   }
 
@@ -77,6 +95,35 @@ class AuthProvider {
 
       final cookies = await Singleton.cookieManager.cookieJar
           .loadForRequest(Uri.parse('$url_api/auth/register'));
+
+      // on ajoute les infos de l'utilisateur dans le stockage local
+      prefs.setString('user', jsonEncode(res.data));
+      // on ajoute les cookies
+      prefs.setString("cookies", cookies[0].toString());
+
+      // on supprime les données du formulaire en stockage
+      prefs.remove('register_form');
+
+      // redirection
+      Navigator.pushNamed(context, '/home');
+    } catch (e) {
+      print('error $e');
+    }
+  }
+
+  /**
+   * Inscription de l'utilisateur par facebook
+   */
+  Future<void> registerWithFacebook(
+      BuildContext context, Map<String, dynamic> data) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final res = await Singleton.getDio()
+          .post('$url_api/auth/register/facebook', data: {...data});
+
+      print("data facebook: $data");
+      final cookies = await Singleton.cookieManager.cookieJar
+          .loadForRequest(Uri.parse('$url_api/auth/register/facebook'));
 
       // on ajoute les infos de l'utilisateur dans le stockage local
       prefs.setString('user', jsonEncode(res.data));

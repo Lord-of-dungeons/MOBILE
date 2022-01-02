@@ -198,9 +198,14 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
 
                   // on concataine les infos principales avec l'adresse
                   final data = {'address': address};
-                  data.addAll(jsonDecode(registerForm));
+                  final registerFormData = jsonDecode(registerForm);
+                  data.addAll(registerFormData);
 
-                  await AuthProvider().register(context, data);
+                  if (registerFormData["facebook_id"] != null) {
+                    await AuthProvider().registerWithFacebook(context, data);
+                  } else {
+                    await AuthProvider().register(context, data);
+                  }
                 },
               ),
             ),

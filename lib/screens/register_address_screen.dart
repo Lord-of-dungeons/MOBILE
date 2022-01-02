@@ -56,12 +56,9 @@ class BodyRegisterAddressScreen extends StatelessWidget {
           DelayedAnimation(
             delay: 500,
             child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
               alignment: Alignment.center,
               child: Text(
-                'Informations complémentaires',
+                'Informations complémentaires (non obligatoires)',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Bungee', fontSize: 18, color: Colors.black),
