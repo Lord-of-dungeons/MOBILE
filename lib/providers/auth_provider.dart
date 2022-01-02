@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/singleton.dart';
@@ -29,6 +30,38 @@ class AuthProvider {
       Navigator.pushNamed(context, '/home');
     } catch (e) {
       print('error $e');
+    }
+  }
+
+  /**
+   * Connexion de l'utilisateur
+   */
+  Future<Map<String, dynamic>?> loginFacebook(BuildContext context) async {
+    try {
+      await FacebookAuth.instance
+          .login(permissions: ["public_profile", "email", "user_birthday"]);
+
+      final result =
+          await FacebookAuth.instance.getUserData(fields: "name,email,id");
+      final name = result["name"];
+
+      // récupération des nom/prénom
+      final firstname = name.toString().split(" ")[0];
+      final lastname = name.toString().split(" ")[1];
+
+      final data = {
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": result["email"],
+        "facebookId": result["id"]
+      };
+
+      // on teste la connexion pour voir si l'utilisateur est déjà authentifié avec facebook
+
+      return data;
+    } catch (e) {
+      print('error $e');
+      return null;
     }
   }
 

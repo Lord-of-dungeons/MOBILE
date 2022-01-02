@@ -134,35 +134,30 @@ class BodyLoginScreen extends StatelessWidget {
                 horizontal: 20,
               ),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF0178EE),
-                  shape: StadiumBorder(),
-                  padding: EdgeInsets.all(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FaIcon(FontAwesomeIcons.facebook),
-                    SizedBox(width: 20),
-                    Text(
-                      'Facebook',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFF0178EE),
+                    shape: StadiumBorder(),
+                    padding: EdgeInsets.all(10),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FaIcon(FontAwesomeIcons.facebook),
+                      SizedBox(width: 20),
+                      Text(
+                        'Facebook',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    ),
-                  );
-                },
-              ),
+                    ],
+                  ),
+                  onPressed: () async {
+                    final data = await AuthProvider().loginFacebook(context);
+                    print("data : $data");
+                  }),
             ),
           ),
           DelayedAnimation(
