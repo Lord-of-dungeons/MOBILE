@@ -43,7 +43,8 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           DelayedAnimation(
             delay: 1000,
-            child: TextField(
+            child: TextFormField(
+              initialValue: _email,
               onChanged: (value) {
                 setState(() {
                   _email = value;
