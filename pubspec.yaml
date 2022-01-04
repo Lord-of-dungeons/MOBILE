@@ -42,6 +42,8 @@ dependencies:
   dio_cookie_manager: ^2.0.0
   shared_preferences: ^2.0.11
   flutter_facebook_auth: ^3.5.7
+  google_sign_in: ^5.2.1
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -79,4 +81,5 @@ flutter:
         - asset: fonts/Bungee/Bungee-Regular.ttf
   assets:
     - assets/images/
+    - .env
   uses-material-design: true

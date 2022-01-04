@@ -203,6 +203,8 @@ class _RegisterAddressFormState extends State<RegisterAddressForm> {
 
                   if (registerFormData["facebook_id"] != null) {
                     await AuthProvider().registerWithFacebook(context, data);
+                  } else if (registerFormData["google_id"] != null) {
+                    await AuthProvider().registerWithGoogle(context, data);
                   } else {
                     await AuthProvider().register(context, data);
                   }

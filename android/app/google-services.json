@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "160013986955",
+    "project_id": "lord-of-dungeons-337216",
+    "storage_bucket": "lord-of-dungeons-337216.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160013986955:android:ef4c63e0bc9810e939388e",
+        "android_client_info": {
+          "package_name": "com.example.lordofdungeons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160013986955-jc1u6ubfl8o66eod8e9jq8ici868amqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lordofdungeons",
+            "certificate_hash": "a608d5c01531b2b0dd7191147e0d8e813c711bd3"
+          }
+        },
+        {
+          "client_id": "160013986955-vfshhg7io11i30hmndn0kra771if8dtb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7sq23MhejKwvcLJGpAfCm76qn7fGhvtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160013986955-vfshhg7io11i30hmndn0kra771if8dtb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
