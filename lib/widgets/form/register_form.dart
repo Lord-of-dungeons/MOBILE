@@ -148,6 +148,9 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
             ),
           ];
+          // ##############################################################
+          //        Récupération des données du stockage locale
+          // ##############################################################
           if (snapshot.hasData) {
             final dynamic user = snapshot.data!.getString('register_form');
             if (user != null) {
@@ -155,9 +158,12 @@ class _RegisterFormState extends State<RegisterForm> {
               emailController.text = data["email"] ?? "";
               firstnameController.text = data["firstname"] ?? "";
               lastnameController.text = data["lastname"] ?? "";
-              dateController.text = data["birthday"] ?? "";
+              // dateController.text = data["birthday"] ?? "";
+              pseudoController.text = data["pseudo"] ?? "";
 
+              //
               // si c'est une inscription normale on ajoute les mots de passe
+              //
               if (data["google_id"] == null &&
                   data["facebook_id"] == null &&
                   data["github_id"] == null) {
@@ -228,6 +234,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   )
                 ]);
               }
+              //
+              // /fin de la condition si c'est une connexion facebook/google/github
+              //
             }
           }
 

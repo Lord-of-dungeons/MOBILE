@@ -220,12 +220,7 @@ class BodyLoginScreen extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
-                    ),
-                  );
+                  AuthProvider().loginGithub(context);
                 },
               ),
             ),

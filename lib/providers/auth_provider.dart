@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
@@ -145,6 +147,87 @@ class AuthProvider {
   }
 
   /**
+   * Connexion de l'utilisateur avec Google
+   */
+  Future<void> loginGithub(BuildContext context) async {
+    try {
+      await dotenv.load(fileName: ".env");
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      //
+      // Github connexion
+      //
+      final GitHubSignIn gitHubSignIn = GitHubSignIn(
+          clientId: dotenv.env['GITHUB_CLIENT_ID'] ?? "",
+          clientSecret: dotenv.env['GITHUB_CLIENT_SECRET'] ?? "",
+          redirectUrl: "com.lordofdungeons://");
+      var result = await gitHubSignIn.signIn(context);
+
+      switch (result.status) {
+        case GitHubSignInResultStatus.ok:
+
+          // on récupère les infos du profil github
+          final githubResponse =
+              await Singleton.getDio().get('https://api.github.com/user',
+                  options: Options(headers: {
+                    'accept': 'application/vnd.github.v3+json',
+                    'authorization': 'token ${result.token}',
+                  }));
+
+          // formatage nom/prénom
+          final displayName = githubResponse.data["name"];
+          final firstname = displayName!.split(" ")[0];
+          final lastname = displayName.split(" ")[1];
+
+          // formatage des données
+          final data = {
+            "firstname": firstname,
+            "lastname": lastname,
+            "pseudo": githubResponse.data["login"],
+            "email": githubResponse.data["email"] ?? "",
+            "github_id": githubResponse.data["id"],
+          };
+
+          // maj dans le stockage local
+          prefs.setString('register_form', jsonEncode(data));
+
+          //
+          // on teste la connexion pour voir si l'utilisateur est déjà authentifié avec google
+          //
+          final res = await Singleton.getDio().post(
+              '$url_api/auth/login/github',
+              data: {'email': data["email"], 'github_id': data["github_id"]});
+
+          final cookies = await Singleton.cookieManager.cookieJar
+              .loadForRequest(Uri.parse('$url_api/auth/login/github'));
+
+          // on ajoute les infos de l'utilisateur dans le stockage local
+          prefs.setString('user', jsonEncode(res.data));
+          // on ajoute les cookies
+          prefs.setString("cookies", cookies[0].toString());
+
+          // redirection si la connexion a réussi
+          Navigator.pushNamed(context, '/home');
+
+          break;
+
+        case GitHubSignInResultStatus.cancelled:
+          return;
+        case GitHubSignInResultStatus.failed:
+          //TODO: toast avec erreur
+          break;
+      }
+    } on PlatformException catch (e) {
+      print("github : $e");
+      return;
+    } catch (e) {
+      print('error $e');
+      // sinon on redirige l'utilisateur vers le formulaire d'inscription complémentaire car ça veut dire qu'il n'est pas encore inscrit
+      Navigator.pushNamed(context, '/register/informations');
+    }
+  }
+
+  /**
    * Inscription de l'utilisateur
    */
   Future<void> register(BuildContext context, Map<String, dynamic> data) async {
@@ -212,6 +295,34 @@ class AuthProvider {
 
       final cookies = await Singleton.cookieManager.cookieJar
           .loadForRequest(Uri.parse('$url_api/auth/register/google'));
+
+      // on ajoute les infos de l'utilisateur dans le stockage local
+      prefs.setString('user', jsonEncode(res.data));
+      // on ajoute les cookies
+      prefs.setString("cookies", cookies[0].toString());
+
+      // on supprime les données du formulaire en stockage
+      prefs.remove('register_form');
+
+      // redirection
+      Navigator.pushNamed(context, '/home');
+    } catch (e) {
+      print('error $e');
+    }
+  }
+
+  /**
+   * Inscription de l'utilisateur par github
+   */
+  Future<void> registerWithGithub(
+      BuildContext context, Map<String, dynamic> data) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final res = await Singleton.getDio()
+          .post('$url_api/auth/register/github', data: {...data});
+
+      final cookies = await Singleton.cookieManager.cookieJar
+          .loadForRequest(Uri.parse('$url_api/auth/register/github'));
 
       // on ajoute les infos de l'utilisateur dans le stockage local
       prefs.setString('user', jsonEncode(res.data));

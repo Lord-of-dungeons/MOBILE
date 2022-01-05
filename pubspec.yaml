@@ -44,6 +44,9 @@ dependencies:
   flutter_facebook_auth: ^3.5.7
   google_sign_in: ^5.2.1
   flutter_dotenv: ^5.0.2
+  github_sign_in: ^0.0.4
+  flutter_webview_plugin:
+    git: https://github.com/nuc134r/flutter_webview_plugin.git
 
 dev_dependencies:
   flutter_test:
