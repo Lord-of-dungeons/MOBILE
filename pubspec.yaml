@@ -48,6 +48,7 @@ dependencies:
   flutter_webview_plugin:
     git: https://github.com/nuc134r/flutter_webview_plugin.git
   flutter_styled_toast: ^2.0.0
+  lottie: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -85,5 +86,6 @@ flutter:
         - asset: fonts/Bungee/Bungee-Regular.ttf
   assets:
     - assets/images/
+    - assets/animations/
     - .env
   uses-material-design: true

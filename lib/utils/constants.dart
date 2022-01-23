@@ -15,5 +15,6 @@ const color_brown = Color(0xFFA4684D);
 //
 
 // URL API
-const url_api = 'http://192.168.0.21:5000/api';
+const url_domain = 'http://192.168.0.21:5000';
+const url_api = '$url_domain/api';
 //
