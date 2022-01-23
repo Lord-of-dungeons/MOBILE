@@ -47,6 +47,7 @@ dependencies:
   github_sign_in: ^0.0.4
   flutter_webview_plugin:
     git: https://github.com/nuc134r/flutter_webview_plugin.git
+  flutter_styled_toast: ^2.0.0
 
 dev_dependencies:
   flutter_test:

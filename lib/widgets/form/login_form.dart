@@ -44,6 +44,7 @@ class _LoginFormState extends State<LoginForm> {
           DelayedAnimation(
             delay: 1000,
             child: TextFormField(
+              keyboardType: TextInputType.emailAddress,
               initialValue: _email,
               onChanged: (value) {
                 setState(() {
