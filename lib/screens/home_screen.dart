@@ -68,6 +68,8 @@ class BodyHomeScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shadowColor: color_green,
+                    elevation: 10,
                     primary: color_green,
                     padding: EdgeInsets.all(15),
                     fixedSize: Size.fromWidth(
@@ -87,6 +89,8 @@ class BodyHomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shadowColor: color_yellow,
+                    elevation: 10,
                     primary: color_yellow,
                     padding: EdgeInsets.all(15),
                     fixedSize: Size.fromWidth(
@@ -106,6 +110,8 @@ class BodyHomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shadowColor: color_brown,
+                    elevation: 10,
                     primary: color_brown,
                     padding: EdgeInsets.all(15),
                     fixedSize: Size.fromWidth(
@@ -125,6 +131,8 @@ class BodyHomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shadowColor: color_red,
+                    elevation: 10,
                     primary: color_red,
                     padding: EdgeInsets.all(15),
                     fixedSize: Size.fromWidth(
@@ -144,6 +152,8 @@ class BodyHomeScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shadowColor: color_blue,
+                    elevation: 10,
                     primary: color_blue,
                     padding: EdgeInsets.all(30),
                     fixedSize: Size.fromWidth(
@@ -163,6 +173,8 @@ class BodyHomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                    shadowColor: color_purple,
+                    elevation: 10,
                     primary: color_purple,
                     padding: EdgeInsets.all(30),
                     fixedSize: Size.fromWidth(
