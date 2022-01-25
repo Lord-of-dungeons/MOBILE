@@ -11,6 +11,7 @@ class UserProvider {
   Future<dynamic> getProfile() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
+
       final res = await Singleton.getDio().get('$url_api/user/profile');
 
       final cookies = await Singleton.cookieManager.cookieJar

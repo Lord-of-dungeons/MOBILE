@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lottie/lottie.dart';
@@ -19,34 +20,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-                "https://i.pinimg.com/originals/f2/5a/a7/f25aa7b942765ae50bbb5070fc91f766.gif"),
-          ),
-        ),
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: UserProvider().getProfile(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  print(snapshot.data);
-                  return BodyHomeScreen(
-                    state: snapshot.data,
-                  );
-                }
-                return LoaderHomeScreen();
-              },
-            ),
-          ],
+        body: Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/images/dungeon_fire.gif"),
         ),
       ),
-    );
+      child: DelayedAnimation(
+        delay: 750,
+        child: BodyHomeScreen(),
+      ),
+    ));
   }
 }
 
@@ -59,7 +46,7 @@ class BodyHomeScreen extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height,
-      padding: EdgeInsets.only(top: 100, bottom: 50),
+      padding: EdgeInsets.only(top: 50, bottom: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
