@@ -49,6 +49,7 @@ dependencies:
     git: https://github.com/nuc134r/flutter_webview_plugin.git
   flutter_styled_toast: ^2.0.0
   lottie: ^1.2.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

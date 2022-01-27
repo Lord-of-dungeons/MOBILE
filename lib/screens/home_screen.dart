@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
-import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 
@@ -38,15 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class BodyHomeScreen extends StatelessWidget {
-  final dynamic state;
-  const BodyHomeScreen({Key? key, this.state}) : super(key: key);
+  const BodyHomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height,
-      padding: EdgeInsets.only(top: 50, bottom: 50),
+      padding: EdgeInsets.only(top: 75, bottom: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +65,7 @@ class BodyHomeScreen extends StatelessWidget {
                       fontFamily: 'Bungee', fontSize: 18, color: Colors.white),
                 ),
                 onPressed: () {
-                  print("");
+                  Navigator.pushNamed(context, '/home/profile');
                 },
               ),
               Divider(
@@ -177,26 +175,6 @@ class BodyHomeScreen extends StatelessWidget {
               ),
             ],
           )
-        ],
-      ),
-    );
-  }
-}
-
-class LoaderHomeScreen extends StatelessWidget {
-  const LoaderHomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Lottie.asset(
-            'assets/animations/loader_1.json',
-          ),
         ],
       ),
     );
