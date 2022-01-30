@@ -32,6 +32,8 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
+      // on ajoute le fait qu'il se soit connecté avec Facebook
+      prefs.setString("connected_with", "email");
 
       // redirection
       Navigator.pushNamed(context, '/home');
