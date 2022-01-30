@@ -156,7 +156,8 @@ class BodyProfileScreen extends StatelessWidget {
                     size: 20,
                   ),
                   onPressed: () {
-                    print("");
+                    Navigator.of(context)
+                        .pushNamed("/home/profile/edit", arguments: state);
                   },
                 ),
               ],

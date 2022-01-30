@@ -5,7 +5,7 @@ import 'package:lordofdungeons/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key, required registerEmail}) : super(key: key);
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   _RegisterFormState createState() => _RegisterFormState();

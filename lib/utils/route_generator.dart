@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
+import 'package:lordofdungeons/screens/profile_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile_screen.dart';
 import 'package:lordofdungeons/screens/register_address_screen.dart';
 import 'package:lordofdungeons/screens/register_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => LoginScreen());
@@ -16,6 +15,23 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case '/home/profile':
         return MaterialPageRoute(builder: (_) => ProfileScreen());
+      case '/home/profile/edit':
+        final args = settings.arguments as dynamic;
+        final values = {
+          "firstname": args["firstname"],
+          "lastname": args["lastname"],
+          "pseudo": args["pseudo"],
+          "email": args["email"],
+          "birthday": args["birthday"],
+          "newsletter": args["newsletter"],
+          "profilePicturePath": args["profilePicturePath"],
+          // address
+        };
+
+        return MaterialPageRoute(
+            builder: (_) => ProfileEditScreen(
+                  state: values,
+                ));
       case '/register/informations':
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':
