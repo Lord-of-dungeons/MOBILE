@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/commons/loader.dart';
+import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 
@@ -259,7 +260,9 @@ class BodyProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              onPressed: () {},
+              onPressed: () {
+                AuthProvider().logout(context);
+              },
             ),
           ),
           Container(

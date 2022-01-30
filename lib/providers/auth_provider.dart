@@ -6,6 +6,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
+import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/singleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,6 +99,8 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
+      // on ajoute le fait qu'il se soit connecté avec Facebook
+      prefs.setString("connected_with", "facebook");
 
       // redirection si la connexion a réussi
       Navigator.pushNamed(context, '/home');
@@ -374,6 +377,43 @@ class AuthProvider {
       Navigator.pushNamed(context, '/home');
     } catch (e) {
       print('autoLogIn : $e');
+    }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      //
+      // On vérifie par quel moyen l'utilisateur s'est connecté
+      //
+      final connectedWith = prefs.getString("connected_with");
+      print("connected with : $connectedWith");
+      switch (connectedWith) {
+        case "facebook":
+          // on se déconnecte de facebook
+          await FacebookAuth.instance.logOut();
+
+          // une fois déconnecté de facebook on se déconnecte totalement par la route API
+          await Singleton.getDio().delete('$url_api/auth/logout');
+
+          await Singleton.cookieManager.cookieJar
+              .delete(Uri.parse('$url_api/auth/logout'));
+
+          // on supprime les infos de l'utilisateur dans le stockage local
+          prefs.remove('user');
+          // on supprime les cookies
+          prefs.remove("cookies");
+
+          break;
+        default:
+      }
+    } catch (e) {
+      print("logout : $e");
+    } finally {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => LoginScreen()),
+          ModalRoute.withName('/'));
     }
   }
 }
