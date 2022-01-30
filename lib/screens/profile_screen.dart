@@ -54,186 +54,242 @@ class BodyProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Row(
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height - 100,
+      padding: EdgeInsets.all(15),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: NetworkImage(
+                      "$url_domain${state['profilePicturePath']}",
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          state['firstname'],
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          state['lastname'],
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                              color: Colors.grey[600]),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              VerticalDivider(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Inscrit depuis le",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    DateFormat('dd/MM/yyyy')
+                        .format(DateTime.parse(state['dateCreate'])),
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 100,
+            ),
+            padding: EdgeInsets.only(right: 25, left: 25),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(
-                        "$url_domain${state['profilePicturePath']}",
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            state['firstname'],
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            state['lastname'],
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 16,
-                                color: Colors.grey[600]),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                Icon(FontAwesomeIcons.userAlt),
+                Text(
+                  "Modifier mon profil",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontFamily: 'Bungee',
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
                 ),
-                VerticalDivider(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Inscrit depuis le",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      DateFormat('dd/MM/yyyy')
-                          .format(DateTime.parse(state['dateCreate'])),
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[350],
+                    shadowColor: Colors.grey[350],
+                    elevation: 5,
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    print("");
+                  },
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(
-                top: 100,
-              ),
-              padding: EdgeInsets.only(right: 25, left: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(FontAwesomeIcons.userAlt),
-                  Text(
-                    "Modifier mon profil",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.grey[350],
-                      shadowColor: Colors.grey[350],
-                      elevation: 5,
-                    ),
-                    child: Icon(
-                      FontAwesomeIcons.chevronRight,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      print("");
-                    },
-                  ),
-                ],
-              ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 25,
             ),
-            Container(
-              margin: EdgeInsets.only(
-                top: 25,
-              ),
-              padding: EdgeInsets.only(right: 25, left: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(FontAwesomeIcons.chartArea),
-                  Text(
-                    "Statistiques",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+            padding: EdgeInsets.only(right: 25, left: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(FontAwesomeIcons.chartArea),
+                Text(
+                  "Statistiques",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontFamily: 'Bungee',
+                    fontSize: 14,
+                    color: Colors.black,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.grey[350],
-                      shadowColor: Colors.grey[350],
-                      elevation: 5,
-                    ),
-                    child: Icon(
-                      FontAwesomeIcons.chevronRight,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      print("");
-                    },
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[350],
+                    shadowColor: Colors.grey[350],
+                    elevation: 5,
                   ),
-                ],
-              ),
+                  child: Icon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    print("");
+                  },
+                ),
+              ],
             ),
-            Container(
-              margin: EdgeInsets.only(
-                top: 25,
-              ),
-              padding: EdgeInsets.only(right: 25, left: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(FontAwesomeIcons.infoCircle),
-                  Text(
-                    "À propos",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 25,
+            ),
+            padding: EdgeInsets.only(right: 25, left: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(FontAwesomeIcons.infoCircle),
+                Text(
+                  "À propos",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontFamily: 'Bungee',
+                    fontSize: 14,
+                    color: Colors.black,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.grey[350],
-                      shadowColor: Colors.grey[350],
-                      elevation: 5,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[350],
+                    shadowColor: Colors.grey[350],
+                    elevation: 5,
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    print("");
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 100,
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.grey[300], padding: EdgeInsets.all(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.signOutAlt,
+                    color: color_red,
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    'Se déconnecter',
+                    style: TextStyle(
+                      color: color_red,
+                      fontFamily: "Bungee",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
-                    child: Icon(
-                      FontAwesomeIcons.chevronRight,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      print("");
-                    },
                   ),
                 ],
               ),
-            )
-          ],
-        ));
+              onPressed: () {},
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 25,
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: color_red, padding: EdgeInsets.all(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(FontAwesomeIcons.trash),
+                  SizedBox(width: 20),
+                  Text(
+                    'Supprimer mon compte',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Bungee",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: () {},
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
