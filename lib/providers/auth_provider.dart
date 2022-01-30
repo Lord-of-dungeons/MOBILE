@@ -32,7 +32,7 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
-      // on ajoute le fait qu'il se soit connecté avec Facebook
+      // on ajoute le fait qu'il se soit connecté avec l'email
       prefs.setString("connected_with", "email");
 
       // redirection
@@ -161,7 +161,7 @@ class AuthProvider {
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
 
-      // on ajoute le fait qu'il se soit connecté avec Facebook
+      // on ajoute le fait qu'il se soit connecté avec google
       prefs.setString("connected_with", "google");
 
       // redirection si la connexion a réussi
@@ -192,7 +192,6 @@ class AuthProvider {
           clientSecret: dotenv.env['GITHUB_CLIENT_SECRET'] ?? "",
           redirectUrl: "com.lordofdungeons://");
       var result = await gitHubSignIn.signIn(context);
-
       switch (result.status) {
         case GitHubSignInResultStatus.ok:
 
@@ -235,6 +234,8 @@ class AuthProvider {
           prefs.setString('user', jsonEncode(res.data));
           // on ajoute les cookies
           prefs.setString("cookies", cookies[0].toString());
+          // on ajoute le fait qu'il se soit connecté avec github
+          prefs.setString("connected_with", "github");
 
           // redirection si la connexion a réussi
           Navigator.pushNamed(context, '/home');
@@ -274,6 +275,8 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
+      // on ajoute le fait qu'il se soit connecté avec email
+      prefs.setString("connected_with", "email");
 
       // on supprime les données du formulaire en stockage
       prefs.remove('register_form');
@@ -302,6 +305,8 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
+      // on ajoute le fait qu'il se soit connecté avec facebook
+      prefs.setString("connected_with", "facebook");
 
       // on supprime les données du formulaire en stockage
       prefs.remove('register_form');
@@ -330,6 +335,8 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
+      // on ajoute le fait qu'il se soit connecté avec google
+      prefs.setString("connected_with", "google");
 
       // on supprime les données du formulaire en stockage
       prefs.remove('register_form');
@@ -358,6 +365,8 @@ class AuthProvider {
       prefs.setString('user', jsonEncode(res.data));
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
+      // on ajoute le fait qu'il se soit connecté avec github
+      prefs.setString("connected_with", "github");
 
       // on supprime les données du formulaire en stockage
       prefs.remove('register_form');
