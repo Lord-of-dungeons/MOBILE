@@ -159,6 +159,9 @@ class AuthProvider {
       // on ajoute les cookies
       prefs.setString("cookies", cookies[0].toString());
 
+      // on ajoute le fait qu'il se soit connecté avec Facebook
+      prefs.setString("connected_with", "google");
+
       // redirection si la connexion a réussi
       Navigator.pushNamed(context, '/home');
     } on PlatformException catch (e) {
@@ -392,21 +395,28 @@ class AuthProvider {
         case "facebook":
           // on se déconnecte de facebook
           await FacebookAuth.instance.logOut();
-
-          // une fois déconnecté de facebook on se déconnecte totalement par la route API
-          await Singleton.getDio().delete('$url_api/auth/logout');
-
-          await Singleton.cookieManager.cookieJar
-              .delete(Uri.parse('$url_api/auth/logout'));
-
-          // on supprime les infos de l'utilisateur dans le stockage local
-          prefs.remove('user');
-          // on supprime les cookies
-          prefs.remove("cookies");
-
+          break;
+        case "google":
+          // on se déconnecte avec google
+          GoogleSignIn _googleSignIn =
+              GoogleSignIn(clientId: dotenv.env['GOOGLE_CLIENT_ID']);
+          await _googleSignIn.disconnect();
           break;
         default:
       }
+
+      // une fois déconnecté de facebook on se déconnecte totalement par la route API
+      await Singleton.getDio().delete('$url_api/auth/logout');
+
+      await Singleton.cookieManager.cookieJar
+          .delete(Uri.parse('$url_api/auth/logout'));
+
+      // on supprime les infos de l'utilisateur dans le stockage local
+      await prefs.remove('user');
+      // on supprime les cookies
+      await prefs.remove("cookies");
+      // suppression du mode de connexion
+      await prefs.remove("connected_with");
     } catch (e) {
       print("logout : $e");
     } finally {
