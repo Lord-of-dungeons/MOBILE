@@ -3,6 +3,10 @@ import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/widgets/form/edit_form.dart';
 
+var appBar = AppBar(
+  backgroundColor: color_green,
+);
+
 class ProfileEditScreen extends StatefulWidget {
   final Map<String, dynamic> state;
   const ProfileEditScreen({Key? key, required this.state}) : super(key: key);
@@ -20,9 +24,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: color_green,
-      ),
+      appBar: appBar,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: BodyProfileEditScreen(
@@ -40,6 +42,8 @@ class BodyProfileEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height -
+          (MediaQuery.of(context).padding.top + appBar.preferredSize.height),
       margin: EdgeInsets.symmetric(
         vertical: 20,
         horizontal: 20,
