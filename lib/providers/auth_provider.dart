@@ -383,14 +383,13 @@ class AuthProvider {
  * On utilise la récupération du profil comme test car si y'a un token expiré mais un refresh_token
  * l'utilisateur sera réauthentifié dynamiquement
  */
-  Future<void> autoLogIn(BuildContext context) async {
+  Future<dynamic> autoLogIn(BuildContext context) async {
     try {
       final res = await UserProvider().getProfile(context);
-
-      if (res == false) return;
-      Navigator.pushNamed(context, '/home');
+      return res;
     } catch (e) {
       print('autoLogIn : $e');
+      return false;
     }
   }
 

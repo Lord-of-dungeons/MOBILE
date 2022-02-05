@@ -16,7 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    AuthProvider().autoLogIn(context);
   }
 
   @override
@@ -29,6 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
             FutureBuilder(
               future: AuthProvider().autoLogIn(context),
               builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data != false) {
+                    Navigator.pushNamed(context, '/home');
+                  }
+                }
                 return BodyLoginScreen();
               },
             ),

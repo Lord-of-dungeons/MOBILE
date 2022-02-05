@@ -1,43 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/utils/constants.dart';
-import 'package:lordofdungeons/widgets/form/edit_form.dart';
+import 'package:lordofdungeons/widgets/form/password_edit_form.dart';
 
 var appBar = AppBar(
-  backgroundColor: color_green,
+  backgroundColor: color_yellow,
 );
 
-class ProfileEditScreen extends StatefulWidget {
-  final Map<String, dynamic> state;
-  const ProfileEditScreen({Key? key, required this.state}) : super(key: key);
-
-  @override
-  _ProfileEditScreenState createState() => _ProfileEditScreenState();
-}
-
-class _ProfileEditScreenState extends State<ProfileEditScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class PasswordEditScreen extends StatelessWidget {
+  const PasswordEditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-          child: BodyProfileEditScreen(
-        state: widget.state,
-      )),
+      body: SingleChildScrollView(child: BodyPasswordEditScreen()),
     );
   }
 }
 
-class BodyProfileEditScreen extends StatelessWidget {
-  final Map<String, dynamic> state;
-  const BodyProfileEditScreen({Key? key, required this.state})
-      : super(key: key);
+class BodyPasswordEditScreen extends StatelessWidget {
+  const BodyPasswordEditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +40,7 @@ class BodyProfileEditScreen extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               alignment: Alignment.center,
               child: Text(
-                'Modification du profil',
+                'Modification du mot de passe',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'Bungee', fontSize: 18, color: Colors.black),
@@ -66,9 +50,7 @@ class BodyProfileEditScreen extends StatelessWidget {
           // ######################################################
           //                    FORM
           // ######################################################
-          EditForm(
-            state: state,
-          ),
+          PasswordEditForm(),
           // ######################################################
           // ######################################################
         ],

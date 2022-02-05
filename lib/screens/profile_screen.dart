@@ -56,7 +56,7 @@ class BodyProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height,
       padding: EdgeInsets.all(15),
       child: Column(
         children: [
@@ -113,7 +113,7 @@ class BodyProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(FontAwesomeIcons.userAlt),
+                Icon(FontAwesomeIcons.userCog),
                 Text(
                   "Modifier mon profil",
                   textAlign: TextAlign.start,
@@ -136,6 +136,80 @@ class BodyProfileScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed("/home/profile/edit", arguments: state);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 25,
+            ),
+            padding: EdgeInsets.only(right: 25, left: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(FontAwesomeIcons.userCircle),
+                Text(
+                  "Modifier mon pseudo",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontFamily: 'Bungee',
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[350],
+                    shadowColor: Colors.grey[350],
+                    elevation: 5,
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed("/home/profile/edit", arguments: state);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 25,
+            ),
+            padding: EdgeInsets.only(right: 25, left: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(FontAwesomeIcons.userShield),
+                Text(
+                  "Mot de passe",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontFamily: 'Bungee',
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[350],
+                    shadowColor: Colors.grey[350],
+                    elevation: 5,
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed("/home/profile/edit-password");
                   },
                 ),
               ],

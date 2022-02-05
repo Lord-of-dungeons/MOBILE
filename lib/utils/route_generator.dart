@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
+import 'package:lordofdungeons/screens/password_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile_screen.dart';
 import 'package:lordofdungeons/screens/register_address_screen.dart';
@@ -32,6 +33,8 @@ class RouteGenerator {
             builder: (_) => ProfileEditScreen(
                   state: values,
                 ));
+      case '/home/profile/edit-password':
+        return MaterialPageRoute(builder: (_) => PasswordEditScreen());
       case '/register/informations':
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':
