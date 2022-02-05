@@ -1,8 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
+import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
@@ -15,23 +15,24 @@ class EditForm extends StatefulWidget {
 }
 
 class _EditFormState extends State<EditForm> {
-  final emailController = TextEditingController(text: "");
+  String email = "";
+  String pseudo = "";
+  //
+  bool newsletter = true;
+  bool loader = false;
+  //
   final firstnameController = TextEditingController(text: "");
   final lastnameController = TextEditingController(text: "");
   final dateController = TextEditingController(text: "");
   final passwordController = TextEditingController(text: "");
   final confirmPasswordController = TextEditingController(text: "");
-  final pseudoController = TextEditingController(text: "");
-  bool newsletter = true;
 
   @override
   void dispose() {
     // Clean up the controller when the widget is removed
     dateController.dispose();
-    emailController.dispose();
     firstnameController.dispose();
     lastnameController.dispose();
-    pseudoController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
@@ -41,10 +42,10 @@ class _EditFormState extends State<EditForm> {
   void initState() {
     super.initState();
 
-    emailController.text = widget.state["email"];
+    email = widget.state["email"];
+    pseudo = widget.state["pseudo"];
     firstnameController.text = widget.state["firstname"];
     lastnameController.text = widget.state["lastname"];
-    pseudoController.text = widget.state["pseudo"];
     dateController.text = widget.state["birthday"];
     newsletter = widget.state["newsletter"] == 1;
   }
@@ -54,7 +55,7 @@ class _EditFormState extends State<EditForm> {
     return Column(
       children: [
         DelayedAnimation(
-          delay: 1000,
+          delay: 500,
           child: TextFormField(
             controller: firstnameController,
             autocorrect: false,
@@ -73,7 +74,7 @@ class _EditFormState extends State<EditForm> {
         ),
         SizedBox(height: 15),
         DelayedAnimation(
-          delay: 1000,
+          delay: 500,
           child: TextFormField(
             controller: lastnameController,
             autocorrect: false,
@@ -92,7 +93,7 @@ class _EditFormState extends State<EditForm> {
         ),
         SizedBox(height: 15),
         DelayedAnimation(
-            delay: 1000,
+            delay: 500,
             child: TextField(
               readOnly: true,
               controller: dateController,
@@ -114,28 +115,9 @@ class _EditFormState extends State<EditForm> {
             )),
         SizedBox(height: 15),
         DelayedAnimation(
-          delay: 1000,
+          delay: 500,
           child: TextFormField(
-            controller: pseudoController,
-            autocorrect: false,
-            onChanged: (value) {
-              pseudoController.text = value;
-              pseudoController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: value.length));
-            },
-            decoration: InputDecoration(
-              labelStyle: TextStyle(
-                color: Colors.grey[400],
-              ),
-              labelText: 'Pseudo',
-            ),
-          ),
-        ),
-        SizedBox(height: 15),
-        DelayedAnimation(
-          delay: 1000,
-          child: TextFormField(
-            controller: emailController,
+            initialValue: email,
             readOnly: true,
             showCursor: false,
             decoration: InputDecoration(
@@ -154,7 +136,7 @@ class _EditFormState extends State<EditForm> {
           height: 15,
         ),
         DelayedAnimation(
-            delay: 1000,
+            delay: 500,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -191,7 +173,7 @@ class _EditFormState extends State<EditForm> {
             )),
         SizedBox(height: 50),
         DelayedAnimation(
-          delay: 1000,
+          delay: 500,
           child: Container(
             margin: EdgeInsets.symmetric(
               vertical: 5,
@@ -203,7 +185,11 @@ class _EditFormState extends State<EditForm> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FaIcon(FontAwesomeIcons.edit),
+                  loader
+                      ? GFLoader(
+                          type: GFLoaderType.ios,
+                        )
+                      : FaIcon(FontAwesomeIcons.edit),
                   SizedBox(width: 20),
                   Text(
                     'Sauvegarder',
@@ -215,7 +201,22 @@ class _EditFormState extends State<EditForm> {
                   ),
                 ],
               ),
-              onPressed: () {},
+              onPressed: () {
+                Map<String, dynamic> body = {
+                  "firstname": firstnameController.text,
+                  "lastname": lastnameController.text,
+                  "birthday": dateController.text,
+                  "newsletter": newsletter
+                };
+                setState(() {
+                  loader = true;
+                });
+                UserProvider()
+                    .editProfile(context, body)
+                    .then((value) => setState(() {
+                          loader = false;
+                        }));
+              },
             ),
           ),
         ),

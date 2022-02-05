@@ -385,7 +385,7 @@ class AuthProvider {
  */
   Future<void> autoLogIn(BuildContext context) async {
     try {
-      final res = await UserProvider().getProfile();
+      final res = await UserProvider().getProfile(context);
 
       if (res == false) return;
       Navigator.pushNamed(context, '/home');

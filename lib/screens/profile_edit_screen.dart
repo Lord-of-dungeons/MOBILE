@@ -51,7 +51,7 @@ class BodyProfileEditScreen extends StatelessWidget {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 500,
+            delay: 250,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               alignment: Alignment.center,

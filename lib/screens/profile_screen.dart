@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: DelayedAnimation(
             delay: 750,
             child: FutureBuilder(
-              future: UserProvider().getProfile(),
+              future: UserProvider().getProfile(context),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   print(snapshot.data);
@@ -78,7 +78,7 @@ class BodyProfileScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          state['firstname'],
+                          state['pseudo'],
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontFamily: 'Montserrat',
@@ -87,39 +87,17 @@ class BodyProfileScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          state['lastname'],
+                          "Inscrit depuis le " +
+                              DateFormat('dd/MM/yyyy')
+                                  .format(DateTime.parse(state['dateCreate'])),
                           textAlign: TextAlign.start,
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 16,
-                              color: Colors.grey[600]),
-                        )
+                            fontFamily: 'Montserrat',
+                            fontSize: 15,
+                            color: Colors.grey[400],
+                          ),
+                        ),
                       ],
-                    ),
-                  ),
-                ],
-              ),
-              VerticalDivider(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Inscrit depuis le",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 15,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    DateFormat('dd/MM/yyyy')
-                        .format(DateTime.parse(state['dateCreate'])),
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 15,
-                      color: Colors.black,
                     ),
                   ),
                 ],
