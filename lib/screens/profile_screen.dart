@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +17,44 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late Map<String, dynamic> state;
+  //
+  bool loaded = false;
+
   @override
   void initState() {
     super.initState();
+    _getProfile();
+  }
+
+  void _getProfile() async {
+    final data = await UserProvider().getProfile(context);
+    print(data);
+    if (data == false) {
+      //TODO: gérer l'erreur
+      setState(() {
+        loaded = true;
+      });
+      return;
+    }
+    setState(() {
+      state = data;
+      loaded = true;
+    });
+  }
+
+  void _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result =
+        await Navigator.of(context).pushNamed("/home/profile/edit-pseudo");
+
+    //
+    // On met à jour l'affichager du pseudo dynamiquement une fois que la vaalidation faite
+    //
+    setState(() {
+      state["pseudo"] = result;
+    });
   }
 
   @override
@@ -28,31 +65,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: color_green,
         ),
         body: SingleChildScrollView(
-          child: DelayedAnimation(
-            delay: 750,
-            child: FutureBuilder(
-              future: UserProvider().getProfile(context),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  print(snapshot.data);
-                  return BodyProfileScreen(
-                    state: snapshot.data,
-                  );
-                }
-
-                return Loader();
-              },
-            ),
-          ),
-        ));
+            child: loaded
+                ? DelayedAnimation(
+                    delay: 750,
+                    child: BodyProfileScreen(
+                        state: state,
+                        navigateAndDisplaySelection: (context) {
+                          _navigateAndDisplaySelection(context);
+                        }))
+                : Loader()));
   }
 }
 
 class BodyProfileScreen extends StatelessWidget {
   final dynamic state;
-  const BodyProfileScreen({Key? key, this.state}) : super(key: key);
+  final void Function(BuildContext context) navigateAndDisplaySelection;
+  const BodyProfileScreen(
+      {Key? key, this.state, required this.navigateAndDisplaySelection})
+      : super(key: key);
 
-  @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
@@ -161,20 +192,18 @@ class BodyProfileScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.grey[350],
-                    shadowColor: Colors.grey[350],
-                    elevation: 5,
-                  ),
-                  child: Icon(
-                    FontAwesomeIcons.chevronRight,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed("/home/profile/edit", arguments: state);
-                  },
-                ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey[350],
+                      shadowColor: Colors.grey[350],
+                      elevation: 5,
+                    ),
+                    child: Icon(
+                      FontAwesomeIcons.chevronRight,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      navigateAndDisplaySelection(context);
+                    }),
               ],
             ),
           ),

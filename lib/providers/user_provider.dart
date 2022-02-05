@@ -106,7 +106,7 @@ class UserProvider {
   /**
    * Modification du mot de passe utilisateur
    */
-  Future<dynamic> editPassword(
+  Future<void> editPassword(
       BuildContext context, Map<String, String> body) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -132,6 +132,70 @@ class UserProvider {
           borderRadius: BorderRadius.all(Radius.circular(25)));
 
       Navigator.pop(context);
+    } on DioError catch (e) {
+      showToast(e.response?.data["error"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+    } catch (e) {
+      showToast("Erreur inconnue",
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      print('error $e');
+    }
+  }
+
+  /**
+   * Modification du mot de passe utilisateur
+   */
+  Future<void> editPseudo(
+      BuildContext context, Map<String, String> body) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      final res =
+          await Singleton.getDio().put('$url_api/user/edit-pseudo', data: body);
+
+      final cookies = await Singleton.cookieManager.cookieJar
+          .loadForRequest(Uri.parse('$url_api/user/edit-pseudo'));
+
+      // on récupère les anciennes valeurs des prefs
+      final userPrefs = prefs.getString("user");
+      Map<String, dynamic> values = json.decode(userPrefs!);
+      // concataination des anciennes valeurs avec les nouvelles
+      values.addAll(body);
+
+      // on ajoute les infos de l'utilisateur dans le stockage local avec les nouvelles valeurs
+      prefs.setString('user', jsonEncode(values));
+
+      // on ajoute les cookies
+      prefs.setString("cookies", cookies[0].toString());
+
+      showToast(res.data["message"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 5),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.green,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+
+      Navigator.pop(context, body["pseudo"]);
     } on DioError catch (e) {
       showToast(e.response?.data["error"],
           context: context,
