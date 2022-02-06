@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lordofdungeons/screens/friends/friends_screen.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:lordofdungeons/screens/profile/password_edit_screen.dart';
-import 'package:lordofdungeons/screens/profile/profile_edit_pseudo.dart';
+import 'package:lordofdungeons/screens/profile/pseudo_edit_screen.dart';
+import 'package:lordofdungeons/screens/profile/profile_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile/profile_screen.dart';
-import 'package:lordofdungeons/screens/profile_edit_screen.dart';
 import 'package:lordofdungeons/screens/register_address_screen.dart';
 import 'package:lordofdungeons/screens/register_screen.dart';
 
@@ -32,13 +33,13 @@ class RouteGenerator {
         };
 
         return MaterialPageRoute(
-            builder: (_) => ProfileEditScreen(
-                  state: values,
-                ));
+            builder: (_) => ProfileEditScreen(state: values));
       case '/home/profile/edit-password':
         return MaterialPageRoute(builder: (_) => PasswordEditScreen());
       case '/home/profile/edit-pseudo':
         return MaterialPageRoute(builder: (_) => PseudoEditScreen());
+      case '/home/friends':
+        return MaterialPageRoute(builder: (_) => FriendsScreen());
       case '/register/informations':
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':

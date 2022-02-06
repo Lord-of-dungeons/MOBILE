@@ -85,7 +85,7 @@ class BodyHomeScreen extends StatelessWidget {
                       fontFamily: 'Bungee', fontSize: 18, color: Colors.white),
                 ),
                 onPressed: () {
-                  print("");
+                  Navigator.pushNamed(context, '/home/friends');
                 },
               ),
               Divider(
@@ -164,7 +164,7 @@ class BodyHomeScreen extends StatelessWidget {
                     fixedSize: Size.fromWidth(
                         MediaQuery.of(context).size.width - 100)),
                 child: Text(
-                  'Multijoueurs',
+                  'Multijoueur',
                   style: TextStyle(
                       fontFamily: 'Bungee', fontSize: 18, color: Colors.white),
                 ),
