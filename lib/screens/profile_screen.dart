@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +6,10 @@ import 'package:lordofdungeons/commons/loader.dart';
 import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
+
+var appBar = AppBar(
+  backgroundColor: color_green,
+);
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -61,9 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: color_green,
-        ),
+        appBar: appBar,
         body: SingleChildScrollView(
             child: loaded
                 ? DelayedAnimation(
@@ -84,11 +84,14 @@ class BodyProfileScreen extends StatelessWidget {
       {Key? key, this.state, required this.navigateAndDisplaySelection})
       : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height,
-      padding: EdgeInsets.all(15),
+      height: MediaQuery.of(context).size.height +
+          20 -
+          (appBar.preferredSize.height),
+      margin: EdgeInsets.all(10),
       child: Column(
         children: [
           Row(
@@ -329,6 +332,7 @@ class BodyProfileScreen extends StatelessWidget {
                   FaIcon(
                     FontAwesomeIcons.signOutAlt,
                     color: color_red,
+                    size: 16,
                   ),
                   SizedBox(width: 20),
                   Text(
@@ -336,7 +340,7 @@ class BodyProfileScreen extends StatelessWidget {
                     style: TextStyle(
                       color: color_red,
                       fontFamily: "Bungee",
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -349,7 +353,7 @@ class BodyProfileScreen extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(
-              top: 25,
+              top: 10,
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -357,14 +361,17 @@ class BodyProfileScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FaIcon(FontAwesomeIcons.trash),
+                  FaIcon(
+                    FontAwesomeIcons.trash,
+                    size: 16,
+                  ),
                   SizedBox(width: 20),
                   Text(
                     'Supprimer mon compte',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: "Bungee",
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/utils/constants.dart';
-import 'package:lordofdungeons/widgets/form/password_edit_form.dart';
 import 'package:lordofdungeons/widgets/form/pseudo_edit_form.dart';
 
 var appBar = AppBar(
