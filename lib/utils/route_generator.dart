@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
-import 'package:lordofdungeons/screens/password_edit_screen.dart';
-import 'package:lordofdungeons/screens/profile_edit_pseudo.dart';
+import 'package:lordofdungeons/screens/profile/password_edit_screen.dart';
+import 'package:lordofdungeons/screens/profile/profile_edit_pseudo.dart';
+import 'package:lordofdungeons/screens/profile/profile_screen.dart';
 import 'package:lordofdungeons/screens/profile_edit_screen.dart';
-import 'package:lordofdungeons/screens/profile_screen.dart';
 import 'package:lordofdungeons/screens/register_address_screen.dart';
 import 'package:lordofdungeons/screens/register_screen.dart';
 
