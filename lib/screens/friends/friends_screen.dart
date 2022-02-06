@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:intl/intl.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
-import 'package:lordofdungeons/commons/loader.dart';
-import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -22,44 +18,24 @@ class FriendsScreen extends StatefulWidget {
 }
 
 class _FriendsScreenState extends State<FriendsScreen> {
-  late Map<String, dynamic> state;
-  //
-  bool loaded = false;
+  List<dynamic> friends = [];
+  int count = 0;
 
   @override
   void initState() {
     super.initState();
-    _getProfile();
+    _getFriends();
   }
 
-  void _getProfile() async {
-    final data = await UserProvider().getProfile(context);
-    print(data);
-    if (data == false) {
-      //TODO: gérer l'erreur
+  void _getFriends() async {
+    final data = await UserProvider().getFriends(context);
+
+    if (data != false) {
       setState(() {
-        loaded = true;
+        friends = data["users"];
+        count = data["count"];
       });
-      return;
     }
-    setState(() {
-      state = data;
-      loaded = true;
-    });
-  }
-
-  void _navigateAndDisplaySelection(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-    final result =
-        await Navigator.of(context).pushNamed("/home/profile/edit-pseudo");
-
-    //
-    // On met à jour l'affichager du pseudo dynamiquement une fois que la vaalidation faite
-    //
-    setState(() {
-      state["pseudo"] = result;
-    });
   }
 
   @override
@@ -70,7 +46,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
       body: SingleChildScrollView(
         child: DelayedAnimation(
           delay: 750,
-          child: BodyFriendsScreen(),
+          child: BodyFriendsScreen(
+            friends: friends,
+            count: count,
+          ),
         ),
       ),
     );
@@ -78,7 +57,11 @@ class _FriendsScreenState extends State<FriendsScreen> {
 }
 
 class BodyFriendsScreen extends StatelessWidget {
-  const BodyFriendsScreen({Key? key}) : super(key: key);
+  final List<dynamic> friends;
+  final int count;
+  const BodyFriendsScreen(
+      {Key? key, required this.friends, required this.count})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,17 +129,14 @@ class BodyFriendsScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height - 260,
                   alignment: Alignment.center,
                   child: ListView.builder(
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: 8,
+                      itemCount: count,
                       itemBuilder: (BuildContext context, int index) {
                         return SingleChildScrollView(
                           child: Column(
                             children: [
                               GFCheckboxListTile(
                                 title: Text(
-                                  'Pseudo_cool',
+                                  friends[index]["pseudo"] ?? "",
                                   style: TextStyle(
                                     color: Colors.black87,
                                     fontFamily: "Montserrat",
@@ -174,8 +154,9 @@ class BodyFriendsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 avatar: GFAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/images/gobelin.png'),
+                                  backgroundImage: NetworkImage(
+                                    "$url_domain${friends[index]["profilePicturePath"]}",
+                                  ),
                                   backgroundColor: Colors.transparent,
                                   shape: GFAvatarShape.circle,
                                 ),
@@ -209,17 +190,30 @@ class BodyFriendsScreen extends StatelessWidget {
   }
 }
 
-class ModalAddFriend extends StatelessWidget {
+class ModalAddFriend extends StatefulWidget {
   const ModalAddFriend({Key? key}) : super(key: key);
+
+  @override
+  _ModalAddFriendState createState() => _ModalAddFriendState();
+}
+
+class _ModalAddFriendState extends State<ModalAddFriend> {
+  List<dynamic> searchFriends = [];
+  int count = 0;
+
+  Future<void> _searchFriends(BuildContext context, String pseudo) async {
+    dynamic data = await UserProvider().getSearchFriends(context, pseudo);
+
+    if (data != false) {
+      setState(() {
+        searchFriends = data["users"];
+        count = data["count"];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List list = [
-      "Flutter",
-      "React",
-      "Ionic",
-      "Xamarin",
-    ];
-
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height - 200,
@@ -227,27 +221,24 @@ class ModalAddFriend extends StatelessWidget {
         itemCount: 1,
         itemBuilder: (context, index) => GFStickyHeader(
           stickyContent: Container(
-            margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: GFSearchBar(
-              searchList: list,
-              searchQueryBuilder: (query, list) {
-                return list
-                    .where((item) => item
-                        .toString()
-                        .toLowerCase()
-                        .contains(query.toLowerCase()))
-                    .toList();
+            margin: EdgeInsets.only(left: 40, right: 40, top: 20),
+            child: TextFormField(
+              autocorrect: false,
+              showCursor: true,
+              decoration: InputDecoration(
+                icon: Icon(Icons.search_off_rounded),
+                labelText: 'pseudo',
+              ),
+              onChanged: (value) {
+                if (value.length >= 3) {
+                  _searchFriends(context, value);
+                } else if (value.isEmpty) {
+                  setState(() {
+                    searchFriends = [];
+                    count = 0;
+                  });
+                }
               },
-              overlaySearchListItemBuilder: (item) {
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    item.toString(),
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                );
-              },
-              onItemSelected: (item) {},
             ),
           ),
           content: Container(
@@ -255,17 +246,14 @@ class ModalAddFriend extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             alignment: Alignment.center,
             child: ListView.builder(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: 8,
+                itemCount: count,
                 itemBuilder: (BuildContext context, int index) {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
                         GFCheckboxListTile(
                           title: Text(
-                            'Pseudo_cool',
+                            searchFriends[index]["pseudo"] ?? "",
                             style: TextStyle(
                               color: Colors.black87,
                               fontFamily: "Montserrat",
@@ -274,8 +262,9 @@ class ModalAddFriend extends StatelessWidget {
                             ),
                           ),
                           avatar: GFAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/gobelin.png'),
+                            backgroundImage: NetworkImage(
+                              "$url_domain${searchFriends[index]["profilePicturePath"]}",
+                            ),
                             backgroundColor: Colors.transparent,
                             shape: GFAvatarShape.circle,
                           ),

@@ -222,6 +222,79 @@ class UserProvider {
     }
   }
 
+  /**
+   * Récupérer ses amis
+   */
+  Future<dynamic> getFriends(BuildContext context) async {
+    try {
+      final res = await Singleton.getDio().get('$url_api/user/friends');
+
+      return res.data as Map<String, dynamic>;
+    } on DioError catch (e) {
+      // showToast(e.response?.data["error"],
+      //     context: context,
+      //     animation: StyledToastAnimation.slideFromBottomFade,
+      //     reverseAnimation: StyledToastAnimation.fade,
+      //     position: StyledToastPosition.bottom,
+      //     animDuration: Duration(seconds: 1),
+      //     duration: Duration(seconds: 6),
+      //     curve: Curves.easeInOutCubicEmphasized,
+      //     backgroundColor: Colors.red,
+      //     borderRadius: BorderRadius.all(Radius.circular(25)));
+      return false;
+    } catch (e) {
+      showToast("Erreur inconnue",
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      print('error $e');
+      return false;
+    }
+  }
+
+  /**
+   * Rechercher des amis
+   */
+  Future<dynamic> getSearchFriends(BuildContext context, String pseudo) async {
+    try {
+      final res = await Singleton.getDio().get('$url_api/user/search-friends',
+          queryParameters: {"pseudo": pseudo});
+
+      return res.data as Map<String, dynamic>;
+    } on DioError catch (e) {
+      // showToast(e.response?.data["error"],
+      //     context: context,
+      //     animation: StyledToastAnimation.slideFromBottomFade,
+      //     reverseAnimation: StyledToastAnimation.fade,
+      //     position: StyledToastPosition.bottom,
+      //     animDuration: Duration(seconds: 1),
+      //     duration: Duration(seconds: 6),
+      //     curve: Curves.easeInOutCubicEmphasized,
+      //     backgroundColor: Colors.red,
+      //     borderRadius: BorderRadius.all(Radius.circular(25)));
+      return false;
+    } catch (e) {
+      showToast("Erreur inconnue",
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      print('error $e');
+      return false;
+    }
+  }
+
 /**
  * Récupération des informations de l'utilisateur dans le stockage local
  */

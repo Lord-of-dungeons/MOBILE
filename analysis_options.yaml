@@ -28,5 +28,6 @@ linter:
     prefer_const_literals_to_create_immutables: false
     unnecessary_string_interpolations: false
     slash_for_doc_comments: false
+    unrelated_type_equality_checks: false
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
