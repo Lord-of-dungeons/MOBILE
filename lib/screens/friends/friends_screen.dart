@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
@@ -7,6 +8,7 @@ import 'package:lordofdungeons/commons/loader.dart';
 import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 var appBar = AppBar(
   backgroundColor: color_yellow,
@@ -107,29 +109,36 @@ class BodyFriendsScreen extends StatelessWidget {
                 stickyContent: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: color_blue, padding: EdgeInsets.all(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.userPlus,
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          'Ajouter un ami',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Bungee",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                      style: ElevatedButton.styleFrom(
+                          primary: color_blue, padding: EdgeInsets.all(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.userPlus,
                           ),
-                        ),
-                      ],
-                    ),
-                    onPressed: () {},
-                  ),
+                          SizedBox(width: 20),
+                          Text(
+                            'Ajouter un ami',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Bungee",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        showBarModalBottomSheet(
+                          context: context,
+                          builder: (context) => SingleChildScrollView(
+                            controller: ModalScrollController.of(context),
+                            child: ModalAddFriend(),
+                          ),
+                        );
+                      }),
                 ),
                 stickyContentPosition: GFPosition.end,
                 content: Container(
@@ -196,6 +205,102 @@ class BodyFriendsScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ModalAddFriend extends StatelessWidget {
+  const ModalAddFriend({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    List list = [
+      "Flutter",
+      "React",
+      "Ionic",
+      "Xamarin",
+    ];
+
+    return Container(
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height - 200,
+      child: ListView.builder(
+        itemCount: 1,
+        itemBuilder: (context, index) => GFStickyHeader(
+          stickyContent: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: GFSearchBar(
+              searchList: list,
+              searchQueryBuilder: (query, list) {
+                return list
+                    .where((item) => item
+                        .toString()
+                        .toLowerCase()
+                        .contains(query.toLowerCase()))
+                    .toList();
+              },
+              overlaySearchListItemBuilder: (item) {
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    item.toString(),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                );
+              },
+              onItemSelected: (item) {},
+            ),
+          ),
+          content: Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.center,
+            child: ListView.builder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: 8,
+                itemBuilder: (BuildContext context, int index) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        GFCheckboxListTile(
+                          title: Text(
+                            'Pseudo_cool',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontFamily: "Montserrat",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          avatar: GFAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/gobelin.png'),
+                            backgroundColor: Colors.transparent,
+                            shape: GFAvatarShape.circle,
+                          ),
+                          size: 25,
+                          activeBgColor: Colors.transparent,
+                          activeIcon: FaIcon(
+                            FontAwesomeIcons.plus,
+                            color: Colors.grey[700],
+                          ),
+                          type: GFCheckboxType.circle,
+                          onChanged: (val) {},
+                          value: true,
+                          inactiveIcon: null,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Divider(),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+          ),
+        ),
+      ),
     );
   }
 }
