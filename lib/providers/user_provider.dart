@@ -344,6 +344,55 @@ class UserProvider {
     }
   }
 
+  /**
+   * Supprimer un ami
+   */
+  Future<bool> deleteFriend(BuildContext context, String pseudo) async {
+    try {
+      final res = await Singleton.getDio().delete('$url_api/user/delete-friend',
+          queryParameters: {"pseudo": pseudo});
+
+      // message de succès
+      showToast(res.data["message"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.top,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 4),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.green,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+
+      return true;
+    } on DioError catch (e) {
+      showToast(e.response?.data["error"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      return false;
+    } catch (e) {
+      showToast("Erreur inconnue",
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      print('error $e');
+      return false;
+    }
+  }
+
 /**
  * Récupération des informations de l'utilisateur dans le stockage local
  */

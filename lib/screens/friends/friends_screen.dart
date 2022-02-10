@@ -42,6 +42,24 @@ class _FriendsScreenState extends State<FriendsScreen> {
     }
   }
 
+  void _deleteFriend(String pseudo) async {
+    final res = await UserProvider().deleteFriend(context, pseudo);
+    if (res == true) {
+      // on supprime dynamiquement l'utilisateur de la vue
+      final userToRemove = friends.firstWhere(
+          (element) => element["friendPseudo"] == pseudo,
+          orElse: () => false);
+
+      if (userToRemove != false) {
+        friends.remove(userToRemove);
+        setState(() {
+          friends = friends;
+          count = count - 1;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +72,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
             friends: friends,
             count: count,
             getfriends: _getFriends,
+            deleteFriend: _deleteFriend,
           ),
         ),
       ),
@@ -65,12 +84,14 @@ class BodyFriendsScreen extends StatelessWidget {
   final List<dynamic> friends;
   final int count;
   final void Function() getfriends;
+  final void Function(String pseudo) deleteFriend;
   //
   const BodyFriendsScreen(
       {Key? key,
       required this.friends,
       required this.count,
-      required this.getfriends})
+      required this.getfriends,
+      required this.deleteFriend})
       : super(key: key);
 
   @override
@@ -178,9 +199,15 @@ class BodyFriendsScreen extends StatelessWidget {
                                 ),
                                 size: 25,
                                 activeBgColor: Colors.transparent,
-                                activeIcon: FaIcon(
-                                  FontAwesomeIcons.times,
-                                  color: color_red,
+                                activeIcon: IconButton(
+                                  onPressed: () async {
+                                    deleteFriend(
+                                        friends[index]["friendPseudo"]);
+                                  },
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.times,
+                                    color: color_red,
+                                  ),
                                 ),
                                 type: GFCheckboxType.circle,
                                 onChanged: (val) {},
