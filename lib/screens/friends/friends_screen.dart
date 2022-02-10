@@ -27,9 +27,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
     _getFriends();
   }
 
+  void dipose() {
+    super.dispose();
+  }
+
   void _getFriends() async {
     final data = await UserProvider().getFriends(context);
-
+    print(data);
     if (data != false) {
       setState(() {
         friends = data["users"];
@@ -59,6 +63,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
 class BodyFriendsScreen extends StatelessWidget {
   final List<dynamic> friends;
   final int count;
+  //
   const BodyFriendsScreen(
       {Key? key, required this.friends, required this.count})
       : super(key: key);
@@ -115,12 +120,20 @@ class BodyFriendsScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         showBarModalBottomSheet(
-                          context: context,
-                          builder: (context) => SingleChildScrollView(
-                            controller: ModalScrollController.of(context),
-                            child: ModalAddFriend(),
-                          ),
-                        );
+                            context: context,
+                            // builder: (context) => SingleChildScrollView(
+                            //   controller: ModalScrollController.of(context),
+                            //   child: ModalAddFriend(),
+                            // ),
+                            builder: (_) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  //TODO: on rafraichit la liste d'amis
+                                }, // Closing the sheet.
+                                child: ModalAddFriend(),
+                              );
+                            });
                       }),
                 ),
                 stickyContentPosition: GFPosition.end,
@@ -136,7 +149,7 @@ class BodyFriendsScreen extends StatelessWidget {
                             children: [
                               GFCheckboxListTile(
                                 title: Text(
-                                  friends[index]["pseudo"] ?? "",
+                                  friends[index]["friendPseudo"] ?? "",
                                   style: TextStyle(
                                     color: Colors.black87,
                                     fontFamily: "Montserrat",
@@ -191,7 +204,10 @@ class BodyFriendsScreen extends StatelessWidget {
 }
 
 class ModalAddFriend extends StatefulWidget {
-  const ModalAddFriend({Key? key}) : super(key: key);
+  const ModalAddFriend({Key? key})
+      : super(
+          key: key,
+        );
 
   @override
   _ModalAddFriendState createState() => _ModalAddFriendState();
@@ -212,6 +228,23 @@ class _ModalAddFriendState extends State<ModalAddFriend> {
     }
   }
 
+  Future<void> _addFriend(String pseudo) async {
+    final data = await UserProvider().addFriend(context, pseudo);
+    if (data != false) {
+      // on supprime dynamiquement le nouvelle utilisateur ajouté de la liste de recherche
+      final userToRemove = searchFriends.firstWhere(
+          (element) => element["pseudo"] == pseudo,
+          orElse: () => false);
+      if (userToRemove != false) {
+        searchFriends.remove(userToRemove);
+        setState(() {
+          searchFriends = searchFriends;
+          count = count - 1;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -226,7 +259,7 @@ class _ModalAddFriendState extends State<ModalAddFriend> {
               autocorrect: false,
               showCursor: true,
               decoration: InputDecoration(
-                icon: Icon(Icons.search_off_rounded),
+                icon: Icon(Icons.search_rounded),
                 labelText: 'pseudo',
               ),
               onChanged: (value) {
@@ -270,9 +303,14 @@ class _ModalAddFriendState extends State<ModalAddFriend> {
                           ),
                           size: 25,
                           activeBgColor: Colors.transparent,
-                          activeIcon: FaIcon(
-                            FontAwesomeIcons.plus,
-                            color: Colors.grey[700],
+                          activeIcon: IconButton(
+                            onPressed: () {
+                              _addFriend(searchFriends[index]["pseudo"]);
+                            },
+                            icon: FaIcon(
+                              FontAwesomeIcons.plus,
+                              color: Colors.grey[700],
+                            ),
                           ),
                           type: GFCheckboxType.circle,
                           onChanged: (val) {},

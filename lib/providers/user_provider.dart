@@ -295,6 +295,55 @@ class UserProvider {
     }
   }
 
+  /**
+   * Ajouter un ami
+   */
+  Future<dynamic> addFriend(BuildContext context, String pseudo) async {
+    try {
+      final res = await Singleton.getDio()
+          .post('$url_api/user/add-friend', data: {"pseudo": pseudo});
+
+      // message de succès
+      showToast(res.data["message"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.top,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 4),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.green,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+
+      return res.data as Map<String, dynamic>;
+    } on DioError catch (e) {
+      showToast(e.response?.data["error"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      return false;
+    } catch (e) {
+      showToast("Erreur inconnue",
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      print('error $e');
+      return false;
+    }
+  }
+
 /**
  * Récupération des informations de l'utilisateur dans le stockage local
  */
