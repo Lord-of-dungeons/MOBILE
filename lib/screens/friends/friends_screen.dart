@@ -53,6 +53,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
           child: BodyFriendsScreen(
             friends: friends,
             count: count,
+            getfriends: _getFriends,
           ),
         ),
       ),
@@ -63,9 +64,13 @@ class _FriendsScreenState extends State<FriendsScreen> {
 class BodyFriendsScreen extends StatelessWidget {
   final List<dynamic> friends;
   final int count;
+  final void Function() getfriends;
   //
   const BodyFriendsScreen(
-      {Key? key, required this.friends, required this.count})
+      {Key? key,
+      required this.friends,
+      required this.count,
+      required this.getfriends})
       : super(key: key);
 
   @override
@@ -118,22 +123,20 @@ class BodyFriendsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: () {
-                        showBarModalBottomSheet(
+                      onPressed: () async {
+                        await showBarModalBottomSheet(
                             context: context,
-                            // builder: (context) => SingleChildScrollView(
-                            //   controller: ModalScrollController.of(context),
-                            //   child: ModalAddFriend(),
-                            // ),
                             builder: (_) {
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).pop();
-                                  //TODO: on rafraichit la liste d'amis
-                                }, // Closing the sheet.
+                                },
                                 child: ModalAddFriend(),
                               );
                             });
+
+                        // on requete pour actualiser les amis
+                        getfriends();
                       }),
                 ),
                 stickyContentPosition: GFPosition.end,
