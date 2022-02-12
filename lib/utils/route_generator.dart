@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lordofdungeons/screens/friends/friend_screen.dart';
 import 'package:lordofdungeons/screens/friends/friends_screen.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
@@ -29,7 +30,6 @@ class RouteGenerator {
           "birthday": args["birthday"],
           "newsletter": args["newsletter"],
           "profilePicturePath": args["profilePicturePath"],
-          // address
         };
 
         return MaterialPageRoute(
@@ -40,6 +40,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PseudoEditScreen());
       case '/home/friends':
         return MaterialPageRoute(builder: (_) => FriendsScreen());
+      case '/home/friends/show-friend':
+        final args = settings.arguments as dynamic;
+        return MaterialPageRoute(
+            builder: (_) => FriendScreen(pseudo: args["pseudo"]));
       case '/register/informations':
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':

@@ -268,16 +268,6 @@ class UserProvider {
 
       return res.data as Map<String, dynamic>;
     } on DioError catch (e) {
-      // showToast(e.response?.data["error"],
-      //     context: context,
-      //     animation: StyledToastAnimation.slideFromBottomFade,
-      //     reverseAnimation: StyledToastAnimation.fade,
-      //     position: StyledToastPosition.bottom,
-      //     animDuration: Duration(seconds: 1),
-      //     duration: Duration(seconds: 6),
-      //     curve: Curves.easeInOutCubicEmphasized,
-      //     backgroundColor: Colors.red,
-      //     borderRadius: BorderRadius.all(Radius.circular(25)));
       return false;
     } catch (e) {
       showToast("Erreur inconnue",
@@ -365,6 +355,42 @@ class UserProvider {
           borderRadius: BorderRadius.all(Radius.circular(25)));
 
       return true;
+    } on DioError catch (e) {
+      showToast(e.response?.data["error"],
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      return false;
+    } catch (e) {
+      showToast("Erreur inconnue",
+          context: context,
+          animation: StyledToastAnimation.slideFromBottomFade,
+          reverseAnimation: StyledToastAnimation.fade,
+          position: StyledToastPosition.bottom,
+          animDuration: Duration(seconds: 1),
+          duration: Duration(seconds: 6),
+          curve: Curves.easeInOutCubicEmphasized,
+          backgroundColor: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(25)));
+      print('error $e');
+      return false;
+    }
+  }
+
+  /**
+   * Voir un ami
+   */
+  Future<dynamic> getFriend(BuildContext context, String pseudo) async {
+    try {
+      final res = await Singleton.getDio().get('$url_api/user/friends/$pseudo');
+
+      return res.data["friend"];
     } on DioError catch (e) {
       showToast(e.response?.data["error"],
           context: context,

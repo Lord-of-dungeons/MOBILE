@@ -33,7 +33,6 @@ class _FriendsScreenState extends State<FriendsScreen> {
 
   void _getFriends() async {
     final data = await UserProvider().getFriends(context);
-    print(data);
     if (data != false) {
       setState(() {
         friends = data["users"];
@@ -96,7 +95,6 @@ class BodyFriendsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List imageList = ['asset images here'];
     return Column(
       children: [
         DelayedAnimation(
@@ -118,7 +116,7 @@ class BodyFriendsScreen extends StatelessWidget {
             alignment: Alignment.center,
             height: MediaQuery.of(context).size.height,
             child: ListView.builder(
-              itemCount: imageList.length,
+              itemCount: count,
               itemBuilder: (context, index) => GFStickyHeader(
                 stickyContent: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
@@ -168,7 +166,14 @@ class BodyFriendsScreen extends StatelessWidget {
                   child: ListView.builder(
                       itemCount: count,
                       itemBuilder: (BuildContext context, int index) {
-                        return SingleChildScrollView(
+                        return Listener(
+                          onPointerDown: (_) {
+                            Navigator.of(context).pushNamed(
+                                '/home/friends/show-friend',
+                                arguments: {
+                                  "pseudo": friends[index]["friendPseudo"]
+                                });
+                          },
                           child: Column(
                             children: [
                               GFCheckboxListTile(
