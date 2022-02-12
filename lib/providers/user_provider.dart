@@ -390,7 +390,7 @@ class UserProvider {
     try {
       final res = await Singleton.getDio().get('$url_api/user/friends/$pseudo');
 
-      return res.data["friend"];
+      return res.data;
     } on DioError catch (e) {
       showToast(e.response?.data["error"],
           context: context,
