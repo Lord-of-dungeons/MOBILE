@@ -16,6 +16,6 @@ const color_purple = Color(0xFFB567DA);
 //
 
 // URL API
-const url_domain = 'http://192.168.0.20:5000';
+const url_domain = 'http://192.168.0.21:5000';
 const url_api = '$url_domain/api';
 //

@@ -3,6 +3,7 @@ import 'package:lordofdungeons/screens/friends/friend_screen.dart';
 import 'package:lordofdungeons/screens/friends/friends_screen.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
+import 'package:lordofdungeons/screens/profile/about/about_screen.dart';
 import 'package:lordofdungeons/screens/profile/password_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile/pseudo_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile/profile_edit_screen.dart';
@@ -38,6 +39,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PasswordEditScreen());
       case '/home/profile/edit-pseudo':
         return MaterialPageRoute(builder: (_) => PseudoEditScreen());
+      case '/home/profile/about':
+        return MaterialPageRoute(builder: (_) => AboutScreen());
       case '/home/friends':
         return MaterialPageRoute(builder: (_) => FriendsScreen());
       case '/home/friends/show-friend':
