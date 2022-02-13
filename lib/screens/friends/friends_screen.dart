@@ -116,7 +116,7 @@ class BodyFriendsScreen extends StatelessWidget {
             alignment: Alignment.center,
             height: MediaQuery.of(context).size.height,
             child: ListView.builder(
-              itemCount: count,
+              itemCount: 1,
               itemBuilder: (context, index) => GFStickyHeader(
                 stickyContent: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),

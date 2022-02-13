@@ -148,7 +148,7 @@ class BodyHomeScreen extends StatelessWidget {
                       fontFamily: 'Bungee', fontSize: 18, color: Colors.white),
                 ),
                 onPressed: () {
-                  print("");
+                  Navigator.of(context).pushNamed('/home/characters');
                 },
               ),
               Divider(

@@ -3,6 +3,7 @@ import 'package:lordofdungeons/screens/friends/friend_screen.dart';
 import 'package:lordofdungeons/screens/friends/friends_screen.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
+import 'package:lordofdungeons/screens/play/characters_screen.dart';
 import 'package:lordofdungeons/screens/profile/about/about_screen.dart';
 import 'package:lordofdungeons/screens/profile/password_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile/pseudo_edit_screen.dart';
@@ -47,6 +48,9 @@ class RouteGenerator {
         final args = settings.arguments as dynamic;
         return MaterialPageRoute(
             builder: (_) => FriendScreen(pseudo: args["pseudo"]));
+
+      case '/home/characters':
+        return MaterialPageRoute(builder: (_) => CharactersScreen());
       case '/register/informations':
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':
