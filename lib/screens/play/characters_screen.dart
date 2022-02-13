@@ -142,7 +142,10 @@ class BodyCharactersScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: () {}),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed('/home/characters/add-character');
+                      }),
                 ),
                 stickyContentPosition: GFPosition.end,
                 content: Container(

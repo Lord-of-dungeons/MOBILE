@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
-import 'package:lordofdungeons/commons/loader.dart';
 import 'package:lordofdungeons/providers/auth_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/widgets/form/login_form.dart';

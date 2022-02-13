@@ -3,6 +3,7 @@ import 'package:lordofdungeons/screens/friends/friend_screen.dart';
 import 'package:lordofdungeons/screens/friends/friends_screen.dart';
 import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
+import 'package:lordofdungeons/screens/play/add_character_screen.dart';
 import 'package:lordofdungeons/screens/play/characters_screen.dart';
 import 'package:lordofdungeons/screens/profile/about/about_screen.dart';
 import 'package:lordofdungeons/screens/profile/password_edit_screen.dart';
@@ -51,6 +52,8 @@ class RouteGenerator {
 
       case '/home/characters':
         return MaterialPageRoute(builder: (_) => CharactersScreen());
+      case '/home/characters/add-character':
+        return MaterialPageRoute(builder: (_) => AddCharacterScreen());
       case '/register/informations':
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':
