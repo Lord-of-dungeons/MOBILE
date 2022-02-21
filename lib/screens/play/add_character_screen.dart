@@ -21,6 +21,7 @@ class AddCharacterScreen extends StatefulWidget {
 
 class _AddCharacterScreenState extends State<AddCharacterScreen> {
   List<dynamic> vocations = [];
+  dynamic activeVocation = {};
   int count = 0;
   String name = "";
   //
@@ -41,6 +42,7 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
       setState(() {
         vocations = data["vocations"];
         count = data["count"];
+        activeVocation = data["vocations"][0];
       });
     }
   }
@@ -49,6 +51,16 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
     setState(() {
       name = value;
     });
+  }
+
+  void _setActiveVocation(int index) {
+    setState(() {
+      activeVocation = vocations[index];
+    });
+  }
+
+  dynamic _getActiveVocation() {
+    return activeVocation;
   }
 
   @override
@@ -60,11 +72,12 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
         child: DelayedAnimation(
           delay: 250,
           child: BodyAddCharacterScreen(
-            vocations: vocations,
-            count: count,
-            name: name,
-            onChangeName: _onChangeName,
-          ),
+              vocations: vocations,
+              count: count,
+              name: name,
+              onChangeName: _onChangeName,
+              setActiveVocation: _setActiveVocation,
+              getActiveVocation: _getActiveVocation),
         ),
       ),
     );
@@ -73,18 +86,23 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
 
 class BodyAddCharacterScreen extends StatelessWidget {
   final List<dynamic> vocations;
+
   final int count;
   final String name;
   final void Function(String value) onChangeName;
+  final void Function(int index) setActiveVocation;
+  final dynamic Function() getActiveVocation;
   //
 
-  BodyAddCharacterScreen(
-      {Key? key,
-      required this.vocations,
-      required this.count,
-      required this.name,
-      required this.onChangeName})
-      : super(key: key);
+  BodyAddCharacterScreen({
+    Key? key,
+    required this.vocations,
+    required this.count,
+    required this.name,
+    required this.onChangeName,
+    required this.setActiveVocation,
+    required this.getActiveVocation,
+  }) : super(key: key);
 
   final CarouselController buttonCarouselController = CarouselController();
 
@@ -115,7 +133,9 @@ class BodyAddCharacterScreen extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           child: CarouselSlider(
-            options: CarouselOptions(height: 200),
+            options: CarouselOptions(
+                height: 200,
+                onPageChanged: (i, reason) => setActiveVocation(i)),
             items: vocations.map((vocation) {
               return Builder(
                 builder: (BuildContext context) {
@@ -149,7 +169,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
           margin: EdgeInsets.only(left: 50),
           alignment: Alignment.centerLeft,
           child: Text(
-            '100 PV',
+            '${getActiveVocation()["baseFeature"]?["health"] ?? "0"} PV',
             textAlign: TextAlign.start,
             style: TextStyle(
                 fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
@@ -159,7 +179,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
           margin: EdgeInsets.only(left: 50, top: 20),
           alignment: Alignment.centerLeft,
           child: Text(
-            '200 Mana',
+            '${getActiveVocation()["baseFeature"]?["mana"] ?? "0"} mana',
             textAlign: TextAlign.start,
             style: TextStyle(
                 fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
@@ -169,7 +189,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
           margin: EdgeInsets.only(left: 50, top: 20),
           alignment: Alignment.centerLeft,
           child: Text(
-            '50 Puissance',
+            '${getActiveVocation()["baseFeature"]?["armor"] ?? "0"} armure',
             textAlign: TextAlign.start,
             style: TextStyle(
                 fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
@@ -179,7 +199,37 @@ class BodyAddCharacterScreen extends StatelessWidget {
           margin: EdgeInsets.only(left: 50, top: 20),
           alignment: Alignment.centerLeft,
           child: Text(
-            '20 Dégats de base',
+            '${getActiveVocation()["baseFeature"]?["attack"] ?? "0"} dégats de base',
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 50, top: 20),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            '${getActiveVocation()["baseFeature"]?["attackSpeed"] ?? "0"} de vitesse d\'attaque',
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 50, top: 20),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            '${getActiveVocation()["baseFeature"]?["attack"] ?? "0"}% en coup critique',
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 50, top: 20),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            '${getActiveVocation()["baseFeature"]?["wisdom"] ?? "0"}% en fuite',
             textAlign: TextAlign.start,
             style: TextStyle(
                 fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
