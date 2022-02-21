@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/providers/auth_provider.dart';
@@ -42,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 1000,
+            delay: 750,
             child: TextFormField(
               keyboardType: TextInputType.emailAddress,
               initialValue: _email,
@@ -61,7 +60,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 10),
           DelayedAnimation(
-            delay: 1000,
+            delay: 750,
             child: TextField(
               onChanged: (value) {
                 setState(() {
@@ -89,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           DelayedAnimation(
-            delay: 1000,
+            delay: 750,
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
               width: double.infinity,

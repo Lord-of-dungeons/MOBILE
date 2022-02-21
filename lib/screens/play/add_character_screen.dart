@@ -311,15 +311,24 @@ class MyGame extends FlameGame {
   Future<void> onLoad() async {
     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
     final spriteSheet = await getImage(path);
-    final spriteSize = Vector2(170, 130);
+    final spriteSize = Vector2(100, 90);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
         amount: 3, stepTime: 0.25, textureSize: Vector2(32, 32));
 
+    SpriteComponent background = SpriteComponent()
+      ..sprite = await loadSprite("dungeon_home.png")
+      ..size = size;
+
+    // ajout du fond
+    add(background);
+
     SpriteAnimationComponent vocationAnimation =
         SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-          ..x = 60
-          ..y = 30
+          ..x = 100
+          ..y = 70
           ..size = spriteSize;
+
+    // ajout du perso
     add(vocationAnimation);
   }
 }

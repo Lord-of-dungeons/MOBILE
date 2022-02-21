@@ -59,7 +59,7 @@ class BodyLoginScreen extends StatelessWidget {
       child: Column(
         children: [
           DelayedAnimation(
-            delay: 250,
+            delay: 150,
             child: Container(
               alignment: Alignment.center,
               child: Image.asset(
@@ -69,7 +69,7 @@ class BodyLoginScreen extends StatelessWidget {
             ),
           ),
           DelayedAnimation(
-            delay: 500,
+            delay: 250,
             child: Container(
               alignment: Alignment.center,
               child: Text(
@@ -91,13 +91,13 @@ class BodyLoginScreen extends StatelessWidget {
           //                   PAS DE COMPTE
           // ######################################################
           DelayedAnimation(
-            delay: 1750,
+            delay: 1000,
             child: Container(
                 margin: EdgeInsets.fromLTRB(30, 20, 30, 20),
                 child: Text('Vous n\'avez pas encore de compte ?')),
           ),
           DelayedAnimation(
-            delay: 2500,
+            delay: 1100,
             child: Container(
               margin: EdgeInsets.symmetric(
                 vertical: 5,
@@ -134,7 +134,7 @@ class BodyLoginScreen extends StatelessWidget {
             ),
           ),
           DelayedAnimation(
-            delay: 3000,
+            delay: 1200,
             child: Container(
               margin: EdgeInsets.symmetric(
                 vertical: 5,
@@ -167,7 +167,7 @@ class BodyLoginScreen extends StatelessWidget {
             ),
           ),
           DelayedAnimation(
-            delay: 3500,
+            delay: 1300,
             child: Container(
               margin: EdgeInsets.symmetric(
                 vertical: 5,
@@ -200,7 +200,7 @@ class BodyLoginScreen extends StatelessWidget {
             ),
           ),
           DelayedAnimation(
-            delay: 4000,
+            delay: 1400,
             child: Container(
               margin: EdgeInsets.symmetric(
                 vertical: 5,
