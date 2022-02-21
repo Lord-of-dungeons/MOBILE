@@ -324,8 +324,8 @@ class MyGame extends FlameGame {
 
     SpriteAnimationComponent vocationAnimation =
         SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-          ..x = 100
-          ..y = 70
+          ..x = 95
+          ..y = 80
           ..size = spriteSize;
 
     // ajout du perso
