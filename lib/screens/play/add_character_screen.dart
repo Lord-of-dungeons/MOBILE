@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
-import 'package:lordofdungeons/providers/character_provider.dart';
+import 'package:lordofdungeons/providers/vocation_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 
 var appBar = AppBar(
@@ -25,7 +28,7 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
   @override
   void initState() {
     super.initState();
-    // _getVocations();
+    _getVocations();
   }
 
   void dipose() {
@@ -33,7 +36,7 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
   }
 
   void _getVocations() async {
-    final data = await CharacterProvider().getCharacters(context);
+    final data = await VocationProvider().getVocations(context);
     if (data != false) {
       setState(() {
         vocations = data["vocations"];
@@ -113,17 +116,17 @@ class BodyAddCharacterScreen extends StatelessWidget {
           alignment: Alignment.center,
           child: CarouselSlider(
             options: CarouselOptions(height: 200),
-            items: [1, 2, 3, 4, 5].map((i) {
+            items: vocations.map((vocation) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(color: Colors.amber),
-                      child: Text(
-                        'text $i',
-                        style: TextStyle(fontSize: 16.0),
-                      ));
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: GameWidget(
+                      game: MyGame(
+                          "$url_api/public/vocation/${vocation['idVocation']}/${vocation['vocationAppearance']['imgPath']}"),
+                    ),
+                  );
                 },
               );
             }).toList(),
@@ -234,5 +237,39 @@ class BodyAddCharacterScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class MyGame extends FlameGame {
+  late String path;
+  MyGame(this.path);
+
+  Future<dynamic> getImage(String path) async {
+    Completer<ImageInfo> completer = Completer();
+    var img = NetworkImage(path);
+    img
+        .resolve(ImageConfiguration())
+        .addListener(ImageStreamListener((ImageInfo info, bool _) {
+      completer.complete(info);
+    }));
+    ImageInfo imageInfo = await completer.future;
+    return imageInfo.image;
+  }
+
+  @override
+  // ignore: must_call_super
+  Future<void> onLoad() async {
+    // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
+    final spriteSheet = await getImage(path);
+    final spriteSize = Vector2(170, 130);
+    SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
+        amount: 3, stepTime: 0.25, textureSize: Vector2(32, 32));
+
+    SpriteAnimationComponent vocationAnimation =
+        SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
+          ..x = 60
+          ..y = 30
+          ..size = spriteSize;
+    add(vocationAnimation);
   }
 }

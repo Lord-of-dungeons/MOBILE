@@ -54,6 +54,7 @@ dependencies:
   getwidget: ^2.0.4
   modal_bottom_sheet: ^2.0.0
   carousel_slider: ^4.0.0
+  flame: ^1.0.0
 
 dev_dependencies:
   flutter_test:
