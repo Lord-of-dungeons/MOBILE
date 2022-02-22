@@ -1,6 +1,5 @@
 import 'dart:async';
-// import 'package:carousel_slider/carousel_slider.dart';
-import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/providers/vocation_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
-import 'package:flutter_carousel_slider/carousel_slider.dart';
-import 'package:flutter_carousel_slider/carousel_slider_indicators.dart';
-import 'package:flutter_carousel_slider/carousel_slider_transforms.dart';
 
 var appBar = AppBar(
   backgroundColor: color_blue,
@@ -28,13 +24,11 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
   dynamic activeVocation = {};
   int count = 0;
   String name = "";
-  late CarouselSliderController _sliderController;
   //
 
   @override
   void initState() {
     super.initState();
-    _sliderController = CarouselSliderController();
     _getVocations();
   }
 
@@ -82,7 +76,6 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
               count: count,
               name: name,
               onChangeName: _onChangeName,
-              sliderController: _sliderController,
               setActiveVocation: _setActiveVocation,
               getActiveVocation: _getActiveVocation),
         ),
@@ -93,7 +86,6 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
 
 class BodyAddCharacterScreen extends StatelessWidget {
   final List<dynamic> vocations;
-  final CarouselSliderController sliderController;
   final int count;
   final String name;
   final void Function(String value) onChangeName;
@@ -106,14 +98,13 @@ class BodyAddCharacterScreen extends StatelessWidget {
     required this.vocations,
     required this.count,
     required this.name,
-    required this.sliderController,
     required this.onChangeName,
     required this.setActiveVocation,
     required this.getActiveVocation,
   }) : super(key: key);
 
-  // final CarouselController buttonCarouselController = CarouselController();
-  final GlobalKey<dynamic> _sliderKey = GlobalKey();
+  final CarouselController buttonCarouselController = CarouselController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -143,20 +134,15 @@ class BodyAddCharacterScreen extends StatelessWidget {
           height: 200,
           width: MediaQuery.of(context).size.width,
           child: CarouselSlider(
-            key: _sliderKey,
-            controller: sliderController,
-            unlimitedMode: true,
-            autoSliderTransitionTime: Duration(seconds: 1),
-            slideTransform: CubeTransform(),
-            slideIndicator: CircularSlideIndicator(
-              padding: EdgeInsets.only(bottom: 10),
-              indicatorBorderColor: Colors.black,
+            options: CarouselOptions(
+              enableInfiniteScroll: false,
+              height: 200,
+              onPageChanged: (i, reason) => setActiveVocation(i),
             ),
-            initialPage: 0,
-            children: vocations.map((vocation) {
+            items: vocations.map((vocation) {
               return Container(
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
                 child: GameWidget(
                   game: MyGame(
                       "$url_api/public/vocation/${vocation['idVocation']}/${vocation['vocationAppearance']['imgPath']}"),
@@ -165,52 +151,6 @@ class BodyAddCharacterScreen extends StatelessWidget {
             }).toList(),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32),
-          child: Align(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: 240, maxWidth: 600),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    iconSize: 48,
-                    icon: Icon(Icons.skip_previous),
-                    onPressed: () {
-                      sliderController.previousPage();
-                    },
-                  ),
-                  IconButton(
-                    iconSize: 48,
-                    icon: Icon(Icons.skip_next),
-                    onPressed: () {
-                      sliderController.nextPage();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        // child: CarouselSlider(
-        //   options: CarouselOptions(
-        //     enableInfiniteScroll: false,
-        //     height: 200,
-        //     onPageChanged: (i, reason) => setActiveVocation(i),
-        //   ),
-        //   items: vocations.map((vocation) {
-        //     return Container(
-        //       width: MediaQuery.of(context).size.width,
-        //       margin: EdgeInsets.symmetric(horizontal: 5.0),
-        //       child: GameWidget(
-        //         game: MyGame(
-        //             "$url_api/public/vocation/${vocation['idVocation']}/${vocation['vocationAppearance']['imgPath']}"),
-        //       ),
-        //     );
-        //   }).toList(),
-        // ),
-        // ),
         // ###################################################
         // #######       Caractéristiques     ################
         // ###################################################
@@ -370,6 +310,7 @@ class MyGame extends FlameGame {
   Future<void> onLoad() async {
     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
     final spriteSheet = await getImage(path);
+    print("path : $path");
     final spriteSize = Vector2(100, 90);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
         amount: 3, stepTime: 0.25, textureSize: Vector2(32, 32));
@@ -383,7 +324,7 @@ class MyGame extends FlameGame {
 
     SpriteAnimationComponent vocationAnimation =
         SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-          ..x = size.x / 2.75
+          ..x = size.x / 3
           ..y = size.y / 2.5
           ..size = spriteSize;
 
