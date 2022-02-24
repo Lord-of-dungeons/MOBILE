@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
@@ -135,19 +136,34 @@ class BodyAddCharacterScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: CarouselSlider(
             options: CarouselOptions(
-              enableInfiniteScroll: false,
+              enableInfiniteScroll: true,
               height: 200,
+              viewportFraction: 1,
               onPageChanged: (i, reason) => setActiveVocation(i),
             ),
             items: vocations.map((vocation) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                child: GameWidget(
-                  game: MyGame(
-                      "$url_api/public/vocation/${vocation['idVocation']}/${vocation['vocationAppearance']['imgPath']}"),
-                ),
-              );
+              return FutureBuilder(
+                  future: VocationSpriteRender(
+                          "$url_api/public/vocation/${vocation['idVocation']}/${vocation['vocationAppearance']['imgPath']}")
+                      .onLoad(context),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/dungeon_home.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 15.0),
+                        padding: EdgeInsets.all(30),
+                        child: snapshot.data as Widget,
+                      );
+                    }
+
+                    return Container();
+                  });
             }).toList(),
           ),
         ),
@@ -289,9 +305,9 @@ class BodyAddCharacterScreen extends StatelessWidget {
   }
 }
 
-class MyGame extends FlameGame {
+class VocationSpriteRender {
   late String path;
-  MyGame(this.path);
+  VocationSpriteRender(this.path);
 
   Future<dynamic> getImage(String path) async {
     Completer<ImageInfo> completer = Completer();
@@ -305,30 +321,69 @@ class MyGame extends FlameGame {
     return imageInfo.image;
   }
 
-  @override
-  // ignore: must_call_super
-  Future<void> onLoad() async {
+  Future<Widget> onLoad(BuildContext context) async {
     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
     final spriteSheet = await getImage(path);
-    print("path : $path");
-    final spriteSize = Vector2(100, 90);
+
+    Vector2 spriteSize = Vector2(32, 32);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-        amount: 3, stepTime: 0.25, textureSize: Vector2(32, 32));
+      amount: 3,
+      stepTime: 0.25,
+      textureSize: spriteSize,
+    );
 
-    SpriteComponent background = SpriteComponent()
-      ..sprite = await loadSprite("dungeon_home.png")
-      ..size = size;
+    SpriteAnimation vocationAnimation =
+        SpriteAnimation.fromFrameData(spriteSheet, spriteData);
 
-    // ajout du fond
-    add(background);
+    SpriteAnimationWidget vocationAnimationWidget = SpriteAnimationWidget(
+      animation: vocationAnimation,
+      anchor: Anchor.center,
+    );
 
-    SpriteAnimationComponent vocationAnimation =
-        SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-          ..x = size.x / 3
-          ..y = size.y / 2.5
-          ..size = spriteSize;
-
-    // ajout du perso
-    add(vocationAnimation);
+    return vocationAnimationWidget.build(context);
   }
 }
+
+// class MyGame extends FlameGame {
+//   late String path;
+//   MyGame(this.path);
+
+//   Future<dynamic> getImage(String path) async {
+//     Completer<ImageInfo> completer = Completer();
+//     var img = NetworkImage(path);
+//     img
+//         .resolve(ImageConfiguration())
+//         .addListener(ImageStreamListener((ImageInfo info, bool _) {
+//       completer.complete(info);
+//     }));
+//     ImageInfo imageInfo = await completer.future;
+//     return imageInfo.image;
+//   }
+
+//   @override
+//   // ignore: must_call_super
+//   Future<void> onLoad() async {
+//     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
+//     final spriteSheet = await getImage(path);
+//     print("path : $path");
+//     final spriteSize = Vector2(100, 90);
+//     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
+//         amount: 3, stepTime: 0.25, textureSize: Vector2(32, 32));
+
+//     SpriteComponent background = SpriteComponent()
+//       ..sprite = await loadSprite("dungeon_home.png")
+//       ..size = size;
+
+//     // ajout du fond
+//     add(background);
+
+//     SpriteAnimationComponent vocationAnimation =
+//         SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
+//           ..x = size.x / 3
+//           ..y = size.y / 2.5
+//           ..size = spriteSize;
+
+//     // ajout du perso
+//     add(vocationAnimation);
+//   }
+// }
