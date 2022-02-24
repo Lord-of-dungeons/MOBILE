@@ -6,6 +6,7 @@ import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
+import 'package:lordofdungeons/commons/loader.dart';
 import 'package:lordofdungeons/providers/vocation_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 
@@ -72,13 +73,15 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
       body: SingleChildScrollView(
         child: DelayedAnimation(
           delay: 250,
-          child: BodyAddCharacterScreen(
-              vocations: vocations,
-              count: count,
-              name: name,
-              onChangeName: _onChangeName,
-              setActiveVocation: _setActiveVocation,
-              getActiveVocation: _getActiveVocation),
+          child: vocations.isEmpty
+              ? Loader()
+              : BodyAddCharacterScreen(
+                  vocations: vocations,
+                  count: count,
+                  name: name,
+                  onChangeName: _onChangeName,
+                  setActiveVocation: _setActiveVocation,
+                  getActiveVocation: _getActiveVocation),
         ),
       ),
     );
@@ -94,7 +97,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
   final dynamic Function() getActiveVocation;
   //
 
-  BodyAddCharacterScreen({
+  const BodyAddCharacterScreen({
     Key? key,
     required this.vocations,
     required this.count,
@@ -103,8 +106,6 @@ class BodyAddCharacterScreen extends StatelessWidget {
     required this.setActiveVocation,
     required this.getActiveVocation,
   }) : super(key: key);
-
-  final CarouselController buttonCarouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -131,42 +132,44 @@ class BodyAddCharacterScreen extends StatelessWidget {
           ),
         ),
         Container(
-          alignment: Alignment.center,
-          height: 200,
-          width: MediaQuery.of(context).size.width,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              enableInfiniteScroll: true,
-              height: 200,
-              viewportFraction: 1,
-              onPageChanged: (i, reason) => setActiveVocation(i),
-            ),
-            items: vocations.map((vocation) {
-              return FutureBuilder(
-                  future: VocationSpriteRender(
-                          "$url_api/public/vocation/${vocation['idVocation']}/${vocation['vocationAppearance']['imgPath']}")
-                      .onLoad(context),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/dungeon_home.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 15.0),
-                        padding: EdgeInsets.all(30),
-                        child: snapshot.data as Widget,
-                      );
-                    }
+            alignment: Alignment.center,
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: CarouselSlider.builder(
+              itemCount: count,
+              options: CarouselOptions(
+                enableInfiniteScroll: true,
+                height: 200,
+                viewportFraction: 1,
+                initialPage: 0,
+                onPageChanged: (i, reason) => setActiveVocation(i),
+              ),
+              itemBuilder: (BuildContext context, int itemIndex,
+                      int pageViewIndex) =>
+                  FutureBuilder(
+                      future: VocationSpriteRender(
+                              "$url_api/public/vocation/${vocations[itemIndex]['idVocation']}/${vocations[itemIndex]['vocationAppearance']['imgPath']}")
+                          .onLoad(context),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/dungeon_home.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 15.0),
+                            padding: EdgeInsets.all(30),
+                            child: snapshot.data as Widget,
+                          );
+                        }
 
-                    return Container();
-                  });
-            }).toList(),
-          ),
-        ),
+                        return Container();
+                      }),
+            )),
         // ###################################################
         // #######       Caractéristiques     ################
         // ###################################################
@@ -324,7 +327,7 @@ class VocationSpriteRender {
   Future<Widget> onLoad(BuildContext context) async {
     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
     final spriteSheet = await getImage(path);
-
+    print(path);
     Vector2 spriteSize = Vector2(32, 32);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
       amount: 3,
