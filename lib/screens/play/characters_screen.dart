@@ -70,7 +70,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
           child: BodyCharactersScreen(
             characters: characters,
             count: count,
-            getfriends: _getCharacters,
+            getCharacters: _getCharacters,
             deleteCharacter: _deleteCharacter,
           ),
         ),
@@ -82,14 +82,14 @@ class _CharactersScreenState extends State<CharactersScreen> {
 class BodyCharactersScreen extends StatelessWidget {
   final List<dynamic> characters;
   final int count;
-  final void Function() getfriends;
+  final void Function() getCharacters;
   final void Function(String name) deleteCharacter;
   //
   const BodyCharactersScreen(
       {Key? key,
       required this.characters,
       required this.count,
-      required this.getfriends,
+      required this.getCharacters,
       required this.deleteCharacter})
       : super(key: key);
 
@@ -142,9 +142,13 @@ class BodyCharactersScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: () {
-                        Navigator.of(context)
+                      onPressed: () async {
+                        final res = await Navigator.of(context)
                             .pushNamed('/home/characters/add-character');
+
+                        if (res == true) {
+                          getCharacters();
+                        }
                       }),
                 ),
                 stickyContentPosition: GFPosition.end,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/commons/loader.dart';
+import 'package:lordofdungeons/providers/character_provider.dart';
 import 'package:lordofdungeons/providers/vocation_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 
@@ -23,6 +24,7 @@ class AddCharacterScreen extends StatefulWidget {
 
 class _AddCharacterScreenState extends State<AddCharacterScreen> {
   List<dynamic> vocations = [];
+  dynamic activeVocation = {};
   int count = 0;
   String name = "";
   //
@@ -43,8 +45,19 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
       setState(() {
         vocations = data["vocations"];
         count = data["count"];
+        activeVocation = data["vocations"][0];
       });
     }
+  }
+
+  void _setActiveVocation(int index) {
+    setState(() {
+      activeVocation = vocations[index];
+    });
+  }
+
+  dynamic _getActiveVocation() {
+    return activeVocation;
   }
 
   void _onChangeName(String value) {
@@ -68,7 +81,8 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
                   count: count,
                   name: name,
                   onChangeName: _onChangeName,
-                ),
+                  setActiveVocation: _setActiveVocation,
+                  getActiveVocation: _getActiveVocation),
         ),
       ),
     );
@@ -80,6 +94,8 @@ class BodyAddCharacterScreen extends StatelessWidget {
   final int count;
   final String name;
   final void Function(String value) onChangeName;
+  final void Function(int index) setActiveVocation;
+  final dynamic Function() getActiveVocation;
   //
 
   const BodyAddCharacterScreen({
@@ -88,6 +104,8 @@ class BodyAddCharacterScreen extends StatelessWidget {
     required this.count,
     required this.name,
     required this.onChangeName,
+    required this.setActiveVocation,
+    required this.getActiveVocation,
   }) : super(key: key);
 
   @override
@@ -114,6 +132,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height - 200,
                 viewportFraction: 1,
                 initialPage: 0,
+                onPageChanged: (i, reason) => setActiveVocation(i),
               ),
               itemBuilder: (BuildContext context, int itemIndex,
                       int pageViewIndex) =>
@@ -305,7 +324,12 @@ class BodyAddCharacterScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              onPressed: name.isEmpty ? null : () {}),
+              onPressed: name.isEmpty
+                  ? null
+                  : () {
+                      CharacterProvider().addCharacter(
+                          context, name, getActiveVocation()["idVocation"]);
+                    }),
         ),
       ],
     );
