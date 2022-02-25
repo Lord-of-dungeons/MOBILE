@@ -23,7 +23,6 @@ class AddCharacterScreen extends StatefulWidget {
 
 class _AddCharacterScreenState extends State<AddCharacterScreen> {
   List<dynamic> vocations = [];
-  dynamic activeVocation = {};
   int count = 0;
   String name = "";
   //
@@ -44,7 +43,6 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
       setState(() {
         vocations = data["vocations"];
         count = data["count"];
-        activeVocation = data["vocations"][0];
       });
     }
   }
@@ -53,16 +51,6 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
     setState(() {
       name = value;
     });
-  }
-
-  void _setActiveVocation(int index) {
-    setState(() {
-      activeVocation = vocations[index];
-    });
-  }
-
-  dynamic _getActiveVocation() {
-    return activeVocation;
   }
 
   @override
@@ -80,8 +68,7 @@ class _AddCharacterScreenState extends State<AddCharacterScreen> {
                   count: count,
                   name: name,
                   onChangeName: _onChangeName,
-                  setActiveVocation: _setActiveVocation,
-                  getActiveVocation: _getActiveVocation),
+                ),
         ),
       ),
     );
@@ -93,8 +80,6 @@ class BodyAddCharacterScreen extends StatelessWidget {
   final int count;
   final String name;
   final void Function(String value) onChangeName;
-  final void Function(int index) setActiveVocation;
-  final dynamic Function() getActiveVocation;
   //
 
   const BodyAddCharacterScreen({
@@ -103,8 +88,6 @@ class BodyAddCharacterScreen extends StatelessWidget {
     required this.count,
     required this.name,
     required this.onChangeName,
-    required this.setActiveVocation,
-    required this.getActiveVocation,
   }) : super(key: key);
 
   @override
@@ -122,27 +105,15 @@ class BodyAddCharacterScreen extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.all(20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Classe',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 14, color: Colors.black),
-          ),
-        ),
-        Container(
             alignment: Alignment.center,
-            height: 200,
             width: MediaQuery.of(context).size.width,
             child: CarouselSlider.builder(
               itemCount: count,
               options: CarouselOptions(
                 enableInfiniteScroll: true,
-                height: 200,
+                height: MediaQuery.of(context).size.height - 200,
                 viewportFraction: 1,
                 initialPage: 0,
-                onPageChanged: (i, reason) => setActiveVocation(i),
               ),
               itemBuilder: (BuildContext context, int itemIndex,
                       int pageViewIndex) =>
@@ -152,107 +123,140 @@ class BodyAddCharacterScreen extends StatelessWidget {
                           .onLoad(context),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/dungeon_home.png'),
-                                fit: BoxFit.cover,
+                          return Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  vocations[itemIndex]["name"],
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
                               ),
-                            ),
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 15.0),
-                            padding: EdgeInsets.all(30),
-                            child: snapshot.data as Widget,
+                              Container(
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/dungeon_home.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                                padding: EdgeInsets.all(30),
+                                child: snapshot.data as Widget,
+                              ),
+                              // ###################################################
+                              // #######       Caractéristiques     ################
+                              // ###################################################
+                              Container(
+                                padding: EdgeInsets.all(20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Caractéristiques de base',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["health"]} PV',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50, top: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["mana"]} mana',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50, top: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["armor"]} armure',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50, top: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["attack"]} dégats de base',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50, top: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["attackSpeed"]} de vitesse d\'attaque',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50, top: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["attack"]}% en coup critique',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 50, top: 20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${vocations[itemIndex]["baseFeature"]["wisdom"]}% en fuite',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 12,
+                                      color: Colors.grey[500]),
+                                ),
+                              ),
+                            ],
                           );
                         }
 
                         return Container();
                       }),
             )),
-        // ###################################################
-        // #######       Caractéristiques     ################
-        // ###################################################
-        Container(
-          padding: EdgeInsets.all(20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Caractéristiques de base',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 14, color: Colors.black),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["health"] ?? "0"} PV',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50, top: 20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["mana"] ?? "0"} mana',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50, top: 20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["armor"] ?? "0"} armure',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50, top: 20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["attack"] ?? "0"} dégats de base',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50, top: 20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["attackSpeed"] ?? "0"} de vitesse d\'attaque',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50, top: 20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["attack"] ?? "0"}% en coup critique',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 50, top: 20),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '${getActiveVocation()["baseFeature"]?["wisdom"] ?? "0"}% en fuite',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontFamily: 'Bungee', fontSize: 12, color: Colors.grey[350]),
-          ),
-        ),
         Container(
           padding: EdgeInsets.all(20),
           child: Divider(
