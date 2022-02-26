@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
-import 'package:lordofdungeons/commons/ultimlate_sprite_render.dart';
+import 'package:lordofdungeons/commons/ultimate_sprite_render.dart';
 import 'package:lordofdungeons/commons/vocation_sprite_render.dart';
 import 'package:lordofdungeons/providers/character_provider.dart';
 import 'package:lordofdungeons/providers/vocation_provider.dart';
@@ -294,86 +294,434 @@ class BodyAddCharacterScreen extends StatelessWidget {
                                   if (snapshot.hasData) {
                                     return Column(
                                       children: [
-                                        Container(
-                                          margin: EdgeInsets.symmetric(
-                                            horizontal: 25,
-                                            vertical: 10,
-                                          ),
-                                          child: Row(children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 15),
-                                              height: 75,
-                                              width: 75,
-                                              child: snapshot.data as Widget,
-                                            ),
-                                            Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "Rage",
-                                                style: TextStyle(
-                                                    fontFamily: 'Bungee',
-                                                    fontSize: 12,
-                                                    color: Colors.black),
+                                        GestureDetector(
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                      vocations[itemIndex]
+                                                          ['ultimate']['name'],
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily: "Bungee",
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    content: Column(
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  top: 20),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            '${vocations[itemIndex]["ultimate"]["base"]} dégat de base',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Bungee',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey[500]),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  top: 20),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            '${vocations[itemIndex]["ultimate"]["mana"]} mana',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Bungee',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey[500]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                        child: Text(
+                                                          'FERMER',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Montserrat",
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 25),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: color_yellow,
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid),
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                                bottomLeft:
+                                                    Radius.circular(10.0),
+                                                bottomRight:
+                                                    Radius.circular(10.0),
                                               ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: color_yellow,
+                                                  offset: const Offset(
+                                                    1.0,
+                                                    1.0,
+                                                  ),
+                                                  blurRadius: 2.0,
+                                                  spreadRadius: 1.0,
+                                                ), //BoxShadow
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  offset:
+                                                      const Offset(0.0, 0.0),
+                                                  blurRadius: 0.0,
+                                                  spreadRadius: 0.0,
+                                                ), //BoxShadow
+                                              ],
                                             ),
-                                          ]),
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 25,
+                                              vertical: 10,
+                                            ),
+                                            child: Row(children: [
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 15),
+                                                height: 75,
+                                                width: 75,
+                                                child: snapshot.data as Widget,
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Rage",
+                                                  style: TextStyle(
+                                                      fontFamily: 'Bungee',
+                                                      fontSize: 12,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ]),
+                                          ),
                                         ),
                                         //
                                         //
-                                        Container(
-                                          margin: EdgeInsets.symmetric(
-                                            horizontal: 25,
-                                            vertical: 10,
-                                          ),
-                                          child: Row(children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 15),
-                                              height: 75,
-                                              width: 75,
-                                              child: snapshot.data as Widget,
-                                            ),
-                                            Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "Appel du mega Chad",
-                                                style: TextStyle(
-                                                    fontFamily: 'Bungee',
-                                                    fontSize: 12,
-                                                    color: Colors.black),
+                                        GestureDetector(
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                      vocations[itemIndex]
+                                                          ['ultimate']['name'],
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily: "Bungee",
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    content: Column(
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  top: 20),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            '${vocations[itemIndex]["ultimate"]["base"]} dégat de base',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Bungee',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey[500]),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  top: 20),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            '${vocations[itemIndex]["ultimate"]["mana"]} mana',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Bungee',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey[500]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                        child: Text(
+                                                          'FERMER',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Montserrat",
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 25),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: color_yellow,
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid),
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                                bottomLeft:
+                                                    Radius.circular(10.0),
+                                                bottomRight:
+                                                    Radius.circular(10.0),
                                               ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: color_yellow,
+                                                  offset: const Offset(
+                                                    1.0,
+                                                    1.0,
+                                                  ),
+                                                  blurRadius: 2.0,
+                                                  spreadRadius: 1.0,
+                                                ), //BoxShadow
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  offset:
+                                                      const Offset(0.0, 0.0),
+                                                  blurRadius: 0.0,
+                                                  spreadRadius: 0.0,
+                                                ), //BoxShadow
+                                              ],
                                             ),
-                                          ]),
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 25,
+                                              vertical: 10,
+                                            ),
+                                            child: Row(children: [
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 15),
+                                                height: 75,
+                                                width: 75,
+                                                child: snapshot.data as Widget,
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Appel du mega Chad",
+                                                  style: TextStyle(
+                                                      fontFamily: 'Bungee',
+                                                      fontSize: 12,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ]),
+                                          ),
                                         ),
                                         //
                                         //
-                                        Container(
-                                          margin: EdgeInsets.symmetric(
-                                            horizontal: 25,
-                                            vertical: 10,
-                                          ),
-                                          child: Row(children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 15),
-                                              height: 75,
-                                              width: 75,
-                                              child: snapshot.data as Widget,
-                                            ),
-                                            Container(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                vocations[itemIndex]['ultimate']
-                                                        ['name'] +
-                                                    " (ultime)",
-                                                style: TextStyle(
-                                                    fontFamily: 'Bungee',
-                                                    fontSize: 12,
-                                                    color: Colors.black),
+                                        GestureDetector(
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                      vocations[itemIndex]
+                                                          ['ultimate']['name'],
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily: "Bungee",
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    content: Column(
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  top: 20),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            '${vocations[itemIndex]["ultimate"]["base"]} dégat de base',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Bungee',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey[500]),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  top: 20),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            '${vocations[itemIndex]["ultimate"]["mana"]} mana',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Bungee',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey[500]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                        child: Text(
+                                                          'FERMER',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Montserrat",
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 25),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: color_yellow,
+                                                  width: 1.0,
+                                                  style: BorderStyle.solid),
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
+                                                bottomLeft:
+                                                    Radius.circular(10.0),
+                                                bottomRight:
+                                                    Radius.circular(10.0),
                                               ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: color_yellow,
+                                                  offset: const Offset(
+                                                    1.0,
+                                                    1.0,
+                                                  ),
+                                                  blurRadius: 2.0,
+                                                  spreadRadius: 1.0,
+                                                ), //BoxShadow
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  offset:
+                                                      const Offset(0.0, 0.0),
+                                                  blurRadius: 0.0,
+                                                  spreadRadius: 0.0,
+                                                ), //BoxShadow
+                                              ],
                                             ),
-                                          ]),
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 25,
+                                              vertical: 10,
+                                            ),
+                                            child: Row(children: [
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 15),
+                                                height: 75,
+                                                width: 75,
+                                                child: snapshot.data as Widget,
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  vocations[itemIndex]
+                                                          ['ultimate']['name'] +
+                                                      " (ultime)",
+                                                  style: TextStyle(
+                                                      fontFamily: 'Bungee',
+                                                      fontSize: 12,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ]),
+                                          ),
                                         ),
                                       ],
                                     );
