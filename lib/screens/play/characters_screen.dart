@@ -4,7 +4,6 @@ import 'package:getwidget/getwidget.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/commons/vocation_sprite_render.dart';
 import 'package:lordofdungeons/providers/character_provider.dart';
-import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/xp.dart';
 
@@ -36,7 +35,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void _getCharacters() async {
     final data = await CharacterProvider().getCharacters(context);
     if (data != false) {
-      print(data["characters"]);
       setState(() {
         characters = data["characters"];
         count = data["count"];
@@ -44,12 +42,12 @@ class _CharactersScreenState extends State<CharactersScreen> {
     }
   }
 
-  void _deleteCharacter(String name) async {
-    final res = await UserProvider().deleteFriend(context, name);
+  Future<void> _deleteCharacter(BuildContext context, int idCharacter) async {
+    final res = await CharacterProvider().deleteCharacter(context, idCharacter);
     if (res == true) {
       // on supprime dynamiquement le personnage de la vue
       final charToRemove = characters.firstWhere(
-          (element) => element["name"] == name,
+          (element) => element["idCharacter"] == idCharacter,
           orElse: () => false);
 
       if (charToRemove != false) {
@@ -58,6 +56,9 @@ class _CharactersScreenState extends State<CharactersScreen> {
           characters = characters;
           count = count - 1;
         });
+
+        // fermeture de la modal
+        Navigator.of(context).pop();
       }
     }
   }
@@ -86,7 +87,8 @@ class BodyCharactersScreen extends StatelessWidget {
   final List<dynamic> characters;
   final int count;
   final void Function() getCharacters;
-  final void Function(String name) deleteCharacter;
+  final Future<void> Function(BuildContext context, int idCharacter)
+      deleteCharacter;
   //
   const BodyCharactersScreen(
       {Key? key,
@@ -200,9 +202,72 @@ class BodyCharactersScreen extends StatelessWidget {
                                         ),
                                         activeBgColor: Colors.transparent,
                                         activeIcon: IconButton(
-                                          onPressed: () async {
-                                            deleteCharacter(characters[index]
-                                                ["friendPseudo"]);
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                      'Alerte',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily: "Bungee",
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ), // To display the title it is optional
+                                                    content: Text(
+                                                      'Voulez-vous vraiment supprimer le personnage ${characters[index]["name"]} ?',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily:
+                                                            "Montserrat",
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(),
+                                                        child: Text(
+                                                          'ANNULER',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Montserrat",
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          deleteCharacter(
+                                                              context,
+                                                              characters[index][
+                                                                  "idCharacter"]);
+                                                        },
+                                                        child: Text(
+                                                          'SUPPRIMER',
+                                                          style: TextStyle(
+                                                            color: color_red,
+                                                            fontFamily:
+                                                                "Montserrat",
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
                                           },
                                           icon: FaIcon(
                                             FontAwesomeIcons.times,
