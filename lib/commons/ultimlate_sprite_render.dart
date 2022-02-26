@@ -3,9 +3,11 @@ import 'package:flame/components.dart';
 import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 
-class VocationSpriteRender {
+class UltimateSpriteRender {
   late String path;
-  VocationSpriteRender(this.path);
+  late Vector2 spriteSize;
+  late int amount;
+  UltimateSpriteRender(this.path, this.spriteSize, this.amount);
 
   Future<dynamic> getImage(String path) async {
     Completer<ImageInfo> completer = Completer();
@@ -22,10 +24,9 @@ class VocationSpriteRender {
   Future<Widget> onLoad(BuildContext context) async {
     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
     final spriteSheet = await getImage(path);
-    Vector2 spriteSize = Vector2(32, 32);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-      amount: 3,
-      stepTime: 0.25,
+      amount: amount,
+      stepTime: 0.33,
       textureSize: spriteSize,
     );
 

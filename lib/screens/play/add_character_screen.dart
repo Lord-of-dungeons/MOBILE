@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
-import 'package:lordofdungeons/commons/loader.dart';
+import 'package:lordofdungeons/commons/ultimlate_sprite_render.dart';
 import 'package:lordofdungeons/commons/vocation_sprite_render.dart';
 import 'package:lordofdungeons/providers/character_provider.dart';
 import 'package:lordofdungeons/providers/vocation_provider.dart';
@@ -126,7 +128,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
               itemCount: count,
               options: CarouselOptions(
                 enableInfiniteScroll: true,
-                height: MediaQuery.of(context).size.height - 200,
+                height: MediaQuery.of(context).size.height * 1.2,
                 viewportFraction: 1,
                 initialPage: 0,
                 onPageChanged: (i, reason) => setActiveVocation(i),
@@ -265,6 +267,120 @@ class BodyAddCharacterScreen extends StatelessWidget {
                                       fontSize: 12,
                                       color: Colors.grey[500]),
                                 ),
+                              ),
+                              // ###################################################
+                              // #############       Compétences      ###############
+                              // ###################################################
+                              Container(
+                                margin: EdgeInsets.only(top: 15),
+                                padding: EdgeInsets.all(20),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Compétences',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontFamily: 'Bungee',
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                              ),
+                              FutureBuilder(
+                                future: UltimateSpriteRender(
+                                  "$url_api/public/vocation/${vocations[itemIndex]['idVocation']}/${vocations[itemIndex]['ultimate']['imgPath']}",
+                                  Vector2(192, 192),
+                                  5,
+                                ).onLoad(context),
+                                builder: ((context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 25,
+                                            vertical: 10,
+                                          ),
+                                          child: Row(children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 15),
+                                              height: 75,
+                                              width: 75,
+                                              child: snapshot.data as Widget,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Rage",
+                                                style: TextStyle(
+                                                    fontFamily: 'Bungee',
+                                                    fontSize: 12,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                        //
+                                        //
+                                        Container(
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 25,
+                                            vertical: 10,
+                                          ),
+                                          child: Row(children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 15),
+                                              height: 75,
+                                              width: 75,
+                                              child: snapshot.data as Widget,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Appel du mega Chad",
+                                                style: TextStyle(
+                                                    fontFamily: 'Bungee',
+                                                    fontSize: 12,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                        //
+                                        //
+                                        Container(
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 25,
+                                            vertical: 10,
+                                          ),
+                                          child: Row(children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 15),
+                                              height: 75,
+                                              width: 75,
+                                              child: snapshot.data as Widget,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                vocations[itemIndex]['ultimate']
+                                                        ['name'] +
+                                                    " (ultime)",
+                                                style: TextStyle(
+                                                    fontFamily: 'Bungee',
+                                                    fontSize: 12,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                      ],
+                                    );
+                                  }
+
+                                  return Container();
+                                }),
                               ),
                             ],
                           );
