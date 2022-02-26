@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
+import 'package:lordofdungeons/commons/vocation_sprite_render.dart';
 import 'package:lordofdungeons/providers/character_provider.dart';
 import 'package:lordofdungeons/providers/user_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
+import 'package:lordofdungeons/utils/xp.dart';
 
 var appBar = AppBar(
   backgroundColor: color_blue,
@@ -34,6 +36,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void _getCharacters() async {
     final data = await CharacterProvider().getCharacters(context);
     if (data != false) {
+      print(data["characters"]);
       setState(() {
         characters = data["characters"];
         count = data["count"];
@@ -161,58 +164,67 @@ class BodyCharactersScreen extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return Listener(
                           onPointerDown: (_) {},
-                          child: Column(
-                            children: [
-                              GFCheckboxListTile(
-                                title: Text(
-                                  "Test",
-                                  style: TextStyle(
-                                    color: Colors.black87,
-                                    fontFamily: "Montserrat",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                subTitle: Text(
-                                  'En ligne',
-                                  style: TextStyle(
-                                    color: color_green,
-                                    fontFamily: "Montserrat",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                avatar: GFAvatar(
-                                  backgroundImage: NetworkImage(
-                                    "$url_domain${characters[index]["profilePicturePath"]}",
-                                  ),
-                                  backgroundColor: Colors.transparent,
-                                  shape: GFAvatarShape.circle,
-                                ),
-                                size: 25,
-                                activeBgColor: Colors.transparent,
-                                activeIcon: IconButton(
-                                  onPressed: () async {
-                                    deleteCharacter(
-                                        characters[index]["friendPseudo"]);
-                                  },
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.times,
-                                    color: color_red,
-                                  ),
-                                ),
-                                type: GFCheckboxType.circle,
-                                onChanged: (val) {},
-                                value: true,
-                                inactiveIcon: null,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
-                                child: Divider(),
-                              ),
-                            ],
-                          ),
+                          child: FutureBuilder(
+                              future: VocationSpriteRender(
+                                      "$url_api/public/vocation/${characters[index]["vocation"]['idVocation']}/${characters[index]["vocation"]['vocationAppearance']['imgPath']}")
+                                  .onLoad(context),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GFCheckboxListTile(
+                                        title: Text(
+                                          characters[index]["name"],
+                                          style: TextStyle(
+                                            color: Colors.black87,
+                                            fontFamily: "Bungee",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        subTitle: Text(
+                                          "${characters[index]["vocation"]["name"]} Niveau ${Xp(characters[index]["xp"]).getLevel()}",
+                                          style: TextStyle(
+                                            color: Colors.grey[500],
+                                            fontFamily: "Bungee",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        avatar: Container(
+                                          margin: EdgeInsets.only(right: 15),
+                                          height: 75,
+                                          width: 75,
+                                          child: snapshot.data as Widget,
+                                        ),
+                                        activeBgColor: Colors.transparent,
+                                        activeIcon: IconButton(
+                                          onPressed: () async {
+                                            deleteCharacter(characters[index]
+                                                ["friendPseudo"]);
+                                          },
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.times,
+                                            color: color_red,
+                                          ),
+                                        ),
+                                        type: GFCheckboxType.circle,
+                                        onChanged: (val) {},
+                                        value: true,
+                                        inactiveIcon: null,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20.0),
+                                        child: Divider(),
+                                      ),
+                                    ],
+                                  );
+                                }
+
+                                return Container();
+                              }),
                         );
                       }),
                 ),

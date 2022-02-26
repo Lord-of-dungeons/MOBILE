@@ -1,12 +1,9 @@
-import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flame/components.dart';
-import 'package:flame/game.dart';
-import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/commons/loader.dart';
+import 'package:lordofdungeons/commons/vocation_sprite_render.dart';
 import 'package:lordofdungeons/providers/character_provider.dart';
 import 'package:lordofdungeons/providers/vocation_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
@@ -336,44 +333,6 @@ class BodyAddCharacterScreen extends StatelessWidget {
   }
 }
 
-class VocationSpriteRender {
-  late String path;
-  VocationSpriteRender(this.path);
-
-  Future<dynamic> getImage(String path) async {
-    Completer<ImageInfo> completer = Completer();
-    var img = NetworkImage(path);
-    img
-        .resolve(ImageConfiguration())
-        .addListener(ImageStreamListener((ImageInfo info, bool _) {
-      completer.complete(info);
-    }));
-    ImageInfo imageInfo = await completer.future;
-    return imageInfo.image;
-  }
-
-  Future<Widget> onLoad(BuildContext context) async {
-    // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
-    final spriteSheet = await getImage(path);
-    print(path);
-    Vector2 spriteSize = Vector2(32, 32);
-    SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-      amount: 3,
-      stepTime: 0.25,
-      textureSize: spriteSize,
-    );
-
-    SpriteAnimation vocationAnimation =
-        SpriteAnimation.fromFrameData(spriteSheet, spriteData);
-
-    SpriteAnimationWidget vocationAnimationWidget = SpriteAnimationWidget(
-      animation: vocationAnimation,
-      anchor: Anchor.center,
-    );
-
-    return vocationAnimationWidget.build(context);
-  }
-}
 
 // class MyGame extends FlameGame {
 //   late String path;
