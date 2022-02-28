@@ -5,6 +5,7 @@ import 'package:lordofdungeons/screens/home_screen.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:lordofdungeons/screens/play/add_character_screen.dart';
 import 'package:lordofdungeons/screens/play/characters_screen.dart';
+import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 import 'package:lordofdungeons/screens/profile/about/about_screen.dart';
 import 'package:lordofdungeons/screens/profile/password_edit_screen.dart';
 import 'package:lordofdungeons/screens/profile/pseudo_edit_screen.dart';
@@ -58,6 +59,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => RegisterScreen());
       case '/register/address':
         return MaterialPageRoute(builder: (_) => RegisterAddressScreen());
+
+      //
+      case '/home/characters/play-single':
+        return MaterialPageRoute(builder: (_) => PlaySoloScreen());
       default:
         return _errorRoute();
     }
@@ -101,3 +106,5 @@ class RouteGenerator {
     });
   }
 }
+
+class PlaySingleScreen {}

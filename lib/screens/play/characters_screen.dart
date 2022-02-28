@@ -1,3 +1,4 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
@@ -165,10 +166,17 @@ class BodyCharactersScreen extends StatelessWidget {
                       itemCount: count,
                       itemBuilder: (BuildContext context, int index) {
                         return Listener(
-                          onPointerDown: (_) {},
+                          onPointerDown: (_) {
+                            print(index);
+                            Navigator.of(context)
+                                .pushNamed('/home/characters/play-single');
+                          },
                           child: FutureBuilder(
                               future: VocationSpriteRender(
-                                      "$url_api/public/vocation/${characters[index]["vocation"]['idVocation']}/${characters[index]["vocation"]['vocationAppearance']['imgPath']}")
+                                      "$url_api/public/vocation/${characters[index]["vocation"]['idVocation']}/${characters[index]["vocation"]['vocationAppearance']['imgPath']}",
+                                      Vector2(32, 32),
+                                      3,
+                                      0.25)
                                   .onLoad(context),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {

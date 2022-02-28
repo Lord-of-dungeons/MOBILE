@@ -7,7 +7,8 @@ class UltimateSpriteRender {
   late String path;
   late Vector2 spriteSize;
   late int amount;
-  UltimateSpriteRender(this.path, this.spriteSize, this.amount);
+  late double stepTime;
+  UltimateSpriteRender(this.path, this.spriteSize, this.amount, this.stepTime);
 
   Future<dynamic> getImage(String path) async {
     Completer<ImageInfo> completer = Completer();
@@ -26,7 +27,7 @@ class UltimateSpriteRender {
     final spriteSheet = await getImage(path);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
       amount: amount,
-      stepTime: 0.33,
+      stepTime: stepTime,
       textureSize: spriteSize,
     );
 

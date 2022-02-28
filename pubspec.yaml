@@ -55,6 +55,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   carousel_slider: ^4.0.0
   flame: ^1.0.0
+  bonfire: ^2.2.5
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +93,9 @@ flutter:
         - asset: fonts/Bungee/Bungee-Regular.ttf
   assets:
     - assets/images/
+    - assets/images/tile/
+    - assets/images/RF_Catacombs_v1.0/
+    - assets/images/props_itens/
     - assets/animations/
     - .env
   uses-material-design: true

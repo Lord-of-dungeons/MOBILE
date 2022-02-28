@@ -1,3 +1,4 @@
+import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/utils/constants.dart';
@@ -15,6 +16,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  Future<void> _setPortrait() async {
+    await Flame.device.setPortrait();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: DelayedAnimation(
         delay: 750,
-        child: BodyHomeScreen(),
+        child: FutureBuilder(
+          future: _setPortrait(),
+          builder: (context, snapshot) {
+            return BodyHomeScreen();
+          },
+        ),
       ),
     ));
   }

@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 
 class VocationSpriteRender {
   late String path;
-  VocationSpriteRender(this.path);
+  late Vector2 spriteSize;
+  late int amount;
+  late double stepTime;
+  VocationSpriteRender(this.path, this.spriteSize, this.amount, this.stepTime);
 
   Future<dynamic> getImage(String path) async {
     Completer<ImageInfo> completer = Completer();
@@ -22,10 +25,10 @@ class VocationSpriteRender {
   Future<Widget> onLoad(BuildContext context) async {
     // récupération de l'image distante d'une façon qui permet de la mettre dans un Sprite
     final spriteSheet = await getImage(path);
-    Vector2 spriteSize = Vector2(32, 32);
+
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-      amount: 3,
-      stepTime: 0.25,
+      amount: amount,
+      stepTime: stepTime,
       textureSize: spriteSize,
     );
 

@@ -128,7 +128,7 @@ class BodyAddCharacterScreen extends StatelessWidget {
               itemCount: count,
               options: CarouselOptions(
                 enableInfiniteScroll: true,
-                height: MediaQuery.of(context).size.height * 1.2,
+                height: MediaQuery.of(context).size.height * 1.25,
                 viewportFraction: 1,
                 initialPage: 0,
                 onPageChanged: (i, reason) => setActiveVocation(i),
@@ -137,7 +137,10 @@ class BodyAddCharacterScreen extends StatelessWidget {
                       int pageViewIndex) =>
                   FutureBuilder(
                       future: VocationSpriteRender(
-                              "$url_api/public/vocation/${vocations[itemIndex]['idVocation']}/${vocations[itemIndex]['vocationAppearance']['imgPath']}")
+                              "$url_api/public/vocation/${vocations[itemIndex]['idVocation']}/${vocations[itemIndex]['vocationAppearance']['imgPath']}",
+                              Vector2(32, 32),
+                              3,
+                              0.25)
                           .onLoad(context),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
@@ -286,10 +289,11 @@ class BodyAddCharacterScreen extends StatelessWidget {
                               ),
                               FutureBuilder(
                                 future: UltimateSpriteRender(
-                                  "$url_api/public/vocation/${vocations[itemIndex]['idVocation']}/${vocations[itemIndex]['ultimate']['imgPath']}",
-                                  Vector2(192, 192),
-                                  5,
-                                ).onLoad(context),
+                                        "$url_api/public/vocation/${vocations[itemIndex]['idVocation']}/${vocations[itemIndex]['ultimate']['imgPath']}",
+                                        Vector2(192, 192),
+                                        5,
+                                        0.33)
+                                    .onLoad(context),
                                 builder: ((context, snapshot) {
                                   if (snapshot.hasData) {
                                     return Column(
@@ -377,7 +381,9 @@ class BodyAddCharacterScreen extends StatelessWidget {
                                           },
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 25),
+                                              horizontal: 25,
+                                              vertical: 10,
+                                            ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: color_yellow,
@@ -520,7 +526,9 @@ class BodyAddCharacterScreen extends StatelessWidget {
                                           },
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 25),
+                                              horizontal: 25,
+                                              vertical: 10,
+                                            ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: color_yellow,
@@ -663,7 +671,9 @@ class BodyAddCharacterScreen extends StatelessWidget {
                                           },
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 25),
+                                              horizontal: 25,
+                                              vertical: 10,
+                                            ),
                                             decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: color_yellow,
