@@ -93,9 +93,9 @@ flutter:
         - asset: fonts/Bungee/Bungee-Regular.ttf
   assets:
     - assets/images/
-    - assets/images/tile/
+    - assets/images/tiled/
     - assets/images/RF_Catacombs_v1.0/
-    - assets/images/props_itens/
+    - assets/images/itens/
     - assets/animations/
     - .env
   uses-material-design: true

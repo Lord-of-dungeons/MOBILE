@@ -1,5 +1,5 @@
-import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 
@@ -16,32 +16,31 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  Future<void> _setPortrait() async {
-    await Flame.device.setPortrait();
+  void _setPortrait() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
+    _setPortrait();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage("assets/images/dungeon_fire.gif"),
-        ),
-      ),
-      child: DelayedAnimation(
-        delay: 750,
-        child: FutureBuilder(
-          future: _setPortrait(),
-          builder: (context, snapshot) {
-            return BodyHomeScreen();
-          },
-        ),
-      ),
-    ));
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage("assets/images/dungeon_fire.gif"),
+            ),
+          ),
+          child: DelayedAnimation(
+            delay: 750,
+            child: BodyHomeScreen(),
+          ),
+        ));
   }
 }
 
