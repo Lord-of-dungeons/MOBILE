@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_renaming_method_parameters
-
+import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/game/player_sprite_sheet.dart';
@@ -8,6 +8,9 @@ import 'package:lordofdungeons/utils/functions.dart';
 
 class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double initSpeed = tileSize / 0.25;
+  double mana = 100;
+  async.Timer? _timerMana;
+  bool containKey = false;
 
   Knight(Vector2 position)
       : super(
@@ -15,6 +18,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
           size: Vector2.all(tileSize),
           animation: PlayerSpriteSheet.simpleDirectionAnimation,
           speed: tileSize / 0.25,
+          life: 200,
         ) {
     setupCollision(
       CollisionConfig(
@@ -48,5 +52,28 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void render(Canvas c) {
     super.render(c);
+  }
+
+  @override
+  void update(double dt) {
+    if (isDead) return;
+    _verifyMana();
+
+    super.update(dt);
+  }
+
+  void _verifyMana() {
+    if (_timerMana == null) {
+      _timerMana = async.Timer(Duration(milliseconds: 500), () {
+        _timerMana = null;
+      });
+    } else {
+      return;
+    }
+
+    mana += 2;
+    if (mana > 100) {
+      mana = 100;
+    }
   }
 }

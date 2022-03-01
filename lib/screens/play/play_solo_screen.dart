@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lordofdungeons/game/decoration/spike.dart';
 import 'package:lordofdungeons/game/decoration/torch.dart';
+import 'package:lordofdungeons/game/interface/knight_interface.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
 import 'package:lordofdungeons/game/player_sprite_sheet.dart';
 
@@ -100,6 +101,21 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
             ),
             lightingColorGame: Colors.black.withOpacity(0.6),
             background: BackgroundColorGame(Colors.grey[900]!),
+            interface: KnightInterface(),
+            showFPS: true,
+            progress: Container(
+              color: Colors.black,
+              child: Center(
+                child: Text(
+                  "Chargement...",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Bungee',
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ),
           ),
         );
       },
