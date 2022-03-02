@@ -56,6 +56,7 @@ dependencies:
   carousel_slider: ^4.0.0
   flame: ^1.0.0
   bonfire: ^2.2.5
+  flame_audio: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -95,8 +96,11 @@ flutter:
     - assets/images/
     - assets/images/tiled/
     - assets/images/enemy/
+    - assets/images/emote/
     - assets/images/RF_Catacombs_v1.0/
     - assets/images/itens/
     - assets/animations/
+    - assets/audio/
     - .env
+    - resources/lang/fr.json
   uses-material-design: true

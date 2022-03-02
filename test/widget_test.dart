@@ -7,13 +7,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lordofdungeons/game/util/localization/my_localizations_delegate.dart';
 
 import 'package:lordofdungeons/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    MyLocalizationsDelegate myLocation = MyLocalizationsDelegate();
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(
+      myLocation: myLocation,
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

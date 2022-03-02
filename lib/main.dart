@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lordofdungeons/game/util/localization/my_localizations_delegate.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lordofdungeons/utils/route_generator.dart';
 import 'package:page_transition/page_transition.dart';
 
 void main() {
-  runApp(MyApp());
+  MyLocalizationsDelegate myLocation = MyLocalizationsDelegate();
+  runApp(MyApp(myLocation: myLocation));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final MyLocalizationsDelegate myLocation;
+  const MyApp({Key? key, required this.myLocation}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [GlobalMaterialLocalizations.delegate],
-      supportedLocales: [Locale('en'), Locale('fr')],
+      localizationsDelegates: [
+        myLocation,
+        GlobalMaterialLocalizations.delegate
+      ],
+      supportedLocales: MyLocalizationsDelegate.supportedLocales(),
+      localeResolutionCallback: myLocation.resolution,
       debugShowCheckedModeBanner: false,
       title: 'Lord of Dungeons',
       // Set Raleway as the default app font.

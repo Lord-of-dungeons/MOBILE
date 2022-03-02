@@ -1,18 +1,18 @@
 import 'dart:math';
 import 'package:bonfire/bonfire.dart';
-import 'package:flame/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lordofdungeons/game/decoration/spike.dart';
 import 'package:lordofdungeons/game/decoration/torch.dart';
-import 'package:lordofdungeons/game/ennemies/pepe_the_frog.dart';
-import 'package:lordofdungeons/game/ennemies/skeleton.dart';
-import 'package:lordofdungeons/game/ennemies/vampyrus_alchemist.dart';
-import 'package:lordofdungeons/game/ennemies/vampyrus_boss.dart';
-import 'package:lordofdungeons/game/ennemies/vampyrus_guard.dart';
+import 'package:lordofdungeons/game/enemies/pepe_the_frog.dart';
+import 'package:lordofdungeons/game/enemies/skeleton.dart';
+import 'package:lordofdungeons/game/enemies/vampyrus_alchemist.dart';
+import 'package:lordofdungeons/game/enemies/vampyrus_boss.dart';
+import 'package:lordofdungeons/game/enemies/vampyrus_guard.dart';
 import 'package:lordofdungeons/game/interface/knight_interface.dart';
+import 'package:lordofdungeons/game/npc/player_enter_dungeon.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
-import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
+import 'package:lordofdungeons/game/util/sound.dart';
 
 double tileSize = 32;
 
@@ -34,12 +34,31 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
   void initState() {
     WidgetsBinding.instance?.addObserver(this);
     _controller = GameController()..addListener(this);
+    Sounds.playBackgroundSound();
     super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        Sounds.resumeBackgroundSound();
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.paused:
+        Sounds.pauseBackgroundSound();
+        break;
+      case AppLifecycleState.detached:
+        Sounds.stopBackgroundSound();
+        break;
+    }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
+    Sounds.stopBackgroundSound();
     super.dispose();
   }
 
@@ -96,6 +115,8 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
               'tiled/map.json',
               forceTileSize: Size(tileSize, tileSize),
               objectsBuilder: {
+                'player_enter_dungeon': (p) =>
+                    PlayerEnterDungeon(p.position, empty: true),
                 'torch': (p) => Torch(p.position),
                 'spikes': (p) => Spikes(p.position),
                 'torch_empty': (p) => Torch(p.position, empty: true),
@@ -109,6 +130,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
             player: Knight(
               Vector2(2 * tileSize, 3 * tileSize),
             ),
+            // showCollisionArea: true,
             lightingColorGame: Colors.black.withOpacity(0.6),
             background: BackgroundColorGame(Colors.grey[900]!),
             interface: KnightInterface(),

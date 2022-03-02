@@ -1,6 +1,21 @@
 import 'package:bonfire/bonfire.dart';
 
 class EnemySpriteSheet {
+  static Future<SpriteAnimation> idleRight(
+          {required String path,
+          required Vector2 textureSize,
+          required Vector2 texturePosition,
+          amont = 1,
+          stepTime = 1.0}) =>
+      SpriteAnimation.load(
+        path,
+        SpriteAnimationData.sequenced(
+            amount: amont,
+            stepTime: stepTime,
+            textureSize: textureSize,
+            texturePosition: texturePosition),
+      );
+
   // ##################################################################
 //                          PEPE THE FROG
 // ##################################################################
@@ -20,7 +35,7 @@ class EnemySpriteSheet {
             amount: 1,
             stepTime: 1,
             textureSize: Vector2(127.875, 127.875),
-            texturePosition: Vector2(0, 1278.75),
+            texturePosition: Vector2(1406.625, 255.75),
           ),
         ),
         runLeft: SpriteAnimation.load(

@@ -452,13 +452,13 @@
                 {
                  "height":16,
                  "id":39,
-                 "name":"wizard",
+                 "name":"player_enter_dungeon",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":119.090909090909,
-                 "y":52.5454545454545
+                 "x":40.090909090909,
+                 "y":51.5454545454545
                 }, 
                 {
                  "height":16,
