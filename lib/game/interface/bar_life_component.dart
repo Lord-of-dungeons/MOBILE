@@ -8,8 +8,8 @@ class BarLifeComponent extends InterfaceComponent {
   double widthBar = 90;
   double strokeWidth = 12;
 
-  double maxLife = 0;
-  double life = 0;
+  double maxLife = 350;
+  double life = 350;
   double maxMana = 100;
   double mana = 0;
 
@@ -83,10 +83,10 @@ class BarLifeComponent extends InterfaceComponent {
 
   Color _getColorLife(double currentBarLife) {
     if (currentBarLife > widthBar - (widthBar / 3)) {
-      return Colors.green;
+      return color_green;
     }
     if (currentBarLife > (widthBar / 3)) {
-      return color_blue;
+      return color_yellow;
     } else {
       return color_red;
     }

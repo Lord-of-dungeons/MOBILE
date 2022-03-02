@@ -95,9 +95,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/tiled/
+    - assets/images/player/
     - assets/images/enemy/
     - assets/images/emote/
-    - assets/images/RF_Catacombs_v1.0/
     - assets/images/itens/
     - assets/animations/
     - assets/audio/

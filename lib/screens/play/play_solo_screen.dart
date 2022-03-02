@@ -12,6 +12,7 @@ import 'package:lordofdungeons/game/enemies/vampyrus_guard.dart';
 import 'package:lordofdungeons/game/interface/knight_interface.dart';
 import 'package:lordofdungeons/game/npc/player_enter_dungeon.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
+import 'package:lordofdungeons/game/util/dialogs.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
 
 double tileSize = 32;
@@ -154,6 +155,21 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
     );
   }
 
+  void _showDialogGameOver() {
+    setState(() {
+      showGameOver = true;
+    });
+    Dialogs.showGameOver(
+      context,
+      () {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => PlaySoloScreen()),
+          (Route<dynamic> route) => false,
+        );
+      },
+    );
+  }
+
   @override
   void changeCountLiveEnemies(int count) {
     // TODO: implement changeCountLiveEnemies
@@ -161,6 +177,11 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
 
   @override
   void updateGame() {
-    // TODO: implement updateGame
+    if (_controller.player != null && _controller.player?.isDead == true) {
+      if (!showGameOver) {
+        showGameOver = true;
+        _showDialogGameOver();
+      }
+    }
   }
 }
