@@ -1,11 +1,14 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
+import 'package:lordofdungeons/game/util/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 import 'package:lordofdungeons/utils/functions.dart';
+import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
 
 class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
   final Vector2 initPosition;
+  double initSpeed = tileSize / 0.25;
   double attack = 25;
 
   VampyrusAlchemist(this.initPosition)
@@ -32,6 +35,46 @@ class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
   }
 
   @override
+  void die() {
+    gameRef.add(
+      AnimatedObjectOnce(
+        animation: GameSpriteSheet.smokeExplosion(),
+        position: position,
+        size: Vector2(32, 32),
+      ),
+    );
+    removeFromParent();
+    super.die();
+  }
+
+  void execAttack() {
+    simpleAttackRange(
+      animationRight: GameSpriteSheet.fireBallAttackRight(),
+      animationLeft: GameSpriteSheet.fireBallAttackLeft(),
+      animationUp: GameSpriteSheet.fireBallAttackTop(),
+      animationDown: GameSpriteSheet.fireBallAttackBottom(),
+      animationDestroy: GameSpriteSheet.fireBallExplosion(),
+      size: Vector2(tileSize * 0.65, tileSize * 0.65),
+      damage: 10,
+      speed: initSpeed * 1.5,
+      enableDiagonal: false,
+      onDestroy: () {
+        Sounds.explosion();
+      },
+      collision: CollisionConfig(
+        collisions: [
+          CollisionArea.rectangle(size: Vector2(tileSize / 2, tileSize / 2)),
+        ],
+      ),
+      lightingConfig: LightingConfig(
+        radius: tileSize * 0.9,
+        blurBorder: tileSize / 2,
+        color: Colors.deepOrangeAccent.withOpacity(0.4),
+      ),
+    );
+  }
+
+  @override
   void render(Canvas canvas) {
     drawDefaultLifeBar(
       canvas,
@@ -46,9 +89,22 @@ class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
 
     seeAndMoveToPlayer(
       closePlayer: (player) {
-        // execAttack();
+        execAttack();
       },
       radiusVision: tileSize * 5,
     );
+  }
+
+  @override
+  void receiveDamage(double damage, dynamic id) {
+    showDamage(
+      damage,
+      config: TextStyle(
+        fontSize: valueByTileSize(7),
+        color: Colors.white,
+        fontFamily: 'Montserrat',
+      ),
+    );
+    super.receiveDamage(damage, id);
   }
 }

@@ -3,8 +3,6 @@ import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lordofdungeons/game/util/custom_sprite_animation_widget.dart';
-import 'package:lordofdungeons/game/util/localization/strings_location.dart';
 import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
@@ -16,6 +14,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double attack = 25;
   double mana = 100;
   async.Timer? _timerMana;
+  async.Timer? _timerLife;
   bool containKey = false;
   bool showObserveEnemy = false;
 
@@ -95,7 +94,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     Sounds.attackRange();
 
     //TODO: décrémenter le mana en fonction du coût
-    decrementStamina(10);
+    decrementMana(10);
     simpleAttackRange(
       animationRight: GameSpriteSheet.fireBallAttackRight(),
       animationLeft: GameSpriteSheet.fireBallAttackLeft(),
@@ -122,7 +121,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     );
   }
 
-  void decrementStamina(int i) {
+  void decrementMana(int i) {
     mana -= i;
     if (mana < 0) {
       mana = 0;
@@ -141,6 +140,21 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     mana += 2;
     if (mana > 100) {
       mana = 100;
+    }
+  }
+
+  void _verifyLife() {
+    if (_timerLife == null) {
+      _timerLife = async.Timer(Duration(milliseconds: 1000), () {
+        _timerLife = null;
+      });
+    } else {
+      return;
+    }
+
+    life += 1;
+    if (life > maxLife) {
+      life = maxLife;
     }
   }
 
@@ -168,6 +182,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void update(double dt) {
     if (isDead) return;
+    _verifyLife();
     _verifyMana();
     seeEnemy(
       radiusVision: tileSize * 6,

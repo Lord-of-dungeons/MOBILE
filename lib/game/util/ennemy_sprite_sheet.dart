@@ -291,10 +291,48 @@ class EnemySpriteSheet {
           ),
         ),
       );
+  static Future<SpriteAnimation> vampyrusAlchemistAttackEffectBottom() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_bottom.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+
+  static Future<SpriteAnimation> vampyrusAlchemistAttackEffectLeft() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_left.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+  static Future<SpriteAnimation> vampyrusAlchemistAttackEffectRight() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_right.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+  static Future<SpriteAnimation> vampyrusAlchemistAttackEffectTop() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_top.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
 
 // ##################################################################
 //                          VAMPYRUS BOSS
 // ##################################################################
+
   static SimpleDirectionAnimation vampyrusBossAnimations() =>
       SimpleDirectionAnimation(
         idleLeft: SpriteAnimation.load(
@@ -349,6 +387,43 @@ class EnemySpriteSheet {
             textureSize: Vector2(32, 32),
             texturePosition: Vector2(0, 96),
           ),
+        ),
+      );
+  static Future<SpriteAnimation> vampyrusBossAttackEffectBottom() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_bottom.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+
+  static Future<SpriteAnimation> vampyrusBossAttackEffectLeft() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_left.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+  static Future<SpriteAnimation> vampyrusBossAttackEffectRight() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_right.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
+        ),
+      );
+  static Future<SpriteAnimation> vampyrusBossAttackEffectTop() =>
+      SpriteAnimation.load(
+        'enemy/atack_effect_top.png',
+        SpriteAnimationData.sequenced(
+          amount: 6,
+          stepTime: 0.1,
+          textureSize: Vector2(16, 16),
         ),
       );
 }
