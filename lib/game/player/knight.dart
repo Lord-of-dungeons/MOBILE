@@ -2,7 +2,7 @@
 import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:lordofdungeons/game/player_sprite_sheet.dart';
+import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 import 'package:lordofdungeons/utils/functions.dart';
 

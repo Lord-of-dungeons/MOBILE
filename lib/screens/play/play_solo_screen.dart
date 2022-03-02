@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lordofdungeons/game/decoration/spike.dart';
 import 'package:lordofdungeons/game/decoration/torch.dart';
+import 'package:lordofdungeons/game/ennemies/pepe_the_frog.dart';
+import 'package:lordofdungeons/game/ennemies/skeleton.dart';
+import 'package:lordofdungeons/game/ennemies/vampyrus_alchemist.dart';
+import 'package:lordofdungeons/game/ennemies/vampyrus_boss.dart';
+import 'package:lordofdungeons/game/ennemies/vampyrus_guard.dart';
 import 'package:lordofdungeons/game/interface/knight_interface.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
-import 'package:lordofdungeons/game/player_sprite_sheet.dart';
+import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
 
 double tileSize = 32;
 
@@ -94,6 +99,11 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                 'torch': (p) => Torch(p.position),
                 'spikes': (p) => Spikes(p.position),
                 'torch_empty': (p) => Torch(p.position, empty: true),
+                'pepe': (p) => PepeTheFrog(p.position),
+                'skeleton': (p) => Skeleton(p.position),
+                'vampyrus_guard': (p) => VampyrusGuard(p.position),
+                'vampyrus_alchemist': (p) => VampyrusAlchemist(p.position),
+                'vampyrus_boss': (p) => VampyrusBoss(p.position),
               },
             ),
             player: Knight(
