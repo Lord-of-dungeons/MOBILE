@@ -64,14 +64,6 @@ class PlayerEnterDungeon extends GameDecoration {
                     fontStyle: FontStyle.italic, fontFamily: "Bungee"),
               ),
             ],
-            person: CustomSpriteAnimationWidget(
-              animation: EnemySpriteSheet.idleRight(
-                path: 'enemy/pepe_the_frog.png',
-                textureSize: Vector2(127.875, 127.875),
-                texturePosition: Vector2(0, 1150.875),
-              ),
-            ),
-            personSayDirection: PersonSayDirection.RIGHT,
           ),
           Say(
             text: [
@@ -101,6 +93,18 @@ class PlayerEnterDungeon extends GameDecoration {
               ),
             ),
             personSayDirection: PersonSayDirection.RIGHT,
+          ),
+          Say(
+            text: [
+              TextSpan(
+                text: getString('enter_dungeon_6'),
+                style: TextStyle(fontFamily: "Bungee"),
+              ),
+            ],
+            person: CustomSpriteAnimationWidget(
+              animation: PlayerSpriteSheet.idleRight,
+            ),
+            personSayDirection: PersonSayDirection.LEFT,
           ),
         ],
         onChangeTalk: (index) {},
