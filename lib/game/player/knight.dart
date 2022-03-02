@@ -17,6 +17,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   async.Timer? _timerLife;
   bool containKey = false;
   bool showObserveEnemy = false;
+  int regenerationLifeIncrement = 5;
 
   Knight(Vector2 position)
       : super(
@@ -147,12 +148,16 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     if (_timerLife == null) {
       _timerLife = async.Timer(Duration(milliseconds: 1000), () {
         _timerLife = null;
+        // si l'utilisateur n'est pas dans une phase de combat alors il y a une régénération incrémentielle de ses PV
+        if (showObserveEnemy == false && regenerationLifeIncrement < 5) {
+          regenerationLifeIncrement += 1;
+        }
       });
     } else {
       return;
     }
 
-    life += 1;
+    life += regenerationLifeIncrement;
     if (life > maxLife) {
       life = maxLife;
     }
@@ -201,6 +206,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void receiveDamage(double damage, dynamic id) {
     if (isDead) return;
+    regenerationLifeIncrement = 1;
     showDamage(
       damage,
       config: TextStyle(
@@ -225,7 +231,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         ),
         target: this,
         size: Vector2(32, 32),
-        positionFromTarget: Vector2(18, -6),
+        positionFromTarget: Vector2(18, -24),
       ),
     );
   }

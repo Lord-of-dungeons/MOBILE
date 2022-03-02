@@ -33,6 +33,7 @@ class PlayerEnterDungeon extends GameDecoration {
         gameRef.context,
         [
           Say(
+            speed: 33,
             text: [
               TextSpan(
                 text: getString('enter_dungeon_1'),
@@ -45,6 +46,7 @@ class PlayerEnterDungeon extends GameDecoration {
             personSayDirection: PersonSayDirection.LEFT,
           ),
           Say(
+            speed: 33,
             text: [
               TextSpan(
                 text: getString('enter_dungeon_2'),
@@ -57,6 +59,7 @@ class PlayerEnterDungeon extends GameDecoration {
             personSayDirection: PersonSayDirection.LEFT,
           ),
           Say(
+            speed: 33,
             text: [
               TextSpan(
                 text: getString('enter_dungeon_3'),
@@ -66,6 +69,7 @@ class PlayerEnterDungeon extends GameDecoration {
             ],
           ),
           Say(
+            speed: 33,
             text: [
               TextSpan(
                 text: getString('enter_dungeon_4'),
@@ -78,6 +82,7 @@ class PlayerEnterDungeon extends GameDecoration {
             personSayDirection: PersonSayDirection.LEFT,
           ),
           Say(
+            speed: 33,
             text: [
               TextSpan(
                 text: getString('enter_dungeon_5'),
@@ -95,6 +100,7 @@ class PlayerEnterDungeon extends GameDecoration {
             personSayDirection: PersonSayDirection.RIGHT,
           ),
           Say(
+            speed: 33,
             text: [
               TextSpan(
                 text: getString('enter_dungeon_6'),
