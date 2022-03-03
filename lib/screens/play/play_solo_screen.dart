@@ -128,9 +128,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                 'vampyrus_boss': (p) => VampyrusBoss(p.position),
               },
             ),
-            player: Knight(
-              Vector2(2 * tileSize, 3 * tileSize),
-            ),
+            player: Knight(Vector2(2 * tileSize, 3 * tileSize), "Macron"),
             // showCollisionArea: true,
             lightingColorGame: Colors.black.withOpacity(0.6),
             background: BackgroundColorGame(Colors.grey[900]!),

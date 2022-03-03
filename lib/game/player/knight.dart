@@ -18,8 +18,11 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   bool containKey = false;
   bool showObserveEnemy = false;
   int regenerationLifeIncrement = 5;
+  final String nick;
+  Vector2 sizeTextNick = Vector2.zero();
+  late TextPaint _textConfig;
 
-  Knight(Vector2 position)
+  Knight(Vector2 position, this.nick)
       : super(
           position: position,
           size: Vector2.all(tileSize),
@@ -48,6 +51,16 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         color: Colors.deepOrangeAccent.withOpacity(0.2),
       ),
     );
+
+    // setup du nom du perso flotant au dessus de lui
+    _textConfig = TextPaint(
+      style: TextStyle(
+        fontSize: tileSize / 3,
+        fontFamily: "Montserrat",
+        color: Colors.white,
+      ),
+    );
+    sizeTextNick = _textConfig.measureText(nick);
   }
 
   @override
@@ -181,6 +194,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
 
   @override
   void render(Canvas c) {
+    _renderNickName(c);
     super.render(c);
   }
 
@@ -232,6 +246,17 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         target: this,
         size: Vector2(32, 32),
         positionFromTarget: Vector2(18, -28),
+      ),
+    );
+  }
+
+  void _renderNickName(Canvas canvas) {
+    _textConfig.render(
+      canvas,
+      nick,
+      Vector2(
+        position.x + ((width - sizeTextNick.x) / 2),
+        position.y - sizeTextNick.y - 3,
       ),
     );
   }
