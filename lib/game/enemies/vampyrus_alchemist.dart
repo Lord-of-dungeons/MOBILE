@@ -10,6 +10,8 @@ class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
   final Vector2 initPosition;
   double initSpeed = tileSize / 0.25;
   double attack = 25;
+  double radiusVision = tileSize * 4;
+  bool _isReceiveDamage = false;
 
   VampyrusAlchemist(this.initPosition)
       : super(
@@ -91,7 +93,7 @@ class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
       closePlayer: (player) {
         execAttack();
       },
-      radiusVision: tileSize * 5,
+      radiusVision: radiusVision,
     );
   }
 
@@ -105,6 +107,32 @@ class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
         fontFamily: 'Montserrat',
       ),
     );
+
+    // si il reçoit des dégats alors on affiche l'émote qu'une fois et on augmente son champ de vision pour qu'il se dirige vers la première personne qu'il voit
+    if (_isReceiveDamage == false) {
+      _showEmote();
+    }
+    radiusVision = tileSize * 10;
+    _isReceiveDamage = true;
+
     super.receiveDamage(damage, id);
+  }
+
+  void _showEmote({String emote = 'emote/emote_exclamation.png'}) {
+    gameRef.add(
+      AnimatedFollowerObject(
+        animation: SpriteAnimation.load(
+          emote,
+          SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(32, 32),
+          ),
+        ),
+        target: this,
+        size: Vector2(32, 32),
+        positionFromTarget: Vector2(18, -24),
+      ),
+    );
   }
 }

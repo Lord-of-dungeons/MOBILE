@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 
+//TODO: augmenter le radius de la vision quand un ennemi reçoit des dégats afin qu'il se dirige vers son agresseur pour éviter de la tuer de loin sans se faire attaquer
 class EnemySpriteSheet {
   static Future<SpriteAnimation> idleRight(
           {required String path,
