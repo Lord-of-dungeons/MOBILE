@@ -44,6 +44,9 @@ class GameSpriteSheet {
         ),
       );
 
+  // ###########################################################
+  //                        FIREBALL
+  // ###########################################################
   static Future<SpriteAnimation> fireBallAttackRight() => SpriteAnimation.load(
         'player/fireball_right.png',
         SpriteAnimationData.sequenced(
@@ -86,6 +89,59 @@ class GameSpriteSheet {
           amount: 6,
           stepTime: 0.1,
           textureSize: Vector2(32, 32),
+        ),
+      );
+
+  // ###########################################################
+  //                        ULTIMATE
+  // ###########################################################
+  static Future<SpriteAnimation> pulseAttackRight() => SpriteAnimation.load(
+        'player/pulse.png',
+        SpriteAnimationData.sequenced(
+          amount: 5,
+          stepTime: 0.1,
+          // loop: false,
+          textureSize: Vector2(192, 192),
+        ),
+      );
+
+  static Future<SpriteAnimation> pulseAttackLeft() => SpriteAnimation.load(
+        'player/pulse.png',
+        SpriteAnimationData.sequenced(
+          amount: 5,
+          stepTime: 0.1,
+          // loop: false,
+          textureSize: Vector2(192, 192),
+        ),
+      );
+
+  static Future<SpriteAnimation> pulseAttackTop() => SpriteAnimation.load(
+        'player/pulse.png',
+        SpriteAnimationData.sequenced(
+          amount: 5,
+          stepTime: 0.1,
+          // loop: false,
+          textureSize: Vector2(192, 192),
+        ),
+      );
+
+  static Future<SpriteAnimation> pulseAttackBottom() => SpriteAnimation.load(
+        'player/pulse.png',
+        SpriteAnimationData.sequenced(
+          amount: 5,
+          stepTime: 0.1,
+          // loop: false,
+          textureSize: Vector2(192, 192),
+        ),
+      );
+
+  static Future<SpriteAnimation> pulseExplosion() => SpriteAnimation.load(
+        'player/pulse.png',
+        SpriteAnimationData.sequenced(
+          amount: 5,
+          stepTime: 0.1,
+          textureSize: Vector2(192, 192),
+          texturePosition: Vector2(0, 192),
         ),
       );
 }

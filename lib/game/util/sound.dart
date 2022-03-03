@@ -35,6 +35,11 @@ class Sounds {
     FlameAudio.play('explosion.wav');
   }
 
+  static void thunder() {
+    if (kIsWeb) return;
+    FlameAudio.play('lightining.mp3');
+  }
+
   static void interaction() {
     if (kIsWeb) return;
     FlameAudio.play('sound_interaction.wav', volume: 0.4);

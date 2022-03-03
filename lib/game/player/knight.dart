@@ -15,6 +15,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double mana = 100;
   async.Timer? _timerMana;
   async.Timer? _timerLife;
+  async.Timer? _timerPulse;
   bool containKey = false;
   bool showObserveEnemy = false;
   int regenerationLifeIncrement = 5;
@@ -71,6 +72,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
 
   @override
   void joystickAction(JoystickActionEvent event) {
+    // attaque de base
     if (event.id == 0 && event.event == ActionEvent.DOWN) {
       actionAttack();
     }
@@ -80,9 +82,16 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       actionAttack();
     }
 
+    // sort
     if (event.id == 1 && event.event == ActionEvent.DOWN) {
       actionAttackRange();
     }
+
+    // ulti
+    if (event.id == 2 && event.event == ActionEvent.DOWN) {
+      actionUltimateRange();
+    }
+
     super.joystickAction(event);
   }
 
@@ -133,6 +142,52 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         color: Colors.deepOrangeAccent.withOpacity(0.4),
       ),
     );
+  }
+
+  void actionUltimateRange() {
+    //TODO: vérifier le mana si c'est possible d'attaquer
+    if (mana < 40) {
+      return;
+    }
+
+    Sounds.attackRange();
+
+    //TODO: décrémenter le mana en fonction du coût
+    decrementMana(40);
+
+    Sounds.thunder();
+    // salve de boules électriques de 33*5 dégats
+    for (var i = 0; i < 5; i++) {
+      _timerPulse = async.Timer(Duration(milliseconds: i * 400), () {
+        simpleAttackRange(
+          animationRight: GameSpriteSheet.pulseAttackRight(),
+          animationLeft: GameSpriteSheet.pulseAttackLeft(),
+          animationUp: GameSpriteSheet.pulseAttackTop(),
+          animationDown: GameSpriteSheet.pulseAttackBottom(),
+          animationDestroy: GameSpriteSheet.pulseExplosion(),
+          size: Vector2(tileSize * 1.5, tileSize * 1.5),
+          damage: 33,
+          speed: initSpeed,
+          enableDiagonal: false,
+          onDestroy: () {
+            Sounds.explosion();
+          },
+          collision: CollisionConfig(
+            collisions: [
+              CollisionArea.rectangle(
+                  size: Vector2(tileSize * 1.1, tileSize * 1.1)),
+            ],
+          ),
+          lightingConfig: LightingConfig(
+            radius: tileSize,
+            blurBorder: tileSize / 2,
+            color: Color.fromARGB(255, 128, 217, 233).withOpacity(0.4),
+          ),
+        );
+      });
+      // destruction du timer
+      _timerPulse = null;
+    }
   }
 
   void decrementMana(int i) {

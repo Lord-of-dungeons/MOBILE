@@ -109,6 +109,13 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                       Sprite.load('joystick_atack_range_selected.png'),
                   size: 50,
                   margin: EdgeInsets.only(bottom: 50, right: 160),
+                ),
+                JoystickAction(
+                  actionId: 2,
+                  sprite: Sprite.load('joystick_atom.png'),
+                  spritePressed: Sprite.load('joystick_atom_selected.png'),
+                  size: 50,
+                  margin: EdgeInsets.only(bottom: 50, right: 230),
                 )
               ],
             ),
