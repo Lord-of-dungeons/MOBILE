@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:lordofdungeons/game/util/emote_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
@@ -118,20 +119,13 @@ class VampyrusAlchemist extends SimpleEnemy with ObjectCollision {
     super.receiveDamage(damage, id);
   }
 
-  void _showEmote({String emote = 'emote/emote_exclamation.png'}) {
+  void _showEmote() {
     gameRef.add(
       AnimatedFollowerObject(
-        animation: SpriteAnimation.load(
-          emote,
-          SpriteAnimationData.sequenced(
-            amount: 8,
-            stepTime: 0.1,
-            textureSize: Vector2(32, 32),
-          ),
-        ),
+        animation: EmoteSpriteSheet.angry(),
         target: this,
         size: Vector2(32, 32),
-        positionFromTarget: Vector2(18, -24),
+        positionFromTarget: Vector2(18, -28),
       ),
     );
   }

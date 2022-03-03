@@ -231,7 +231,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         ),
         target: this,
         size: Vector2(32, 32),
-        positionFromTarget: Vector2(18, -24),
+        positionFromTarget: Vector2(18, -28),
       ),
     );
   }
