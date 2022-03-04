@@ -178,15 +178,14 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
           animationDestroy: GameSpriteSheet.pulseExplosion(),
           size: Vector2(tileSize * 1.5, tileSize * 1.5),
           damage: 33,
-          speed: initSpeed,
+          speed: initSpeed * 1.5,
           enableDiagonal: false,
           onDestroy: () {
             Sounds.explosion();
           },
           collision: CollisionConfig(
             collisions: [
-              CollisionArea.rectangle(
-                  size: Vector2(tileSize * 1.1, tileSize * 1.1)),
+              CollisionArea.rectangle(size: Vector2(tileSize, tileSize)),
             ],
           ),
           lightingConfig: LightingConfig(
@@ -202,6 +201,14 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   }
 
   void actionUltimateArmor() {
+    //TODO: vérifier le mana si c'est possible d'attaquer
+    if (mana < 40) {
+      return;
+    }
+
+    //TODO: décrémenter le mana en fonction du coût
+    decrementMana(40);
+
     Sounds.bioup();
     FollowerWidget.show(
       identify: 'ULTI_ARMOR', // identify used to remove
@@ -233,6 +240,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         // suppression de l'ulti
         if (ultiArmorCounter == 0) {
           Sounds.bioup();
+          FollowerWidget.remove("ULTI_ARMOR");
         }
       });
     }
@@ -283,6 +291,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void die() {
     removeFromParent();
+    FollowerWidget.remove("ULTI_ARMOR");
     gameRef.add(
       GameDecoration.withSprite(
         sprite: Sprite.load('player/crypt.png'),
@@ -299,11 +308,6 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void render(Canvas c) {
     _renderNickName(c);
-
-    // suppression du petit bouclier flotant au dessus du perso
-    if (ultiArmorCounter == 0) {
-      FollowerWidget.remove("ULTI_ARMOR");
-    }
 
     super.render(c);
   }
@@ -330,12 +334,21 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void receiveDamage(double damage, dynamic id) {
     if (isDead) return;
+
     regenerationLifeIncrement = 1;
+    Color color = Colors.orange;
+
+    // si l'ulti armor est activé alors on réduit par 2 les dégats
+    if (ultiArmorCounter > 0) {
+      damage = (damage / 2).ceilToDouble();
+      color = Colors.orangeAccent;
+    }
+
     showDamage(
       damage,
       config: TextStyle(
         fontSize: valueByTileSize(5),
-        color: Colors.orange,
+        color: color,
         fontFamily: 'Montserrat',
       ),
     );
