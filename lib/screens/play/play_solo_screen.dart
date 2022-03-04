@@ -60,6 +60,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     Sounds.stopBackgroundSound();
+    Sounds.dispose();
     FollowerWidget.removeAll();
     super.dispose();
   }

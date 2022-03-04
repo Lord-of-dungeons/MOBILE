@@ -12,7 +12,7 @@ class Dialogs {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Image.asset(
-                'assets/game_over.png',
+                'assets/images/game_over.png',
                 height: 100,
               ),
               SizedBox(
@@ -25,10 +25,10 @@ class Dialogs {
                 ),
                 onPressed: playAgain,
                 child: Text(
-                  getString('play_again_cap'),
+                  getString('play_again'),
                   style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Normal',
+                      fontFamily: 'Bungee',
                       fontSize: 20.0),
                 ),
               )
