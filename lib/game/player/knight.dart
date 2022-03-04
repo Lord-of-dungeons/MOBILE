@@ -16,12 +16,18 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   async.Timer? _timerMana;
   async.Timer? _timerLife;
   async.Timer? _timerPulse;
+  async.Timer? _ultiArmorCounter;
   bool containKey = false;
   bool showObserveEnemy = false;
   int regenerationLifeIncrement = 5;
+  //
   final String nick;
   Vector2 sizeTextNick = Vector2.zero();
-  late TextPaint _textConfig;
+  late TextPaint _textConfigNick;
+  //
+  int ultiArmorCounter = 0;
+  Vector2 sizeTextultiArmorCounter = Vector2.zero();
+  late TextPaint _textConfigUltiArmor;
 
   Knight(Vector2 position, this.nick)
       : super(
@@ -44,7 +50,6 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         ],
       ),
     );
-
     setupLighting(
       LightingConfig(
         radius: width * 1.5,
@@ -54,14 +59,25 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     );
 
     // setup du nom du perso flotant au dessus de lui
-    _textConfig = TextPaint(
+    _textConfigNick = TextPaint(
       style: TextStyle(
         fontSize: tileSize / 3,
         fontFamily: "Montserrat",
         color: Colors.white,
       ),
     );
-    sizeTextNick = _textConfig.measureText(nick);
+    sizeTextNick = _textConfigNick.measureText(nick);
+
+    // setup du compteur pour la durée restante de l'ulti armure
+    _textConfigUltiArmor = TextPaint(
+      style: TextStyle(
+        fontSize: tileSize,
+        fontFamily: "Bungee",
+        color: Colors.white,
+      ),
+    );
+    sizeTextultiArmorCounter =
+        _textConfigUltiArmor.measureText(ultiArmorCounter.toString());
   }
 
   @override
@@ -87,9 +103,14 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       actionAttackRange();
     }
 
-    // ulti
+    // ulti mage
     if (event.id == 2 && event.event == ActionEvent.DOWN) {
       actionUltimateRange();
+    }
+
+    // ulti guerrier
+    if (event.id == 3 && event.event == ActionEvent.DOWN) {
+      actionUltimateArmor();
     }
 
     super.joystickAction(event);
@@ -190,6 +211,15 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     }
   }
 
+  void actionUltimateArmor() {
+    for (var i = 0; i <= 10; i++) {
+      _ultiArmorCounter = async.Timer(Duration(seconds: i), () {
+        ultiArmorCounter = 10 - i;
+      });
+    }
+    _ultiArmorCounter = null;
+  }
+
   void decrementMana(int i) {
     mana -= i;
     if (mana < 0) {
@@ -250,6 +280,12 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   @override
   void render(Canvas c) {
     _renderNickName(c);
+
+    // affichage du compteur que si on clique sur l'ulti adequat
+    if (ultiArmorCounter > 0) {
+      _renderultiArmorCounter(c);
+    }
+
     super.render(c);
   }
 
@@ -306,7 +342,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   }
 
   void _renderNickName(Canvas canvas) {
-    _textConfig.render(
+    _textConfigNick.render(
       canvas,
       nick,
       Vector2(
@@ -314,5 +350,16 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         position.y - sizeTextNick.y - 3,
       ),
     );
+  }
+
+  void _renderultiArmorCounter(Canvas canvas) {
+    _textConfigUltiArmor.render(
+        canvas,
+        ultiArmorCounter.toString(),
+        Vector2(
+          position.x + ((width - sizeTextultiArmorCounter.x - 5)),
+          position.y - sizeTextultiArmorCounter.y + 18,
+        ),
+        anchor: Anchor.bottomLeft);
   }
 }

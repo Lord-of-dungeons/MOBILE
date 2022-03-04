@@ -116,6 +116,13 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                   spritePressed: Sprite.load('joystick_atom_selected.png'),
                   size: 50,
                   margin: EdgeInsets.only(bottom: 50, right: 230),
+                ),
+                JoystickAction(
+                  actionId: 3,
+                  sprite: Sprite.load('joystick_armor.png'),
+                  spritePressed: Sprite.load('joystick_armor.png'),
+                  size: 50,
+                  margin: EdgeInsets.only(bottom: 50, right: 300),
                 )
               ],
             ),
@@ -142,10 +149,11 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
             interface: KnightInterface(),
             showFPS: true,
             progress: Container(
+              alignment: Alignment.center,
               color: Colors.black,
               child: Center(
                 child: Text(
-                  "Chargement...",
+                  "Chargement . . .",
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Bungee',

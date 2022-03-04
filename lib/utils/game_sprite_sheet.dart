@@ -100,7 +100,6 @@ class GameSpriteSheet {
         SpriteAnimationData.sequenced(
           amount: 5,
           stepTime: 0.1,
-          // loop: false,
           textureSize: Vector2(192, 192),
         ),
       );
@@ -110,7 +109,6 @@ class GameSpriteSheet {
         SpriteAnimationData.sequenced(
           amount: 5,
           stepTime: 0.1,
-          // loop: false,
           textureSize: Vector2(192, 192),
         ),
       );
@@ -120,7 +118,6 @@ class GameSpriteSheet {
         SpriteAnimationData.sequenced(
           amount: 5,
           stepTime: 0.1,
-          // loop: false,
           textureSize: Vector2(192, 192),
         ),
       );
@@ -130,7 +127,6 @@ class GameSpriteSheet {
         SpriteAnimationData.sequenced(
           amount: 5,
           stepTime: 0.1,
-          // loop: false,
           textureSize: Vector2(192, 192),
         ),
       );
