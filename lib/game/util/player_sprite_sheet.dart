@@ -89,6 +89,65 @@ class PlayerSpriteSheet {
             texturePosition: Vector2(0, 96)),
       );
 
+  // #####################################################################
+  //                              ULTI ARMOR
+  // #####################################################################
+  static Future<SpriteAnimation> get idleRightUltiArmor => SpriteAnimation.load(
+        "spartiate.png",
+        SpriteAnimationData.sequenced(
+            amount: 1,
+            stepTime: 1,
+            textureSize: Vector2(77, 77),
+            texturePosition: Vector2(0, 0)),
+      );
+
+  static Future<SpriteAnimation> get idleLeftUltiArmor => SpriteAnimation.load(
+        "spartiate.png",
+        SpriteAnimationData.sequenced(
+            amount: 1,
+            stepTime: 1,
+            textureSize: Vector2(77, 77),
+            texturePosition: Vector2(0, 0)),
+      );
+
+  static Future<SpriteAnimation> get runDownUltiArmor => SpriteAnimation.load(
+        "spartiate.png",
+        SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(77, 77),
+            texturePosition: Vector2(0, 0)),
+      );
+
+  static Future<SpriteAnimation> get runRightUltiArmor => SpriteAnimation.load(
+        "spartiate.png",
+        SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(77, 77),
+            texturePosition: Vector2(0, 154)),
+      );
+
+  static Future<SpriteAnimation> get runLeftUltiArmor => SpriteAnimation.load(
+        "spartiate.png",
+        SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(77, 77),
+            texturePosition: Vector2(0, 77)),
+      );
+
+  static Future<SpriteAnimation> get runUpUltiArmor => SpriteAnimation.load(
+        "spartiate.png",
+        SpriteAnimationData.sequenced(
+            amount: 8,
+            stepTime: 0.1,
+            textureSize: Vector2(77, 77),
+            texturePosition: Vector2(0, 231)),
+      );
+
+  //
+  //
   static SimpleDirectionAnimation get simpleDirectionAnimation =>
       SimpleDirectionAnimation(
         idleRight: idleRight,
@@ -98,13 +157,14 @@ class PlayerSpriteSheet {
         runRight: runRight,
         runLeft: runLeft,
       );
-}
 
-class Kinght extends SimplePlayer {
-  Kinght(Vector2 position)
-      : super(
-          position: position,
-          size: Vector2(32, 32),
-          animation: PlayerSpriteSheet.simpleDirectionAnimation,
-        );
+  static SimpleDirectionAnimation get simpleDirectionAnimationUltiArmor =>
+      SimpleDirectionAnimation(
+        idleRight: idleRightUltiArmor,
+        idleLeft: idleLeftUltiArmor,
+        runDown: runDownUltiArmor,
+        runUp: runUpUltiArmor,
+        runRight: runRightUltiArmor,
+        runLeft: runLeftUltiArmor,
+      );
 }

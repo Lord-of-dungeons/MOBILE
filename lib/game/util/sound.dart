@@ -40,6 +40,21 @@ class Sounds {
     FlameAudio.play('lightining.mp3');
   }
 
+  static void monsterRoar() {
+    if (kIsWeb) return;
+    FlameAudio.play('monster_roar.mp3');
+  }
+
+  static void bioup() {
+    if (kIsWeb) return;
+    FlameAudio.play('bioup.wav');
+  }
+
+  static void countHide() {
+    if (kIsWeb) return;
+    FlameAudio.play('count_hide.wav');
+  }
+
   static void interaction() {
     if (kIsWeb) return;
     FlameAudio.play('sound_interaction.wav', volume: 0.4);

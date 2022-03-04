@@ -3,6 +3,7 @@ import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lordofdungeons/game/util/custom_sprite_animation_widget.dart';
 import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
@@ -26,8 +27,6 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   late TextPaint _textConfigNick;
   //
   int ultiArmorCounter = 0;
-  Vector2 sizeTextultiArmorCounter = Vector2.zero();
-  late TextPaint _textConfigUltiArmor;
 
   Knight(Vector2 position, this.nick)
       : super(
@@ -67,17 +66,6 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       ),
     );
     sizeTextNick = _textConfigNick.measureText(nick);
-
-    // setup du compteur pour la durée restante de l'ulti armure
-    _textConfigUltiArmor = TextPaint(
-      style: TextStyle(
-        fontSize: tileSize,
-        fontFamily: "Bungee",
-        color: Colors.white,
-      ),
-    );
-    sizeTextultiArmorCounter =
-        _textConfigUltiArmor.measureText(ultiArmorCounter.toString());
   }
 
   @override
@@ -109,7 +97,9 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     }
 
     // ulti guerrier
-    if (event.id == 3 && event.event == ActionEvent.DOWN) {
+    if (event.id == 3 &&
+        event.event == ActionEvent.DOWN &&
+        ultiArmorCounter == 0) {
       actionUltimateArmor();
     }
 
@@ -212,9 +202,38 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   }
 
   void actionUltimateArmor() {
+    Sounds.bioup();
+    FollowerWidget.show(
+      identify: 'ULTI_ARMOR', // identify used to remove
+      context: context,
+      target: this, // You can add here any GameComponent
+      child: CustomSpriteAnimationWidget(
+        animation: SpriteAnimation.load(
+          "shield_20.png",
+          SpriteAnimationData.sequenced(
+            amount: 1,
+            stepTime: 1,
+            textureSize: Vector2(24, 24),
+          ),
+        ),
+        width: 25,
+        height: 25,
+      ),
+      align: Offset(2.5, -45),
+    );
     for (var i = 0; i <= 10; i++) {
       _ultiArmorCounter = async.Timer(Duration(seconds: i), () {
         ultiArmorCounter = 10 - i;
+
+        // on émet un son quand le bouclier arrive à expiration
+        if (ultiArmorCounter < 4 && ultiArmorCounter > 0) {
+          Sounds.countHide();
+        }
+
+        // suppression de l'ulti
+        if (ultiArmorCounter == 0) {
+          Sounds.bioup();
+        }
       });
     }
     _ultiArmorCounter = null;
@@ -281,9 +300,9 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   void render(Canvas c) {
     _renderNickName(c);
 
-    // affichage du compteur que si on clique sur l'ulti adequat
-    if (ultiArmorCounter > 0) {
-      _renderultiArmorCounter(c);
+    // suppression du petit bouclier flotant au dessus du perso
+    if (ultiArmorCounter == 0) {
+      FollowerWidget.remove("ULTI_ARMOR");
     }
 
     super.render(c);
@@ -350,16 +369,5 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         position.y - sizeTextNick.y - 3,
       ),
     );
-  }
-
-  void _renderultiArmorCounter(Canvas canvas) {
-    _textConfigUltiArmor.render(
-        canvas,
-        ultiArmorCounter.toString(),
-        Vector2(
-          position.x + ((width - sizeTextultiArmorCounter.x - 5)),
-          position.y - sizeTextultiArmorCounter.y + 18,
-        ),
-        anchor: Anchor.bottomLeft);
   }
 }

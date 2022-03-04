@@ -60,6 +60,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     Sounds.stopBackgroundSound();
+    FollowerWidget.removeAll();
     super.dispose();
   }
 
@@ -120,7 +121,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                 JoystickAction(
                   actionId: 3,
                   sprite: Sprite.load('joystick_armor.png'),
-                  spritePressed: Sprite.load('joystick_armor.png'),
+                  spritePressed: Sprite.load('joystick_armor_selected.png'),
                   size: 50,
                   margin: EdgeInsets.only(bottom: 50, right: 300),
                 )
