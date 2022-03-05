@@ -28,7 +28,6 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
     with WidgetsBindingObserver
     implements GameListener {
   bool showGameOver = false;
-
   late GameController _controller;
 
   @override
@@ -148,7 +147,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
             // showCollisionArea: true,
             lightingColorGame: Colors.black.withOpacity(0.6),
             background: BackgroundColorGame(Colors.grey[900]!),
-            interface: KnightInterface(),
+            interface: KnightInterface(context),
             showFPS: true,
             progress: Container(
               alignment: Alignment.center,

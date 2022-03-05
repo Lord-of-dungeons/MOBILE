@@ -39,8 +39,9 @@ class Dialogs {
     );
   }
 
-  static void showInventory(BuildContext context, VoidCallback playAgain) {
-    showDialog(
+  static Future<dynamic> showInventory(
+      BuildContext context, VoidCallback playAgain) async {
+    return await showDialog(
       context: context,
       barrierDismissible: true,
       builder: (context) {

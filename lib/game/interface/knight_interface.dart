@@ -1,16 +1,20 @@
-import 'dart:ui';
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/game/interface/bar_life_component.dart';
+import 'package:lordofdungeons/game/interface/inventory_component.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
 
 class KnightInterface extends GameInterface {
   late Sprite key;
+  BuildContext context;
+
+  KnightInterface(this.context);
 
   @override
   Future<void> onLoad() async {
     key = await Sprite.load('itens/key_silver.png');
     add(BarLifeComponent());
+    add(InventoryComponent(context));
     return super.onLoad();
   }
 
