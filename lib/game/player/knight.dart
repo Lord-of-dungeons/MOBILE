@@ -18,7 +18,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   bool showObserveEnemy = false;
   int regenerationLifeIncrement = 5;
   int ultiArmorCounter = 0;
-  Map<String, int> inventory = {"potion": 0};
+  Map<String, int> inventory = {"potionLife": 0, "potionMana": 0};
   //
   async.Timer? _timerMana;
   async.Timer? _timerLife;

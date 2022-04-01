@@ -18,7 +18,7 @@ class PotionLife extends GameDecoration with Sensor {
     if (player is! Knight) return;
 
     // incrémentation des potions dans l'inventaire
-    player.inventory.update("potion", (v) => v + 1);
+    player.inventory.update("potionLife", (v) => v + 1);
   }
 
   @override

@@ -131,8 +131,8 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
               'tiled/map.json',
               forceTileSize: Size(tileSize, tileSize),
               objectsBuilder: {
-                'player_enter_dungeon': (p) =>
-                    PlayerEnterDungeon(p.position, empty: true),
+                // 'player_enter_dungeon': (p) =>
+                //     PlayerEnterDungeon(p.position, empty: true),
                 'torch': (p) => Torch(p.position),
                 'spikes': (p) => Spikes(p.position),
                 'torch_empty': (p) => Torch(p.position, empty: true),
