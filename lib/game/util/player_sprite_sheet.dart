@@ -41,6 +41,24 @@ class PlayerSpriteSheet {
             amount: 1,
             stepTime: 1,
             textureSize: Vector2(32, 32),
+            texturePosition: Vector2(0, 64)),
+      );
+
+  static Future<SpriteAnimation> get idleUp => SpriteAnimation.load(
+        "Male 01-1.png",
+        SpriteAnimationData.sequenced(
+            amount: 1,
+            stepTime: 1,
+            textureSize: Vector2(32, 32),
+            texturePosition: Vector2(0, 96)),
+      );
+
+  static Future<SpriteAnimation> get idleDown => SpriteAnimation.load(
+        "Male 01-1.png",
+        SpriteAnimationData.sequenced(
+            amount: 1,
+            stepTime: 1,
+            textureSize: Vector2(32, 32),
             texturePosition: Vector2(0, 0)),
       );
 
@@ -50,7 +68,7 @@ class PlayerSpriteSheet {
             amount: 1,
             stepTime: 1,
             textureSize: Vector2(32, 32),
-            texturePosition: Vector2(0, 0)),
+            texturePosition: Vector2(0, 32)),
       );
 
   static Future<SpriteAnimation> get runDown => SpriteAnimation.load(
@@ -152,6 +170,8 @@ class PlayerSpriteSheet {
       SimpleDirectionAnimation(
         idleRight: idleRight,
         idleLeft: idleLeft,
+        idleDown: idleDown,
+        idleUp: idleUp,
         runDown: runDown,
         runUp: runUp,
         runRight: runRight,

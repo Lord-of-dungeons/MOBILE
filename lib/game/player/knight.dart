@@ -14,19 +14,19 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double initSpeed = tileSize / 0.25;
   double attack = 25;
   double mana = 100;
+  bool containKey = false;
+  bool showObserveEnemy = false;
+  int regenerationLifeIncrement = 5;
+  int ultiArmorCounter = 0;
+  //
   async.Timer? _timerMana;
   async.Timer? _timerLife;
   async.Timer? _timerPulse;
   async.Timer? _ultiArmorCounter;
-  bool containKey = false;
-  bool showObserveEnemy = false;
-  int regenerationLifeIncrement = 5;
   //
   final String nick;
   Vector2 sizeTextNick = Vector2.zero();
   late TextPaint _textConfigNick;
-  //
-  int ultiArmorCounter = 0;
 
   Knight(Vector2 position, this.nick)
       : super(
