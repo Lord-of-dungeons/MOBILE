@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
 import 'package:lordofdungeons/game/util/localization/strings_location.dart';
@@ -52,26 +53,46 @@ class Dialogs {
       barrierDismissible: true,
       builder: (context) {
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Row(
+              children: [
+                Container(
+                  width: (screenSize.width / 2),
+                  margin: EdgeInsets.only(bottom: 20, top: 20),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Consommables',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Bungee",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                /************************************************************************************************************/
+                Container(
+                  width: (screenSize.width / 2),
+                  margin: EdgeInsets.only(bottom: 20, top: 20),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Équipements',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Bungee",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Row(
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Consommables',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "Bungee",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
                     Container(
                       alignment: Alignment.center,
                       width: (screenSize.width / 2) - 40,
@@ -179,125 +200,36 @@ class Dialogs {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 20),
                       alignment: Alignment.center,
-                      child: Text(
-                        'Équipements',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "Bungee",
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
+                      height: screenSize.height * 0.4,
                       width: (screenSize.width / 2) - 40,
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GFAvatar(
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: AssetImage(
-                                  'assets/images/itens/potion_red.png'),
-                              shape: GFAvatarShape.standard,
-                              size: GFSize.SMALL,
-                            ),
-                            SizedBox(width: 20),
-                            Expanded(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Potion de vie',
+                      child: ListView.builder(
+                          itemCount: 10,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Listener(
+                              onPointerDown: (_) {},
+                              child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                width: (screenSize.width / 2) - 40,
+                                height: 50,
+                                color: Colors.red,
+                                child: Text(
+                                  "test" + index.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: "Bungee",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12,
                                   ),
                                 ),
-                                Text(
-                                  'x' +
-                                      player.inventory["potionLife"].toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Montserrat",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ))
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: (screenSize.width / 2) - 40,
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GFAvatar(
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: AssetImage(
-                                  'assets/images/itens/potion_blue.png'),
-                              shape: GFAvatarShape.standard,
-                              size: GFSize.SMALL,
-                            ),
-                            SizedBox(width: 20),
-                            Expanded(
-                                child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Potion de mana',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Bungee",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'x' +
-                                      player.inventory["potionMana"].toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Montserrat",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ))
-                          ],
-                        ),
-                      ),
+                              ),
+                            );
+                          }),
                     ),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 50),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   width: 100,
