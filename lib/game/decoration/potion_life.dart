@@ -1,4 +1,5 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:lordofdungeons/game/player/knight.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 
 class PotionLife extends GameDecoration with Sensor {
@@ -12,14 +13,18 @@ class PotionLife extends GameDecoration with Sensor {
           size: Vector2(tileSize, tileSize),
         );
 
-  void _starTimeAddLife() {
-    gameRef.player?.addLife(life);
+  void _addLifeToInventory() {
+    Knight? player = gameRef.player as Knight?;
+    if (player is! Knight) return;
+
+    // incrémentation des potions dans l'inventaire
+    player.inventory.update("potion", (v) => v + 1);
   }
 
   @override
   void onContact(GameComponent collision) {
     if (collision is Player) {
-      _starTimeAddLife();
+      _addLifeToInventory();
       removeFromParent();
     }
   }

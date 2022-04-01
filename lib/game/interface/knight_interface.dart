@@ -14,7 +14,7 @@ class KnightInterface extends GameInterface {
   Future<void> onLoad() async {
     key = await Sprite.load('itens/key_silver.png');
     add(BarLifeComponent());
-    add(InventoryComponent(context));
+    add(InventoryComponent(context, gameRef.player as Knight));
     return super.onLoad();
   }
 
