@@ -12,9 +12,7 @@ class InventoryComponent extends InterfaceComponent {
             spriteSelected: Sprite.load('inventory.png'),
             spriteUnselected: Sprite.load('inventory.png'),
             selectable: true,
-            onTapComponent: (bool b) async {
-              await Dialogs.showInventory(context, player);
-            });
+            onTapComponent: (bool b) async {});
 
   @override
   void update(double t) {

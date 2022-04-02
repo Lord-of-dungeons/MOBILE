@@ -3,6 +3,7 @@ import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lordofdungeons/game/util/calculator.dart';
 import 'package:lordofdungeons/game/util/custom_sprite_animation_widget.dart';
 import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
@@ -13,12 +14,14 @@ import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
 class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double initSpeed = tileSize / 0.25;
   double attack = 25;
+  double bonusAttack = 0;
+  double armor = 15;
+  double bonusArmor = 0;
   double mana = 100;
   bool containKey = false;
   bool showObserveEnemy = false;
   int regenerationLifeIncrement = 5;
   int ultiArmorCounter = 0;
-  Map<String, int> inventory = {"potionLife": 0, "potionMana": 0};
   //
   async.Timer? _timerMana;
   async.Timer? _timerLife;
@@ -111,7 +114,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     Sounds.attackPlayerMelee();
 
     simpleAttackMelee(
-      damage: attack,
+      damage: _getAttack(),
       animationDown: PlayerSpriteSheet.attackEffectBottom(),
       animationLeft: PlayerSpriteSheet.attackEffectLeft(),
       animationRight: PlayerSpriteSheet.attackEffectRight(),
@@ -344,6 +347,8 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     if (ultiArmorCounter > 0) {
       damage = (damage / 2).ceilToDouble();
       color = Colors.orangeAccent;
+    } else {
+      damage = Calculator.damageReducer(damage, _getArmor());
     }
 
     showDamage(
@@ -384,5 +389,13 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
         position.y - sizeTextNick.y - 3,
       ),
     );
+  }
+
+  double _getAttack() {
+    return attack + bonusAttack;
+  }
+
+  double _getArmor() {
+    return armor + bonusArmor;
   }
 }

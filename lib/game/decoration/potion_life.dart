@@ -13,18 +13,14 @@ class PotionLife extends GameDecoration with Sensor {
           size: Vector2(tileSize, tileSize),
         );
 
-  void _addLifeToInventory() {
-    Knight? player = gameRef.player as Knight?;
-    if (player is! Knight) return;
-
-    // incrémentation des potions dans l'inventaire
-    player.inventory.update("potionLife", (v) => v + 1);
+  void _starTimeAddLife() {
+    gameRef.player?.addLife(life);
   }
 
   @override
   void onContact(GameComponent collision) {
     if (collision is Player) {
-      _addLifeToInventory();
+      _starTimeAddLife();
       removeFromParent();
     }
   }
