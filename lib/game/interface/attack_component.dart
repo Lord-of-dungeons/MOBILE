@@ -10,7 +10,7 @@ class AttackComponent extends InterfaceComponent {
           size: Vector2(50, 50),
           spriteSelected: Sprite.load('carre_noir.png'),
           spriteUnselected: Sprite.load('carre_noir.png'),
-          selectable: true,
+          selectable: false,
         );
 
   @override

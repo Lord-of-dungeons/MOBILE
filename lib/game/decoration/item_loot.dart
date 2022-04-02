@@ -27,7 +27,9 @@ class ItemLoot extends GameDecoration with Sensor {
 
     // on ajoute le nouvel item
     interface.add(ItemLootComponent(
-      onTapComponent: (p) => {interface.removeById(id)},
+      onTapComponent: (p) {
+        interface.removeById(id);
+      },
       id: id,
       path: path,
       position: positionInterface,
