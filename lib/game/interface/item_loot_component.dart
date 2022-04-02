@@ -1,8 +1,8 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 
-class ItemComponent extends InterfaceComponent {
-  ItemComponent({
+class ItemLootComponent extends InterfaceComponent {
+  ItemLootComponent({
     required Vector2 position,
     required String path,
     required int id,
