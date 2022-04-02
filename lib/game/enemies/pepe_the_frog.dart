@@ -1,6 +1,7 @@
+import 'dart:math';
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:lordofdungeons/game/decoration/item_attack.dart';
+import 'package:lordofdungeons/game/decoration/item_loot.dart';
 import 'package:lordofdungeons/game/decoration/potion_life.dart';
 import 'package:lordofdungeons/game/util/emote_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
@@ -47,8 +48,17 @@ class PepeTheFrog extends SimpleEnemy with ObjectCollision {
         size: Vector2(32, 32),
       ),
     );
+
+    Random random = Random();
+    int randomNumber = random.nextInt(2); // 0 1
+    if (randomNumber == 0) {
+      gameRef
+          .add(ItemLoot(position, "weapons/shield_1.png", Vector2(20, 140), 4));
+    } else {
+      gameRef
+          .add(ItemLoot(position, "weapons/sword_1.png", Vector2(20, 80), 5));
+    }
     // gameRef.add(PotionLife(position, 10));
-    gameRef.add(ItemAttack(position, "weapons/sword_1.png"));
     removeFromParent();
     super.die();
   }
