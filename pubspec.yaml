@@ -95,6 +95,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/tiled/
+    - assets/images/weapons/
     - assets/images/player/
     - assets/images/enemy/
     - assets/images/emote/

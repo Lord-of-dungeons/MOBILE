@@ -92,8 +92,8 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                 spriteBackgroundDirectional:
                     Sprite.load('joystick_background.png'),
                 spriteKnobDirectional: Sprite.load('joystick_knob.png'),
-                size: 100,
-                isFixed: false,
+                size: 115,
+                isFixed: true,
               ),
               actions: [
                 JoystickAction(
