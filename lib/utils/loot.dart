@@ -12,11 +12,16 @@ class Loot {
       case Monsters.PepeTheFrog:
         Random random = Random();
         int randomNumber = random.nextInt(2);
+        bool canLoot = _getProbaToLootItem(0.5);
+        if (canLoot == false) break;
+
         randomNumber == 0
             ? gameRef.add(PotionLife(position, 10))
             : gameRef.add(PotionLife(position, 10));
         break;
       case Monsters.Skeleton:
+        bool canLoot = _getProbaToLootItem(0.2);
+        if (canLoot == false) break;
         _getWeaponOrArmor(gameRef, position);
         break;
       default:
@@ -72,5 +77,14 @@ class Loot {
     } else {
       gameRef.add(ItemLoot(position, path, Vector2(20, 80), 5));
     }
+  }
+
+  static bool _getProbaToLootItem(double proba) {
+    Random random = Random();
+    // on divise 1 par la proba en faisant l'arrondi pour avoir une proba entre 1 et x
+    // exemple : 1/0.2 = 5 donc 1 chance sur 5
+    int randomNumber = random.nextInt((1.0 / proba).round());
+    // si le nombre est égal à 0 alors on peut loot
+    return randomNumber == 0;
   }
 }
