@@ -7,8 +7,10 @@ import 'package:lordofdungeons/game/util/emote_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
+import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/functions.dart';
 import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
+import 'package:lordofdungeons/utils/loot.dart';
 
 class PepeTheFrog extends SimpleEnemy with ObjectCollision {
   final Vector2 initPosition;
@@ -49,16 +51,10 @@ class PepeTheFrog extends SimpleEnemy with ObjectCollision {
       ),
     );
 
-    Random random = Random();
-    int randomNumber = random.nextInt(2); // 0 1
-    if (randomNumber == 0) {
-      gameRef
-          .add(ItemLoot(position, "weapons/shield_1.png", Vector2(20, 140), 4));
-    } else {
-      gameRef
-          .add(ItemLoot(position, "weapons/sword_1.png", Vector2(20, 80), 5));
-    }
-    // gameRef.add(PotionLife(position, 10));
+    // Loot du monstre quand il meurt
+    Loot.getLoot(Monsters.PepeTheFrog, gameRef, position);
+
+    // on supprime le adavre du monstre
     removeFromParent();
     super.die();
   }

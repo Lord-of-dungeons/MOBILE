@@ -4,8 +4,10 @@ import 'package:lordofdungeons/game/util/emote_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
 import 'package:lordofdungeons/game/util/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
+import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/functions.dart';
 import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
+import 'package:lordofdungeons/utils/loot.dart';
 
 class Skeleton extends SimpleEnemy with ObjectCollision {
   final Vector2 initPosition;
@@ -45,6 +47,11 @@ class Skeleton extends SimpleEnemy with ObjectCollision {
         size: Vector2(32, 32),
       ),
     );
+
+    // Loot du monstre quand il meurt
+    Loot.getLoot(Monsters.Skeleton, gameRef, position);
+
+    // on supprime le adavre du monstre
     removeFromParent();
     super.die();
   }

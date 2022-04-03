@@ -6,6 +6,10 @@ import 'package:flutter/cupertino.dart';
 const title = 'Rejoignez l\'univers\nLord of Dungeons';
 //
 
+// MONSTRES
+enum Monsters { PepeTheFrog, Skeleton }
+//
+
 // COULEURS
 const color_yellow = Color(0xFFFFC526);
 const color_green = Color(0xFF00C644);

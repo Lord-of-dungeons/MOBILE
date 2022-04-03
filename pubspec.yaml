@@ -96,6 +96,7 @@ flutter:
     - assets/images/
     - assets/images/tiled/
     - assets/images/weapons/
+    - assets/images/consummables/
     - assets/images/player/
     - assets/images/enemy/
     - assets/images/emote/

@@ -1,5 +1,4 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:lordofdungeons/game/player/knight.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 
 class PotionLife extends GameDecoration with Sensor {
@@ -8,7 +7,7 @@ class PotionLife extends GameDecoration with Sensor {
 
   PotionLife(this.initPosition, this.life)
       : super.withSprite(
-          sprite: Sprite.load('itens/potion_red.png'),
+          sprite: Sprite.load('consummables/potion_red.png'),
           position: initPosition,
           size: Vector2(tileSize, tileSize),
         );
