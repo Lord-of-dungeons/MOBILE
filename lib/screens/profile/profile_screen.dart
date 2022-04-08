@@ -54,9 +54,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //
     // On met à jour l'affichager du pseudo dynamiquement une fois que la vaalidation faite
     //
-    setState(() {
-      state["pseudo"] = result;
-    });
+    if (result != null) {
+      setState(() {
+        state["pseudo"] = result;
+      });
+    }
   }
 
   @override
