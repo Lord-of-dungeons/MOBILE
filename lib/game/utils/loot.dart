@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'constants.dart';
+import '../../utils/constants.dart';
 import 'package:bonfire/base/bonfire_game_interface.dart';
 import 'package:bonfire/bonfire.dart';
 import 'package:lordofdungeons/game/decoration/item_loot.dart';

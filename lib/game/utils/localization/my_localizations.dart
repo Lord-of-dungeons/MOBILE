@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lordofdungeons/game/util/localization/strings_location.dart';
+import 'package:lordofdungeons/game/utils/localization/strings_location.dart';
 
 class MyLocalizations {
   MyLocalizations(this.locale) {

@@ -1,7 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
-import 'package:lordofdungeons/game/util/dialogs.dart';
 
 class InventoryComponent extends InterfaceComponent {
   InventoryComponent(BuildContext context, Knight player)

@@ -1,4 +1,4 @@
-import 'package:lordofdungeons/game/util/localization/my_localizations.dart';
+import 'package:lordofdungeons/game/utils/localization/my_localizations.dart';
 
 class StringsLocation {
   static final StringsLocation _singleton = StringsLocation._internal();

@@ -1,13 +1,13 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:lordofdungeons/game/util/emote_sprite_sheet.dart';
-import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
-import 'package:lordofdungeons/game/util/sound.dart';
+import 'package:lordofdungeons/game/utils/emote_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/ennemy_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 import 'package:lordofdungeons/utils/constants.dart';
 import 'package:lordofdungeons/utils/functions.dart';
-import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
-import 'package:lordofdungeons/utils/loot.dart';
+import 'package:lordofdungeons/game/utils/game_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/loot.dart';
 
 class Skeleton extends SimpleEnemy with ObjectCollision {
   final Vector2 initPosition;

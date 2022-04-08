@@ -10,10 +10,9 @@ import 'package:lordofdungeons/game/enemies/vampyrus_alchemist.dart';
 import 'package:lordofdungeons/game/enemies/vampyrus_boss.dart';
 import 'package:lordofdungeons/game/enemies/vampyrus_guard.dart';
 import 'package:lordofdungeons/game/interface/knight_interface.dart';
-import 'package:lordofdungeons/game/npc/player_enter_dungeon.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
-import 'package:lordofdungeons/game/util/dialogs.dart';
-import 'package:lordofdungeons/game/util/sound.dart';
+import 'package:lordofdungeons/game/utils/dialogs.dart';
+import 'package:lordofdungeons/game/utils/sound.dart';
 
 double tileSize = 32;
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lordofdungeons/game/util/localization/my_localizations.dart';
+import 'package:lordofdungeons/game/utils/localization/my_localizations.dart';
 
 class MyLocalizationsDelegate extends LocalizationsDelegate<MyLocalizations> {
   const MyLocalizationsDelegate();

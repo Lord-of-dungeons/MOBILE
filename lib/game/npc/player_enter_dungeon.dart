@@ -1,9 +1,9 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:lordofdungeons/game/util/custom_sprite_animation_widget.dart';
-import 'package:lordofdungeons/game/util/ennemy_sprite_sheet.dart';
-import 'package:lordofdungeons/game/util/localization/strings_location.dart';
-import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/custom_sprite_animation_widget.dart';
+import 'package:lordofdungeons/game/utils/ennemy_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/localization/strings_location.dart';
+import 'package:lordofdungeons/game/utils/player_sprite_sheet.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 
 class PlayerEnterDungeon extends GameDecoration {

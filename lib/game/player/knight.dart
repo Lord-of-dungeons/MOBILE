@@ -3,13 +3,13 @@ import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lordofdungeons/game/util/calculator.dart';
-import 'package:lordofdungeons/game/util/custom_sprite_animation_widget.dart';
-import 'package:lordofdungeons/game/util/player_sprite_sheet.dart';
-import 'package:lordofdungeons/game/util/sound.dart';
+import 'package:lordofdungeons/game/utils/calculator.dart';
+import 'package:lordofdungeons/game/utils/custom_sprite_animation_widget.dart';
+import 'package:lordofdungeons/game/utils/player_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/sound.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 import 'package:lordofdungeons/utils/functions.dart';
-import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/game_sprite_sheet.dart';
 
 class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double initSpeed = tileSize / 0.25;

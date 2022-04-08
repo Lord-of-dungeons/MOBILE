@@ -1,7 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:lordofdungeons/game/interface/item_loot_component.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
-import 'package:lordofdungeons/game/util/calculator.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 
 class ItemLoot extends GameDecoration with Sensor {

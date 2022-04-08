@@ -1,10 +1,5 @@
-import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:lordofdungeons/game/player/knight.dart';
-import 'package:lordofdungeons/game/util/localization/strings_location.dart';
-import 'package:lordofdungeons/utils/constants.dart';
+import 'package:lordofdungeons/game/utils/localization/strings_location.dart';
 
 class Dialogs {
   static void showGameOver(BuildContext context, VoidCallback playAgain) {

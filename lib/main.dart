@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:lordofdungeons/game/util/localization/my_localizations_delegate.dart';
+import 'package:lordofdungeons/game/utils/localization/my_localizations_delegate.dart';
 import 'package:lordofdungeons/screens/login_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lordofdungeons/utils/route_generator.dart';

@@ -1,7 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
-import 'package:lordofdungeons/utils/game_sprite_sheet.dart';
+import 'package:lordofdungeons/game/utils/game_sprite_sheet.dart';
 
 class Torch extends GameDecoration with Lighting {
   bool empty = false;

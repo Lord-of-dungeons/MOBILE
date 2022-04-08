@@ -6,7 +6,7 @@ import 'package:lordofdungeons/commons/delayed_animation.dart';
 import 'package:lordofdungeons/commons/vocation_sprite_render.dart';
 import 'package:lordofdungeons/providers/character_provider.dart';
 import 'package:lordofdungeons/utils/constants.dart';
-import 'package:lordofdungeons/utils/xp.dart';
+import 'package:lordofdungeons/game/utils/xp.dart';
 
 var appBar = AppBar(
   backgroundColor: color_blue,
