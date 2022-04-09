@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:lordofdungeons/game/interface/knight_interface.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
 import 'package:lordofdungeons/game/utils/dialogs.dart';
 import 'package:lordofdungeons/game/utils/sound.dart';
+import 'package:lordofdungeons/utils/writer_file.dart';
 
 double tileSize = 32;
 
@@ -35,6 +37,31 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
     _controller = GameController()..addListener(this);
     Sounds.playBackgroundSound();
     super.initState();
+  }
+
+  Future<Map<String, dynamic>?> _getPlayerFileInfos() async {
+    try {
+      WriterFile writeFile = WriterFile(filename: "macron.json");
+      // Object obj = {
+      //   "nick": "Macron",
+      //   "xp": 1.0,
+      //   "attack": 25.0,
+      //   "bonusAttack": 0.0,
+      //   "armor": 15.0,
+      //   "bonusArmor": 0.0,
+      //   "mana": 100.0,
+      //   "bonusMana": 0.0,
+      //   "playerLife": 150.0,
+      //   "playerPosition": [2 * tileSize, 3 * tileSize],
+      //   "isDead": false,
+      //   "playerClassName": "knight",
+      // };
+      final content = await writeFile.readFile();
+      return jsonDecode(content);
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   @override
@@ -68,14 +95,43 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
     await Flame.device.fullScreen();
   }
 
+  Future<Map<String, dynamic>?> _load(BuildContext context) async {
+    final infos = await _getPlayerFileInfos();
+    await _setLandscape(context);
+
+    return infos;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size sizeScreen = MediaQuery.of(context).size;
     var tileSize = max(sizeScreen.height, sizeScreen.width) / 15;
 
     return FutureBuilder(
-      future: _setLandscape(context),
+      future: _load(context),
       builder: (context, snapchot) {
+        if (snapchot.hasData == false) {
+          return Material(
+            color: Colors.transparent,
+          );
+        }
+
+        // si y'a une erreur ou la variable vaut null car une erreur a été prise par le catch
+        if (snapchot.hasError || snapchot.data == null) {
+          print("error : ${snapchot.error}");
+          //TODO: rediriger ou afficher erreur
+          return Material(
+            color: Colors.transparent,
+          );
+        }
+
+        final data = snapchot.data as Map<String, dynamic>;
+        // on cast les valeurs dynamic en double pour éviter une erreur de typage
+        List<double> position = [
+          data["playerPosition"][0] ?? 64.0,
+          data["playerPosition"][1] ?? 96.0
+        ];
+
         return Material(
           color: Colors.transparent,
           child: BonfireTiledWidget(
@@ -142,7 +198,19 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
                 'vampyrus_boss': (p) => VampyrusBoss(p.position),
               },
             ),
-            player: Knight(Vector2(2 * tileSize, 3 * tileSize), "Macron"),
+            player: Knight(
+              nick: data["nick"],
+              xp: data["xp"],
+              attack: data["attack"],
+              armor: data["armor"],
+              playerPosition: position,
+              playerLife: data["playerLife"],
+              mana: data["mana"],
+              bonusArmor: data["bonusArmor"],
+              bonusAttack: data["bonusAttack"],
+              bonusMana: data["bonusMana"],
+              isDead: data["isDead"],
+            ),
             // showCollisionArea: true,
             lightingColorGame: Colors.black.withOpacity(0.6),
             background: BackgroundColorGame(Colors.grey[900]!),

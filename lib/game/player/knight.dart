@@ -13,11 +13,7 @@ import 'package:lordofdungeons/game/utils/game_sprite_sheet.dart';
 
 class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double initSpeed = tileSize / 0.25;
-  double attack = 25;
-  double bonusAttack = 0;
-  double armor = 15;
-  double bonusArmor = 0;
-  double mana = 100;
+
   bool containKey = false;
   bool showObserveEnemy = false;
   int regenerationLifeIncrement = 5;
@@ -29,16 +25,38 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   async.Timer? _ultiArmorCounter;
   //
   final String nick;
+  double xp;
+  double attack;
+  double bonusAttack;
+  double armor;
+  double bonusArmor;
+  double mana;
+  double bonusMana;
+  double playerLife;
+  bool isDead;
+  List<double> playerPosition;
+  //
   Vector2 sizeTextNick = Vector2.zero();
   late TextPaint _textConfigNick;
 
-  Knight(Vector2 position, this.nick)
-      : super(
-          position: position,
+  Knight({
+    required this.playerPosition,
+    required this.nick,
+    required this.xp,
+    required this.attack,
+    required this.bonusAttack,
+    required this.armor,
+    required this.bonusArmor,
+    required this.mana,
+    required this.bonusMana,
+    required this.playerLife,
+    required this.isDead,
+  }) : super(
+          position: Vector2(playerPosition[0], playerPosition[1]),
           size: Vector2.all(tileSize),
           animation: PlayerSpriteSheet.simpleDirectionAnimation,
           speed: tileSize / 0.25,
-          life: 200,
+          life: playerLife,
         ) {
     setupCollision(
       CollisionConfig(
@@ -287,9 +305,9 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       return;
     }
 
-    life += regenerationLifeIncrement;
-    if (life > maxLife) {
-      life = maxLife;
+    playerLife += regenerationLifeIncrement;
+    if (playerLife > maxLife) {
+      playerLife = maxLife;
     }
   }
 
