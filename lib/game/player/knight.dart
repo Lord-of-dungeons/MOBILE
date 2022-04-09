@@ -3,6 +3,7 @@ import 'dart:async' as async;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lordofdungeons/game/player/base.dart';
 import 'package:lordofdungeons/game/utils/calculator.dart';
 import 'package:lordofdungeons/game/utils/custom_sprite_animation_widget.dart';
 import 'package:lordofdungeons/game/utils/player_sprite_sheet.dart';
@@ -11,7 +12,7 @@ import 'package:lordofdungeons/screens/play/play_solo_screen.dart';
 import 'package:lordofdungeons/utils/functions.dart';
 import 'package:lordofdungeons/game/utils/game_sprite_sheet.dart';
 
-class Knight extends SimplePlayer with Lighting, ObjectCollision {
+class Knight extends SimplePlayer with Lighting, ObjectCollision, Base {
   double initSpeed = tileSize / 0.25;
 
   bool containKey = false;
@@ -32,7 +33,9 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
   double bonusArmor;
   double mana;
   double bonusMana;
-  double playerLife;
+  @override
+  double life;
+  @override
   bool isDead;
   List<double> playerPosition;
   //
@@ -49,14 +52,14 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
     required this.bonusArmor,
     required this.mana,
     required this.bonusMana,
-    required this.playerLife,
+    required this.life,
     required this.isDead,
   }) : super(
           position: Vector2(playerPosition[0], playerPosition[1]),
           size: Vector2.all(tileSize),
           animation: PlayerSpriteSheet.simpleDirectionAnimation,
           speed: tileSize / 0.25,
-          life: playerLife,
+          life: life,
         ) {
     setupCollision(
       CollisionConfig(
@@ -305,9 +308,9 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       return;
     }
 
-    playerLife += regenerationLifeIncrement;
-    if (playerLife > maxLife) {
-      playerLife = maxLife;
+    life += regenerationLifeIncrement;
+    if (life > maxLife) {
+      life = maxLife;
     }
   }
 
@@ -326,6 +329,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       ),
     );
     super.die();
+    saveInfos(this);
   }
 
   @override
@@ -378,6 +382,7 @@ class Knight extends SimplePlayer with Lighting, ObjectCollision {
       ),
     );
     super.receiveDamage(damage, id);
+    saveInfos(this);
   }
 
   void _showEmote({String emote = 'emote/emote_exclamation.png'}) {

@@ -42,20 +42,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
   Future<Map<String, dynamic>?> _getPlayerFileInfos() async {
     try {
       WriterFile writeFile = WriterFile(filename: "macron.json");
-      // Object obj = {
-      //   "nick": "Macron",
-      //   "xp": 1.0,
-      //   "attack": 25.0,
-      //   "bonusAttack": 0.0,
-      //   "armor": 15.0,
-      //   "bonusArmor": 0.0,
-      //   "mana": 100.0,
-      //   "bonusMana": 0.0,
-      //   "playerLife": 150.0,
-      //   "playerPosition": [2 * tileSize, 3 * tileSize],
-      //   "isDead": false,
-      //   "playerClassName": "knight",
-      // };
+
       final content = await writeFile.readFile();
       return jsonDecode(content);
     } catch (e) {
@@ -204,7 +191,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
               attack: data["attack"],
               armor: data["armor"],
               playerPosition: position,
-              playerLife: data["playerLife"],
+              life: data["playerLife"],
               mana: data["mana"],
               bonusArmor: data["bonusArmor"],
               bonusAttack: data["bonusAttack"],
