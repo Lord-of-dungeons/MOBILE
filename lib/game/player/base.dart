@@ -1,15 +1,10 @@
 import 'dart:convert';
-
-import 'package:bonfire/base/bonfire_game_interface.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
 import 'package:lordofdungeons/utils/writer_file.dart';
 
 abstract class Base {
   Future<void> saveInfos(Knight player) async {
     try {
-      print("gameRef : ${player.gameRef}");
-      return;
-
       print("save");
       String filename = player.nick.toLowerCase();
       WriterFile writeFile = WriterFile(filename: filename + ".json");

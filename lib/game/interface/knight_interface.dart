@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lordofdungeons/game/interface/armor_component.dart';
 import 'package:lordofdungeons/game/interface/attack_component.dart';
 import 'package:lordofdungeons/game/interface/bar_life_component.dart';
+import 'package:lordofdungeons/game/interface/menu_component.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
 
 class KnightInterface extends GameInterface {
@@ -17,6 +18,7 @@ class KnightInterface extends GameInterface {
     add(BarLifeComponent());
     add(AttackComponent(context, gameRef.player as Knight));
     add(ArmorComponent(context, gameRef.player as Knight));
+    add(MenuComponent(context, gameRef.player as Knight));
     return super.onLoad();
   }
 

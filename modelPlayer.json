@@ -1,0 +1,12 @@
+{
+  "name": "",
+  "xp": 156789,
+  "playerClassName": "",
+  "attack": 25,
+  "bonusAttack": 0,
+  "armor": 15,
+  "bonusArmor": 0,
+  "mana": 200,
+  "isDead": false,
+  "position": [0, 0]
+}

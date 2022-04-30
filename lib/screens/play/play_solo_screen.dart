@@ -74,6 +74,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
     Sounds.stopBackgroundSound();
     Sounds.dispose();
     FollowerWidget.removeAll();
+    Flame.device.setOrientation(DeviceOrientation.portraitUp);
     super.dispose();
   }
 
@@ -202,7 +203,7 @@ class _PlaySoloScreenState extends State<PlaySoloScreen>
             lightingColorGame: Colors.black.withOpacity(0.6),
             background: BackgroundColorGame(Colors.grey[900]!),
             interface: KnightInterface(context),
-            showFPS: true,
+            showFPS: false,
             progress: Container(
               alignment: Alignment.center,
               color: Colors.black,

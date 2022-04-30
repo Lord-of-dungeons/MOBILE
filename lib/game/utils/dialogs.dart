@@ -38,4 +38,41 @@ class Dialogs {
       },
     );
   }
+
+  static void showMenu(BuildContext context, VoidCallback backToHome) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Image.asset(
+                'assets/images/gobelin.png',
+                height: 100,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent),
+                ),
+                onPressed: backToHome,
+                child: Text(
+                  "Retour à l'accueil",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Bungee',
+                      fontSize: 20.0),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

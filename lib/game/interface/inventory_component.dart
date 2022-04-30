@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:lordofdungeons/game/player/knight.dart';
+import 'package:lordofdungeons/game/utils/dialogs.dart';
 
 class InventoryComponent extends InterfaceComponent {
   InventoryComponent(BuildContext context, Knight player)
@@ -11,7 +12,10 @@ class InventoryComponent extends InterfaceComponent {
             spriteSelected: Sprite.load('inventory.png'),
             spriteUnselected: Sprite.load('inventory.png'),
             selectable: true,
-            onTapComponent: (bool b) async {});
+            onTapComponent: (bool b) {
+              print("yop");
+              Dialogs.showMenu(context, () {});
+            });
 
   @override
   void update(double t) {
