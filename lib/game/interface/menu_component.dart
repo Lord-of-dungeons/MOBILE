@@ -13,7 +13,9 @@ class MenuComponent extends InterfaceComponent {
             spriteUnselected: Sprite.load('engrenage.png'),
             selectable: true,
             onTapComponent: (bool b) {
-              Dialogs.showMenu(context, () {
+              Dialogs.showMenu(context, () async {
+                // sauvegarde des infos
+                await player.saveInfos(player);
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   "/home",
                   (Route<dynamic> route) => false,
