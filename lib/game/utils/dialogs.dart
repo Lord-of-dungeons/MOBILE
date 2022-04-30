@@ -39,8 +39,7 @@ class Dialogs {
     );
   }
 
-  static void showMenu(
-      BuildContext context, Future<void> Function() backToHome) {
+  static void showMenu(BuildContext context, VoidCallback backToHome) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -61,7 +60,7 @@ class Dialogs {
                   backgroundColor:
                       MaterialStateProperty.all(Colors.transparent),
                 ),
-                onPressed: () => backToHome,
+                onPressed: backToHome,
                 child: Text(
                   "Retour à l'accueil",
                   style: TextStyle(
